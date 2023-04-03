@@ -24,5 +24,6 @@ namespace FinanceManagementAppCore.Cards
         public decimal Balance { get; set; }
 
         public string CurrencyName { get; set; }
+        public int UserId { get; init; }
     }
 }

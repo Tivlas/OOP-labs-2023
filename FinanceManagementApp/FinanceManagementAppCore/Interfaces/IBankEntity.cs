@@ -5,5 +5,6 @@
         string Name { get; set; }
         decimal Balance { get; set; }
         string CurrencyName { get; set; }
+        int UserId { get; init; }
     }
 }
