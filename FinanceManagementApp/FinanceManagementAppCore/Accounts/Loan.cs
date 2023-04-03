@@ -4,7 +4,7 @@ namespace FinanceManagementAppCore.Accounts
 {
     public class Loan : AccountAtInterestBase
     {
-        public Loan(decimal balance, string currencyName, string name, int userId, int cardId, Term term, int interestRate, LoanPayments payments) : base(balance, currencyName, name, userId, cardId, term, interestRate)
+        public Loan(decimal balance, string currencyName, string name, int userId,  Term term, int interestRate, LoanPayments payments) : base(balance, currencyName, name, userId,  term, interestRate)
         {
             Payments = payments;
         }

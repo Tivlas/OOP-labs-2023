@@ -6,13 +6,12 @@ namespace FinanceManagementAppCore.Accounts
     {
         private static int s_IdController = 0;
 
-        public AccountBase(decimal balance, string currencyName, string name, int userId, int cardId)
+        public AccountBase(decimal balance, string currencyName, string name, int userId)
         {
             Balance = balance;
             CurrencyName = currencyName;
             Name = name;
             UserId = userId;
-            CardId = cardId;
             Id = s_IdController;
             ++s_IdController;
         }
@@ -27,6 +26,6 @@ namespace FinanceManagementAppCore.Accounts
 
         public int Id { get; init; }
 
-        public int CardId { get; init; }
+        public List<int> CardIds { get; set; } = new List<int>();
     }
 }
