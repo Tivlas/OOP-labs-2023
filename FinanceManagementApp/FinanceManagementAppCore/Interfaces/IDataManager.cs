@@ -18,18 +18,22 @@ namespace FinanceManagementAppCore.Interfaces
 
         int GetUserId(string email);
 
+        bool AccountExists(string name, int userId);
+
         bool UserExists(string email);
 
-        void AddTransactionCategory(int userId, TransactionCategory category);
+        void AddTransactionCategory(TransactionCategory category);
 
-        void RemoveTransactionCategory(int userId, int categoryId);
+        void RemoveTransactionCategory(string name, int userId);
 
-        void AddTransaction(int userId, TransactionBase transaction);
+        bool TransactionCategoryExists(string name, int userId);
 
-        void RemoveTransaction(int userId, int transactionId);
+        void AddTransaction(TransactionBase transaction);
 
-        bool AddAccountIfNotExist(int userId, AccountBase account);
+        void RemoveTransaction(int transactionId);
 
-        void RemoveAccount(int userId, int accountId);
+        void AddAccount(AccountBase account);
+
+        void RemoveAccount(int userId, string name);
     }
 }
