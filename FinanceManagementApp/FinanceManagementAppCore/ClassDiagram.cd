@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="FinanceManagementAppCore.Transactions.SimpleTransaction">
+    <Position X="18.75" Y="9.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Transactions\SimpleTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinanceManagementAppCore.Transactions.TransactionBase">
+    <Position X="17.5" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAgAAAAAABAAAAAAAAAAgEAAAAAA=</HashCode>
+      <FileName>Transactions\TransactionBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FinanceManagementAppCore.Transactions.TransactionCategory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Transactions\TransactionCategory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FinanceManagementAppCore.Accounts.AccountAtInterestBase">
+    <Position X="11.25" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Accounts\AccountAtInterestBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinanceManagementAppCore.Accounts.AccountBase">
+    <Position X="10" Y="6.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAIAgAAAwAAAAAAAAAAAAgAAgAAAA=</HashCode>
+      <FileName>Accounts\AccountBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FinanceManagementAppCore.Accounts.Deposit">
+    <Position X="9.5" Y="13" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Accounts\Deposit.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinanceManagementAppCore.Accounts.Loan">
+    <Position X="13" Y="13" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Accounts\Loan.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinanceManagementAppCore.Term" Collapsed="true">
+    <Position X="25.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Helpers\Term.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinanceManagementAppCore.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAAA=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FinanceManagementAppCore.Card" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAIggAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Card.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FinanceManagementAppCore.SimpleAccount">
+    <Position X="7.25" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SimpleAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinanceManagementAppCore.Transfer">
+    <Position X="16" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transfer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FinanceManagementAppCore.Calculator" Collapsed="true">
+    <Position X="22.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Calculator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="FinanceManagementAppCore.Interfaces.IEntity">
+    <Position X="7.25" Y="15.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FinanceManagementAppCore.IDataManager" Collapsed="true">
+    <Position X="22.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAAAAAEQAAAEIAgAAAAAAAAAAgAAACAAAAAEg=</HashCode>
+      <FileName>IDataManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FinanceManagementAppCore.IBankEntity">
+    <Position X="7" Y="17.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAgAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IBankEntity.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="FinanceManagementAppCore.Enums.TermTimeUnit" Collapsed="true">
+    <Position X="25.75" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FinanceManagementAppCore.Enums.DepositInterestAccrual" Collapsed="true">
+    <Position X="22.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAgA=</HashCode>
+      <FileName>Enums\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FinanceManagementAppCore.Enums.LoanPayments" Collapsed="true">
+    <Position X="24" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Enums.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
