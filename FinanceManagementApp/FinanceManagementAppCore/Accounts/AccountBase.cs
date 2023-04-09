@@ -27,5 +27,14 @@ namespace FinanceManagementAppCore.Accounts
         public int Id { get; init; }
 
         public List<int> CardIds { get; set; } = new List<int>();
+
+        public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
+        {
+            List<(string PropName, object propValue)> info = new();
+            info.Add(("name", Name));
+            info.Add(("currency name", CurrencyName));
+            info.Add(("balance", Balance));
+            return info;
+        }
     }
 }
