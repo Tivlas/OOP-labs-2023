@@ -13,45 +13,43 @@ namespace Lab2.UserActions
 {
     public static class Actions
     {
-        public static Dictionary<int, Action> UserActions = new Dictionary<int, Action>();
+        public static Dictionary<int, Action<int, Storage>> UserActions = new Dictionary<int, Action<int, Storage>>();
 
         static Actions()
         {
             UserActions[3] = AddSimpleAccount;
+            UserActions[13] = ListBankEntities;
         }
 
-        private static T ParseInput<T>(string message)
+
+        private static (decimal Balance, string CurrencyName, string Name) AddAccount(int userId, Storage storage)
         {
-            T? obj;
+            decimal balance;
             while (true)
             {
-                try
-                {
-                    Console.Write($"{message}: ");
-                    string? input = Console.ReadLine();
-                    var converter = TypeDescriptor.GetConverter(typeof(T));
-                    obj = (T?)converter?.ConvertFromString(input);
-                }
-                catch (Exception)
+                Console.Write("Enter balance: ");
+                string? temp = Console.ReadLine();
+                if (!decimal.TryParse(temp, out balance))
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
                     continue;
                 }
                 break;
             }
-            return obj!;
-        }
 
-        private static (decimal Balance, string CurrencyName) AddAccount()
-        {
-            decimal balance = ParseInput<decimal>("Enter balance");
-            string currencyName = ParseInput<string>("Enter balance");
-            return (balance, currencyName);
-        }
+            string? currencyName;
+            while (true)
+            {
+                Console.Write("Enter currency name: ");
+                currencyName = Console.ReadLine();
+                if (currencyName is null || currencyName?.Length < 1)
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
+                    continue;
+                }
+                break;
+            }
 
-        private static void AddSimpleAccount(int userId, Storage storage)
-        {
-            var args = AddAccount();
             string? name;
             while (true)
             {
@@ -62,15 +60,40 @@ namespace Lab2.UserActions
                     ColorPrinter.Print(ConsoleColor.Red, "At least 1 character!");
                     continue;
                 }
-                if (storage.AccountExists(name))
+                if (storage.AccountExists(name, userId))
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "Account with this name already exists!");
                     continue;
                 }
                 break;
             }
-            var acc = new SimpleAccount(args.Balance, args.CurrencyName, name, userId);
-            storage.AddAccount
+
+            return (balance, currencyName!, name);
+        }
+
+        public static void AddSimpleAccount(int userId, Storage storage)
+        {
+            var args = AddAccount(userId, storage);
+            var acc = new SimpleAccount(args.Balance, args.CurrencyName, args.Name, userId);
+            storage.AddAccount(acc);
+        }
+
+        public static void ListBankEntities(int userId, Storage storage)
+        {
+            var bankEntities = storage?.BankEntities?.Where(be => be.UserId == userId)?.ToList();
+
+            if (bankEntities is not null)
+            {
+                foreach (var be in bankEntities.Select((value, index) => new { index, value.Name, value.Id }))
+                {
+                    ColorPrinter.Print(ConsoleColor.Yellow, $"{be.index + 1}. ", false);
+                    Console.WriteLine($"Name: {be.Name}, id: {be.Id}");
+                }
+            }
+            else
+            {
+                ColorPrinter.Print(ConsoleColor.Yellow, "No accounts!");
+            }
         }
     }
 }
