@@ -24,5 +24,14 @@ namespace FinanceManagementAppCore.Transactions
         public int Id { get; init; }
 
         public int UserId { get; init; }
+
+        public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
+        {
+            List<(string PropName, object propValue)> info = new();
+            info.Add(("TransactionDate", TransactionDate.Date));
+            info.Add(("AmountOfMoney", AmountOfMoney));
+            info.Add(("AccountId", AccountId));
+            return info;
+        }
     }
 }

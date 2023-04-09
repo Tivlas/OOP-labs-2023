@@ -19,5 +19,12 @@ namespace FinanceManagementAppCore.Transactions
         public int Id { get; init; }
 
         public int UserId { get; set; }
+
+        public IEnumerable<(string PropName, object propValue)> GetInfo()
+        {
+            List<(string PropName, object propValue)> info = new();
+            info.Add(("Name", Name));
+            return info;
+        }
     }
 }
