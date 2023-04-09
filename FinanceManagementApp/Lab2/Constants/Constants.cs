@@ -8,6 +8,19 @@ namespace Lab2.Constants
 {
     public static class Constants
     {
-        public static string HelpInfo => "Enter 3 to add simple account\r\nEnter 4 to add deposit\r\nEnter 5 to add loan\r\nEnter 6 to add card\r\nEnter 7 to add transaction category\r\nEnter 8 to add simple transaction\r\nEnter 9 to add transfer\r\nEnter 10 to remove category\r\nEnter 11 to remove transaction\r\nEnter 12 to remove account or card";
+        public static string HelpInfo => 
+            $"Enter {3,2} to add simple account\r\n" +
+            $"Enter {4,2} to add deposit\r\n" +
+            $"Enter {5,2} to add loan\r\n" +
+            $"Enter {6,2} to add card\r\n" +
+            $"Enter {7,2} to add transaction category\r\n" +
+            $"Enter {8,2} to add simple transaction\r\n" +
+            $"Enter {9,2} to add transfer\r\n" +
+            "Enter 10 to remove category\r\n" +
+            "Enter 11 to remove transaction\r\n" +
+            "Enter 12 to remove account or card\r\n" +
+            "Enter 13 to list ur accounts and cards";
+
+        public static string Delimiter => "———————————————————————————————————————";
     }
 }
