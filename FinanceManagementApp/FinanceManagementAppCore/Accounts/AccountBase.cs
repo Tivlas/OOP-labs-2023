@@ -31,9 +31,9 @@ namespace FinanceManagementAppCore.Accounts
         public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
         {
             List<(string PropName, object propValue)> info = new();
-            info.Add(("name", Name));
-            info.Add(("currency name", CurrencyName));
-            info.Add(("balance", Balance));
+            info.Add(("Name", Name));
+            info.Add(("Currency name", CurrencyName));
+            info.Add(("Balance", Balance));
             return info;
         }
     }
