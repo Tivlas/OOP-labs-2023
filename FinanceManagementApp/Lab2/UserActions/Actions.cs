@@ -2,13 +2,8 @@
 using FinanceManagementAppCore.Cards;
 using Lab2.DataBaseEmulation;
 using Lab2.Helpers;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lab2.Const;
+using FinanceManagementAppCore.Transactions;
 
 namespace Lab2.UserActions
 {
@@ -19,11 +14,18 @@ namespace Lab2.UserActions
         static Actions()
         {
             UserActions[3] = AddSimpleAccount;
-            UserActions[13] = ListBankEntities;
             UserActions[6] = AddCard;
+            UserActions[7] = AddTransactionCategory;
+            UserActions[10] = RemoveTransactionCategory;
+            UserActions[12] = RemoveBankEntity;
+            UserActions[13] = ListBankEntities;
+            UserActions[14] = Listcategories;
         }
 
-        private static string GetName(int userId, Storage storage)
+
+        #region Bank entity actions
+        // TODO: add loan, deposit
+        private static string GetBankEntityName(int userId, Storage storage)
         {
             string? name;
             while (true)
@@ -86,8 +88,8 @@ namespace Lab2.UserActions
                 break;
             }
 
-            string name = GetName(userId, storage);
-            if(name == "CANCEL")
+            string name = GetBankEntityName(userId, storage);
+            if (name == "CANCEL")
             {
                 return canceled;
             }
@@ -108,7 +110,7 @@ namespace Lab2.UserActions
 
         public static void AddCard(int userId, Storage storage)
         {
-            string name = GetName(userId, storage);
+            string name = GetBankEntityName(userId, storage);
             decimal balance;
             string currencyName;
             int accountId;
@@ -121,7 +123,7 @@ namespace Lab2.UserActions
                     return;
                 }
                 var acc = storage?.BankEntities?.FirstOrDefault(be => be.Name == relatedAccName);
-                if(acc is null)
+                if (acc is null)
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "No such account!");
                     continue;
@@ -142,22 +144,97 @@ namespace Lab2.UserActions
 
             if (bankEntities is not null)
             {
-                foreach (var be in bankEntities.Select((value, index) => new { index, value}))
+                foreach (var be in bankEntities)
                 {
-                    ColorPrinter.Print(ConsoleColor.Yellow, $"{be.index + 1}. ", false);
-                    var infoList = be.value.GetInfo();
-                    List<string> temp = new();
-                    foreach(var infoItem in infoList)
+                    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+                    var infoList = be.GetInfo();
+                    foreach (var infoItem in infoList)
                     {
-                        temp.Add($"{infoItem.PropName}: {infoItem.propValue}");
+                        Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
                     }
-                    Console.WriteLine(string.Join(", ", temp));
                 }
+                ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
             }
             else
             {
-                ColorPrinter.Print(ConsoleColor.Yellow, "No accounts!");
+                ColorPrinter.Print(ConsoleColor.Yellow, "No accounts or cards!");
             }
         }
+
+        public static void RemoveBankEntity(int userId, Storage storage)
+        {
+            Console.Write("Enter name: ");
+            string? name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                storage?.BankEntities?.RemoveAll(be => be.Name == name);
+            }
+        }
+
+        #endregion
+
+        #region Transaction & transaction category actions
+
+        public static void AddTransactionCategory(int userId, Storage storage)
+        {
+            string? name;
+            while (true)
+            {
+                Console.Write("Enter name: ");
+                name = Console.ReadLine();
+                if (name == "CANCEL")
+                {
+                    return;
+                }
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "At least 1 character!");
+                }
+                break;
+            }
+            if (!storage!.TransactionCategoryExists(name!, userId))
+            {
+                storage?.AddTransactionCategory(new TransactionCategory(name!, userId));
+            }
+        }
+
+        public static void RemoveTransactionCategory(int userId, Storage storage)
+        {
+            string? name = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                storage?.RemoveTransactionCategory(name!, userId);
+            }
+        }
+
+        public static void Listcategories(int userId,Storage storage)
+        {
+            var categories = storage?.Categories?.Where(ctg => ctg.UserId == userId)?.ToList();
+
+            if (categories is not null)
+            {
+                foreach (var ctg in categories)
+                {
+                    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+                    var infoList = ctg.GetInfo();
+                    foreach (var infoItem in infoList)
+                    {
+                        Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
+                    }
+                }
+                ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+            }
+            else
+            {
+                ColorPrinter.Print(ConsoleColor.Yellow, "No categories!");
+            }
+        }
+
+        // TODO: list categories
+        #endregion
+
+        #region Statistics
+        // TODO: add methods
+        #endregion
     }
 }
