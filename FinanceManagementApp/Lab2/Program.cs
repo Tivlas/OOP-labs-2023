@@ -1,15 +1,16 @@
 ﻿using FinanceManagementAppCore;
+using Lab2.Constants;
 using Lab2.DataBaseEmulation;
 using Lab2.Helpers;
 using Lab2.Services;
-using System.Xml.Serialization;
+using Lab2.UserActions;
 
 Storage storage = new();
 
 (string Email, int Id) curUser = (string.Empty, -1);
 
 StartActions();
-
+ExecuteCommand();
 
 #region Login or user registration
 void StartActions()
@@ -52,7 +53,7 @@ void StartActions()
         {
             email = EmailConsoleEntering.GetEmail();
             password = PasswordConsoleEntering.GetPassword("Enter password");
-            if (!storage.EmailPasswordMatch(email,password))
+            if (!storage.EmailPasswordMatch(email, password))
             {
                 ColorPrinter.Print(ConsoleColor.Red, "Invalid email or password");
                 continue;
@@ -67,4 +68,34 @@ void StartActions()
         else { ColorPrinter.Print(ConsoleColor.Red, "Invalid choice! Enter [1] or [2]?"); }
     }
 }
+#endregion
+
+#region User actions
+
+void ExecuteCommand()
+{
+    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+    Console.WriteLine(Constants.HelpInfo);
+    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+    while (true)
+    {
+        ColorPrinter.Print(ConsoleColor.Yellow, "\nEnter command code: ", false);
+        if (!int.TryParse(Console.ReadLine(), out int code))
+        {
+            ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
+        }
+        else
+        {
+            if (!Actions.UserActions.ContainsKey(code))
+            {
+                ColorPrinter.Print(ConsoleColor.Red, "No such command!");
+            }
+            else
+            {
+                Actions.UserActions[code](curUser.Id, storage);
+            }
+        }
+    }
+}
+
 #endregion
