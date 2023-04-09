@@ -6,5 +6,7 @@
         decimal Balance { get; set; }
         string CurrencyName { get; set; }
         int UserId { get; init; }
+
+        IEnumerable<(string PropName, object propValue)> GetInfo();
     }
 }
