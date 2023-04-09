@@ -45,17 +45,17 @@ namespace Lab2.DataBaseEmulation
         #endregion
 
         #region Account related methods
-        public void AddAccount(AccountBase account)
+        public void AddBankEntity(IBankEntity bankEntity)
         {
-            BankEntities.Add(account);
+            BankEntities.Add(bankEntity);
         }
 
-        public void RemoveAccount(int userId, string name)
+        public void RemoveBankEntity(int userId, string name)
         {
             throw new NotImplementedException();
         }
 
-        public bool AccountExists(string name, int userId)
+        public bool BankEntityExists(string name, int userId)
         {
             return BankEntities is not null && BankEntities.Any(e => e.Name == name && e.UserId == userId);
         }

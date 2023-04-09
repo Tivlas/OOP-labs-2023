@@ -1,6 +1,5 @@
 ﻿using FinanceManagementAppCore.Accounts;
 using FinanceManagementAppCore.Transactions;
-using System.Globalization;
 
 namespace FinanceManagementAppCore.Interfaces
 {
@@ -18,7 +17,7 @@ namespace FinanceManagementAppCore.Interfaces
 
         int GetUserId(string email);
 
-        bool AccountExists(string name, int userId);
+        bool BankEntityExists(string name, int userId);
 
         bool UserExists(string email);
 
@@ -32,8 +31,8 @@ namespace FinanceManagementAppCore.Interfaces
 
         void RemoveTransaction(int transactionId);
 
-        void AddAccount(AccountBase account);
+        void AddBankEntity(IBankEntity account);
 
-        void RemoveAccount(int userId, string name);
+        void RemoveBankEntity(int userId, string name);
     }
 }
