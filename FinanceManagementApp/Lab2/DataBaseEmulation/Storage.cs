@@ -9,13 +9,13 @@ namespace Lab2.DataBaseEmulation
     public class Storage : IDataManager
     {
         #region Containers
-        public List<User>? Users { get; set; } = new List<User>();
+        public List<User> Users { get; set; } = new List<User>();
 
-        public List<IBankEntity>? BankEntities { get; set; } = new List<IBankEntity>();
+        public List<IBankEntity> BankEntities { get; set; } = new List<IBankEntity>();
 
-        public List<TransactionCategory>? Categories { get; set; } = new List<TransactionCategory>();
+        public List<TransactionCategory> Categories { get; set; } = new List<TransactionCategory>();
 
-        public List<TransactionBase>? MadeTransactions { get; set; } = new List<TransactionBase>();
+        public List<TransactionBase> MadeTransactions { get; set; } = new List<TransactionBase>();
         #endregion
 
         #region Email and password related methods
@@ -47,7 +47,7 @@ namespace Lab2.DataBaseEmulation
         #region Account related methods
         public void AddAccount(AccountBase account)
         {
-            throw new NotImplementedException();
+            BankEntities.Add(account);
         }
 
         public void RemoveAccount(int userId, string name)
