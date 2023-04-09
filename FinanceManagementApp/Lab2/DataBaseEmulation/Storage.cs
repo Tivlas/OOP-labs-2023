@@ -1,5 +1,4 @@
 ﻿using FinanceManagementAppCore;
-using FinanceManagementAppCore.Accounts;
 using FinanceManagementAppCore.Interfaces;
 using FinanceManagementAppCore.Transactions;
 using Lab2.Services;
@@ -77,17 +76,17 @@ namespace Lab2.DataBaseEmulation
         #region TransactionCategory related methods
         public void AddTransactionCategory(TransactionCategory category)
         {
-            throw new NotImplementedException();
+            Categories.Add(category);
         }
 
         public void RemoveTransactionCategory(string name, int userId)
         {
-            throw new NotImplementedException();
+            Categories.RemoveAll(c => c.UserId == userId && c.Name == name);
         }
 
         public bool TransactionCategoryExists(string name, int userId)
         {
-            throw new NotImplementedException();
+            return Categories.FindIndex(0, c => c.UserId == userId && c.Name == name) != -1;
         }
         #endregion
 
