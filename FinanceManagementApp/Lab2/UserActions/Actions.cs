@@ -4,6 +4,7 @@ using Lab2.DataBaseEmulation;
 using Lab2.Helpers;
 using Lab2.Const;
 using FinanceManagementAppCore.Transactions;
+using Lab2.Validators;
 
 namespace Lab2.UserActions
 {
@@ -16,10 +17,12 @@ namespace Lab2.UserActions
             UserActions[3] = AddSimpleAccount;
             UserActions[6] = AddCard;
             UserActions[7] = AddTransactionCategory;
+            UserActions[8] = AddSimpleTransaction;
             UserActions[10] = RemoveTransactionCategory;
             UserActions[12] = RemoveBankEntity;
             UserActions[13] = ListBankEntities;
-            UserActions[14] = Listcategories;
+            UserActions[14] = ListCategories;
+            UserActions[15] = ListTransactions;
         }
 
 
@@ -32,7 +35,7 @@ namespace Lab2.UserActions
             {
                 Console.Write("Enter name: ");
                 name = Console.ReadLine();
-                if (name == "CANCEL")
+                if (name == Constants.Cancel)
                 {
                     return name;
                 }
@@ -59,7 +62,7 @@ namespace Lab2.UserActions
             {
                 Console.Write("Enter balance: ");
                 string? temp = Console.ReadLine();
-                if (temp == "CANCEL")
+                if (temp == Constants.Cancel)
                 {
                     return canceled;
                 }
@@ -76,7 +79,7 @@ namespace Lab2.UserActions
             {
                 Console.Write("Enter currency name: ");
                 currencyName = Console.ReadLine();
-                if (currencyName == "CANCEL")
+                if (currencyName == Constants.Cancel)
                 {
                     return canceled;
                 }
@@ -89,7 +92,7 @@ namespace Lab2.UserActions
             }
 
             string name = GetBankEntityName(userId, storage);
-            if (name == "CANCEL")
+            if (name == Constants.Cancel)
             {
                 return canceled;
             }
@@ -118,7 +121,7 @@ namespace Lab2.UserActions
             {
                 Console.Write("Enter related account name: ");
                 string? relatedAccName = Console.ReadLine();
-                if (relatedAccName == "CANCEL")
+                if (relatedAccName == Constants.Cancel)
                 {
                     return;
                 }
@@ -173,7 +176,7 @@ namespace Lab2.UserActions
 
         #endregion
 
-        #region Transaction & transaction category actions
+        #region Transaction category actions
 
         public static void AddTransactionCategory(int userId, Storage storage)
         {
@@ -182,7 +185,7 @@ namespace Lab2.UserActions
             {
                 Console.Write("Enter name: ");
                 name = Console.ReadLine();
-                if (name == "CANCEL")
+                if (name == Constants.Cancel)
                 {
                     return;
                 }
@@ -207,7 +210,7 @@ namespace Lab2.UserActions
             }
         }
 
-        public static void Listcategories(int userId,Storage storage)
+        public static void ListCategories(int userId, Storage storage)
         {
             var categories = storage?.Categories?.Where(ctg => ctg.UserId == userId)?.ToList();
 
@@ -226,11 +229,157 @@ namespace Lab2.UserActions
             }
             else
             {
-                ColorPrinter.Print(ConsoleColor.Yellow, "No categories!");
+                ColorPrinter.Print(ConsoleColor.Yellow, "No transactions!");
             }
         }
 
-        // TODO: list categories
+        #endregion
+
+        #region Transaction actions
+
+        private static (bool Canceled, DateTime Date, decimal AmoutOfMoney, int AccountId) GetBasicTransactionArgs(int userId, Storage storage)
+        {
+            DateTime date;
+            var canceled = (true, DateTime.Now, 0, -1);
+            while (true)
+            {
+                Console.Write("Enter date: ");
+                string? temp = Console.ReadLine();
+                if (temp == Constants.Cancel)
+                {
+                    return canceled;
+                }
+                if (!DateValidator.IsValid(temp, out date))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "Invalid date format!");
+                    continue;
+                }
+                break;
+            }
+
+            decimal amountOfMoney;
+            while (true)
+            {
+                Console.Write("Enter amount of money: ");
+                string? temp = Console.ReadLine();
+                if (temp == Constants.Cancel)
+                {
+                    return canceled;
+                }
+                if (!decimal.TryParse(temp, out amountOfMoney))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
+                    continue;
+                }
+                break;
+            }
+
+            int accountId;
+            while (true)
+            {
+                Console.Write("Enter account or card name: ");
+                string? name = Console.ReadLine();
+                if (name == Constants.Cancel)
+                {
+                    return canceled;
+                }
+                if (!storage!.BankEntityExists(name,userId))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "Such account or card does not exist!");
+                    continue;
+                }
+                else
+                {
+                    accountId = storage.BankEntities.First(be => be.Name == name && be.UserId == userId).Id;
+                }
+                break;
+            }
+            return (false, date, amountOfMoney, accountId);
+        }
+        public static void AddSimpleTransaction(int userId, Storage storage)
+        {
+            var args = GetBasicTransactionArgs(userId, storage);
+            if (args.Canceled == true)
+            {
+                return;
+            }
+
+            string? comment;
+            string? categoryName;
+            bool isIncome;
+
+            Console.Write("Enter comment: ");
+            comment = Console.ReadLine();
+            if (comment == Constants.Cancel)
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(comment))
+            {
+                comment = string.Empty;
+            }
+            while (true)
+            {
+                Console.Write("Enter category name: ");
+                categoryName = Console.ReadLine();
+                if (categoryName == Constants.Cancel)
+                {
+                    return;
+                }
+                if (storage.TransactionCategoryExists(categoryName, userId))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "Such category already exist!");
+                    continue;
+                }
+                break;
+            }
+            while (true)
+            {
+                Console.Write("Is income[y/n]: ");
+                string? choice = Console.ReadLine();
+                switch (choice)
+                {
+                    case "y":
+                        isIncome = true;
+                        break;
+                    case "n":
+                        isIncome = false;
+                        break;
+                    case Constants.Cancel:
+                        return;
+                    default:
+                        ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
+                        continue;
+                }
+                break;
+            }
+            TransactionCategory category = new(categoryName!, userId);
+            SimpleTransaction transaction = new(args.Date, isIncome, args.AmoutOfMoney, args.AccountId, category, comment, userId);
+            storage?.AddTransaction(transaction);
+        }
+
+        public static void ListTransactions(int userId, Storage storage)
+        {
+            var transactions = storage?.Categories?.Where(trn => trn.UserId == userId)?.ToList();
+
+            if (transactions is not null)
+            {
+                foreach (var trn in transactions)
+                {
+                    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+                    var infoList = trn.GetInfo();
+                    foreach (var infoItem in infoList)
+                    {
+                        Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
+                    }
+                }
+                ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+            }
+            else
+            {
+                ColorPrinter.Print(ConsoleColor.Yellow, "No transactions!");
+            }
+        }
         #endregion
 
         #region Statistics
