@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Lab2.Services
+namespace Lab2.Validators
 {
     public static class EmailValidator
     {
