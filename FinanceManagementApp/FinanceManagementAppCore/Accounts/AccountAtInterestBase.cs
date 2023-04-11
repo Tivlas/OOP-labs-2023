@@ -3,7 +3,7 @@
     public abstract class AccountAtInterestBase : AccountBase
     {
 
-        public AccountAtInterestBase(decimal balance, string currencyName,  string name, int userId, Term term, int interestRate) : base(balance, currencyName,  name, userId)
+        public AccountAtInterestBase(decimal balance, string currencyName, string name, int userId, Term term, int interestRate) : base(balance, currencyName, name, userId)
         {
             AccountTerm = term;
             InterestRate = interestRate;
