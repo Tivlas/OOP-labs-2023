@@ -1,9 +1,9 @@
 ﻿using FinanceManagementAppCore.Accounts;
 using FinanceManagementAppCore.Cards;
+using FinanceManagementAppCore.Transactions;
+using Lab2.Const;
 using Lab2.DataBaseEmulation;
 using Lab2.Helpers;
-using Lab2.Const;
-using FinanceManagementAppCore.Transactions;
 using Lab2.Validators;
 
 namespace Lab2.UserActions
@@ -44,9 +44,9 @@ namespace Lab2.UserActions
                     ColorPrinter.Print(ConsoleColor.Red, "At least 1 character!");
                     continue;
                 }
-                if (storage.BankEntityExists(name, userId))
+                if (storage.BankEntityExists(be => be.Name == name && be.UserId == userId))
                 {
-                    ColorPrinter.Print(ConsoleColor.Red, "Account with this relatedAccName already exists!");
+                    ColorPrinter.Print(ConsoleColor.Red, "Account with this name already exists!");
                     continue;
                 }
                 break;
@@ -125,7 +125,7 @@ namespace Lab2.UserActions
                 {
                     return;
                 }
-                var acc = storage?.BankEntities?.FirstOrDefault(be => be.Name == relatedAccName);
+                var acc = storage?.FirstOrDefaultBankEntity(be => be.Name == relatedAccName);
                 if (acc is null)
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "No such account!");
@@ -143,7 +143,7 @@ namespace Lab2.UserActions
 
         public static void ListBankEntities(int userId, Storage storage)
         {
-            var bankEntities = storage?.BankEntities?.Where(be => be.UserId == userId)?.ToList();
+            var bankEntities = storage?.GetBankEntities(be => be.UserId == userId)?.ToList();
 
             if (bankEntities is not null)
             {
@@ -170,7 +170,7 @@ namespace Lab2.UserActions
             string? name = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(name))
             {
-                storage?.BankEntities?.RemoveAll(be => be.Name == name);
+                storage?.RemoveBankEntity(be => be.UserId == userId && be.Name == name);
             }
         }
 
@@ -195,7 +195,7 @@ namespace Lab2.UserActions
                 }
                 break;
             }
-            if (!storage!.TransactionCategoryExists(name!, userId))
+            if (!storage!.TransactionCategoryExists(tc => tc.Name == name && tc.UserId == userId))
             {
                 storage?.AddTransactionCategory(new TransactionCategory(name!, userId));
             }
@@ -206,13 +206,13 @@ namespace Lab2.UserActions
             string? name = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(name))
             {
-                storage?.RemoveTransactionCategory(name!, userId);
+                storage?.RemoveTransactionCategory(tc => tc.Name == name && tc.UserId == userId);
             }
         }
 
         public static void ListCategories(int userId, Storage storage)
         {
-            var categories = storage?.Categories?.Where(ctg => ctg.UserId == userId)?.ToList();
+            var categories = storage?.GetCategories(ctg => ctg.UserId == userId)?.ToList();
 
             if (categories is not null)
             {
@@ -283,14 +283,14 @@ namespace Lab2.UserActions
                 {
                     return canceled;
                 }
-                if (!storage!.BankEntityExists(name,userId))
+                if (!storage!.BankEntityExists(be => be.Name == name && be.UserId == userId))
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "Such account or card does not exist!");
                     continue;
                 }
                 else
                 {
-                    accountId = storage.BankEntities.First(be => be.Name == name && be.UserId == userId).Id;
+                    accountId = storage!.FirstOrDefaultBankEntity(be => be.Name == name && be.UserId == userId)!.Id;
                 }
                 break;
             }
@@ -326,9 +326,9 @@ namespace Lab2.UserActions
                 {
                     return;
                 }
-                if (storage.TransactionCategoryExists(categoryName, userId))
+                if (!storage.TransactionCategoryExists(tc => tc.Name == categoryName && tc.UserId == userId))
                 {
-                    ColorPrinter.Print(ConsoleColor.Red, "Such category already exist!");
+                    ColorPrinter.Print(ConsoleColor.Red, "Such category does not exist!");
                     continue;
                 }
                 break;
@@ -360,7 +360,7 @@ namespace Lab2.UserActions
 
         public static void ListTransactions(int userId, Storage storage)
         {
-            var transactions = storage?.Categories?.Where(trn => trn.UserId == userId)?.ToList();
+            var transactions = storage?.GetTransactions(trn => trn.UserId == userId)?.ToList();
 
             if (transactions is not null)
             {

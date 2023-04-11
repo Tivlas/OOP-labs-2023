@@ -1,5 +1,5 @@
 ﻿using FinanceManagementAppCore;
-using Lab2.Constants;
+using Lab2.Const;
 using Lab2.DataBaseEmulation;
 using Lab2.Helpers;
 using Lab2.Services;
@@ -26,7 +26,7 @@ void StartActions()
         if (choice == "1")
         {
             email = EmailConsoleEntering.GetEmail();
-            if (storage.UserExists(email))
+            if (storage.UserExists(u => u.Email == StringHasher.GetHash(email)))
             {
                 ColorPrinter.Print(ConsoleColor.Red, "Such user already exists!");
                 continue;
@@ -59,7 +59,7 @@ void StartActions()
                 continue;
             }
             curUser.Email = email;
-            curUser.Id = storage.GetUserId(email);
+            curUser.Id = storage.GetUserId(u => u.Email == StringHasher.GetHash(email));
         }
         else if (choice == "exit" || choice == "e")
         {
