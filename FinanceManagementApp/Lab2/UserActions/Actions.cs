@@ -1,5 +1,7 @@
-﻿using FinanceManagementAppCore.Accounts;
+﻿using System.Transactions;
+using FinanceManagementAppCore.Accounts;
 using FinanceManagementAppCore.Cards;
+using FinanceManagementAppCore.Interfaces;
 using FinanceManagementAppCore.Transactions;
 using Lab2.Const;
 using Lab2.DataBaseEmulation;
@@ -144,24 +146,7 @@ namespace Lab2.UserActions
         public static void ListBankEntities(int userId, Storage storage)
         {
             var bankEntities = storage?.GetBankEntities(be => be.UserId == userId)?.ToList();
-
-            if (bankEntities is not null)
-            {
-                foreach (var be in bankEntities)
-                {
-                    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
-                    var infoList = be.GetInfo();
-                    foreach (var infoItem in infoList)
-                    {
-                        Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
-                    }
-                }
-                ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
-            }
-            else
-            {
-                ColorPrinter.Print(ConsoleColor.Yellow, "No accounts or cards!");
-            }
+            ListItems(bankEntities, "No accounts or cards");
         }
 
         public static void RemoveBankEntity(int userId, Storage storage)
@@ -213,24 +198,7 @@ namespace Lab2.UserActions
         public static void ListCategories(int userId, Storage storage)
         {
             var categories = storage?.GetCategories(ctg => ctg.UserId == userId)?.ToList();
-
-            if (categories is not null)
-            {
-                foreach (var ctg in categories)
-                {
-                    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
-                    var infoList = ctg.GetInfo();
-                    foreach (var infoItem in infoList)
-                    {
-                        Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
-                    }
-                }
-                ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
-            }
-            else
-            {
-                ColorPrinter.Print(ConsoleColor.Yellow, "No transactions!");
-            }
+            ListItems(categories, "No categories!");
         }
 
         #endregion
@@ -361,13 +329,19 @@ namespace Lab2.UserActions
         public static void ListTransactions(int userId, Storage storage)
         {
             var transactions = storage?.GetTransactions(trn => trn.UserId == userId)?.ToList();
+            ListItems(transactions, "No transactions!");
+        }
+        #endregion
 
-            if (transactions is not null)
+
+        private static void ListItems<T>(IEnumerable<T>? collection, string noItemsMessage) where T : IEntity
+        {
+            if (collection is not null && collection.Count() > 0)
             {
-                foreach (var trn in transactions)
+                foreach (var item in collection)
                 {
                     ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
-                    var infoList = trn.GetInfo();
+                    var infoList = item.GetInfo();
                     foreach (var infoItem in infoList)
                     {
                         Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
@@ -375,12 +349,12 @@ namespace Lab2.UserActions
                 }
                 ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
             }
-            else
+            else if(collection is null || collection.Count() < 1)
             {
-                ColorPrinter.Print(ConsoleColor.Yellow, "No transactions!");
+                ColorPrinter.Print(ConsoleColor.Red, noItemsMessage);
             }
         }
-        #endregion
+
 
         #region Statistics
         // TODO: add methods
