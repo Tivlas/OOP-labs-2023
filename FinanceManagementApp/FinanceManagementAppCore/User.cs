@@ -1,4 +1,5 @@
 ﻿using FinanceManagementAppCore.Interfaces;
+using FinanceManagementAppCore.Transactions;
 
 namespace FinanceManagementAppCore
 {
@@ -19,5 +20,12 @@ namespace FinanceManagementAppCore
         public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public IEnumerable<(string PropName, object propValue)> GetInfo()
+        {
+            List<(string PropName, object propValue)> info = new();
+            info.Add(("Email", Email));
+            return info;
+        }
     }
 }
