@@ -8,13 +8,13 @@ namespace Lab2.DataBaseEmulation
     public class Storage : IDataManager
     {
         #region Containers
-        public List<User> Users { get; set; } = new List<User>();
+        private List<User> Users { get; set; } = new List<User>();
 
-        public List<IBankEntity> BankEntities { get; set; } = new List<IBankEntity>();
+        private List<IBankEntity> BankEntities { get; set; } = new List<IBankEntity>();
 
-        public List<TransactionCategory> Categories { get; set; } = new List<TransactionCategory>();
+        private List<TransactionCategory> Categories { get; set; } = new List<TransactionCategory>();
 
-        public List<TransactionBase> MadeTransactions { get; set; } = new List<TransactionBase>();
+        private List<TransactionBase> Transactions { get; set; } = new List<TransactionBase>();
         #endregion
 
         #region Email and password related methods
@@ -49,27 +49,41 @@ namespace Lab2.DataBaseEmulation
             BankEntities.Add(bankEntity);
         }
 
-        public void RemoveBankEntity(int userId, string name)
+        public void RemoveBankEntity(Predicate<IBankEntity> filter)
         {
-            throw new NotImplementedException();
+            BankEntities?.RemoveAll(filter);
         }
 
-        public bool BankEntityExists(string name, int userId)
+        public IBankEntity? FirstOrDefaultBankEntity(Func<IBankEntity, bool> filter)
         {
-            return BankEntities is not null && BankEntities.Any(e => e.Name == name && e.UserId == userId);
+            return BankEntities?.FirstOrDefault(filter);
+        }
+
+        public IEnumerable<IBankEntity>? GetBankEntities(Func<IBankEntity, bool> filter)
+        {
+            return BankEntities?.Where(filter);
+        }
+
+        public bool BankEntityExists(Func<IBankEntity, bool> match)
+        {
+            return BankEntities.Any(match);
         }
         #endregion
 
         #region Transaction related methods
         public void AddTransaction(TransactionBase transaction)
         {
-            throw new NotImplementedException();
+            Transactions?.Add(transaction);
         }
 
-
-        public void RemoveTransaction(int transactionId)
+        public IEnumerable<TransactionBase>? GetTransactions(Func<TransactionBase, bool> filter)
         {
-            throw new NotImplementedException();
+            return Transactions?.Where(filter);
+        }
+
+        public void RemoveTransaction(Func<TransactionBase, bool> filter)
+        {
+            Transactions?.RemoveAll(new Predicate<TransactionBase>(filter));
         }
         #endregion
 
@@ -79,37 +93,36 @@ namespace Lab2.DataBaseEmulation
             Categories.Add(category);
         }
 
-        public void RemoveTransactionCategory(string name, int userId)
+        public IEnumerable<TransactionCategory>? GetCategories(Func<TransactionCategory, bool> filter)
         {
-            Categories.RemoveAll(c => c.UserId == userId && c.Name == name);
+            return Categories?.AsQueryable().Where(filter);
         }
 
-        public bool TransactionCategoryExists(string name, int userId)
+        public void RemoveTransactionCategory(Func<TransactionCategory, bool> filter)
         {
-            return Categories.FindIndex(0, c => c.UserId == userId && c.Name == name) != -1;
+            Categories.RemoveAll(new Predicate<TransactionCategory>(filter));
+        }
+
+        public bool TransactionCategoryExists(Func<TransactionCategory, bool> filter)
+        {
+            return Categories.FirstOrDefault(filter) is not null;
         }
         #endregion
 
         #region User related methods
-        public bool UserExists(string email)
+        public bool UserExists(Func<User, bool> match)
         {
-            email = StringHasher.GetHash(email);
-            return Users is not null && Users.Any(u => u.Email == email);
+            return Users.Any(match);
         }
         public void AddUser(User user)
         {
             Users?.Add(user);
         }
 
-        public int GetUserId(string email)
+        public int GetUserId(Func<User, bool> match)
         {
-            if (Users is null)
-            {
-                return -1;
-            }
-            email = StringHasher.GetHash(email);
-            int i = Users.FindIndex(u => u.Email == email);
-            return i == -1 ? i : Users[i].Id;
+            var user = Users.FirstOrDefault(match);
+            return user is not null ? user.Id : -1;
         }
         #endregion
     }
