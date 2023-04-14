@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Abstractions.ConsoleSync;
+﻿using Domain.Abstractions.ConsoleSync;
 using Domain.Cards;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;

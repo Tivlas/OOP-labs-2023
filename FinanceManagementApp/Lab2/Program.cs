@@ -1,22 +1,15 @@
-﻿using Lab2.Const;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Lab2.Helpers;
-using Lab2.Services;
-using Lab2.UserActions;
-using Domain.Abstractions.ConsoleSync;
-using Persistence.UnitOfWork;
-using Persistence.Repository;
-using Persistence.Data;
-using Application.Abstractions.Console;
+﻿using Application.Abstractions.Console;
 using Application.Services.Console;
+using Domain.Abstractions.ConsoleSync;
+using Lab2.UserActions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Persistence.Data;
+using Persistence.UnitOfWork;
 
 using IHost host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
 var services = scope.ServiceProvider;
-
-
-(string Email, int Id) curUser = (string.Empty, -1);
 
 var actions = services.GetRequiredService<Actions>();
 
@@ -28,8 +21,11 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<Actions>();
             services.AddSingleton<IConsoleUnitOfWork, ConsoleUnitOfWork>();
             services.AddSingleton<IDbEmulatorContext, DbEmulatorContext>();
-            services.AddSingleton<ICardService, CardService>();
-            services.AddSingleton<ISimpleAccountService, SimpleAccountService>();
+            services.AddSingleton<IConsoleCardService, ConsoleCardService>();
+            services.AddSingleton<IConsoleSimpleAccountService, ConsoleSimpleAccountService>();
+            services.AddSingleton<IConsoleTransactionCategoryService, ConsoleTransactionCategoryService>();
+            services.AddSingleton<IConsoleTransferService, ConsoleTransferService>();
+            services.AddSingleton<IConsoleSimpleTransactionService, ConsoleSimpleTransactionService>();
 
         });
 }
@@ -112,13 +108,13 @@ static IHostBuilder CreateHostBuilder(string[] args)
 //        }
 //        else
 //        {
-//            if (!Actions.UserActions.ContainsKey(code))
+//            if (!Actions.AvailableActions.ContainsKey(code))
 //            {
 //                ColorPrinter.Print(ConsoleColor.Red, "No such command!");
 //            }
 //            else
 //            {
-//                Actions.UserActions[code](curUser.Id, storage);
+//                Actions.AvailableActions[code](curUser.Id, storage);
 //            }
 //        }
 //    }

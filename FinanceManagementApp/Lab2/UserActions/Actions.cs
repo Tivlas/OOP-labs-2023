@@ -4,24 +4,32 @@ namespace Lab2.UserActions
 {
     public class Actions : IActions
     {
-        public Dictionary<int, Action<int>> UserActions = new Dictionary<int, Action<int>>();
+        public Dictionary<int, Action<int>> AvailableActions = new Dictionary<int, Action<int>>();
 
-        private readonly ICardService _cardService;
-        private readonly ISimpleAccountService _simpleAccountService;
+        private readonly IConsoleCardService _cardService;
+        private readonly IConsoleSimpleAccountService _simpleAccountService;
+        private readonly IConsoleSimpleTransactionService _transactionService;
+        private readonly IConsoleTransferService _transferService;
+        private readonly IConsoleTransactionCategoryService _transactionCategoryService;
 
-        public Actions(ICardService cardService, ISimpleAccountService simpleAccountService)
+        public Actions(IConsoleCardService cardService, IConsoleSimpleAccountService simpleAccountService,
+            IConsoleSimpleTransactionService transactionService, IConsoleTransferService transferService,
+            IConsoleTransactionCategoryService transactionCategoryService)
         {
             _cardService = cardService;
             _simpleAccountService = simpleAccountService;
-            //UserActions[3] = AddSimpleAccount;
-            //UserActions[6] = AddCard;
-            //UserActions[7] = AddTransactionCategory;
-            //UserActions[8] = AddSimpleTransaction;
-            //UserActions[10] = RemoveTransactionCategory;
-            //UserActions[12] = RemoveBankEntity;
-            //UserActions[13] = ListBankEntities;
-            //UserActions[14] = ListCategories;
-            //UserActions[15] = ListTransactions;
+            _transactionService = transactionService;
+            _transferService = transferService;
+            _transactionCategoryService = transactionCategoryService;
+            //AvailableActions[3] = AddSimpleAccount;
+            //AvailableActions[6] = AddCard;
+            //AvailableActions[7] = AddTransactionCategory;
+            //AvailableActions[8] = AddSimpleTransaction;
+            //AvailableActions[10] = RemoveTransactionCategory;
+            //AvailableActions[12] = RemoveBankEntity;
+            //AvailableActions[13] = ListBankEntities;
+            //AvailableActions[14] = ListCategories;
+            //AvailableActions[15] = ListTransactions;
         }
 
         public void TTT()

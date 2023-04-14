@@ -3,11 +3,11 @@ using Domain.Abstractions.ConsoleSync;
 using Domain.Entities.Accounts;
 
 namespace Application.Services.Console;
-public class SimpleAccountService : ISimpleAccountService
+public class ConsoleSimpleAccountService : IConsoleSimpleAccountService
 {
     private IConsoleUnitOfWork _unit;
 
-    public SimpleAccountService(IConsoleUnitOfWork unit)
+    public ConsoleSimpleAccountService(IConsoleUnitOfWork unit)
     {
         _unit = unit;
     }
