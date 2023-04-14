@@ -1,6 +1,6 @@
-﻿using FinanceManagementAppCore.Transactions;
+﻿using Domain.Entities.Transactions;
 
-namespace FinanceManagementAppCore.Interfaces
+namespace Domain.Entities.Interfaces
 {
     public interface IDataManager
     {

@@ -1,4 +1,4 @@
-﻿namespace FinanceManagementAppCore.Transactions
+﻿namespace Domain.Entities.Transactions
 {
     public class Transfer : TransactionBase
     {

@@ -1,4 +1,4 @@
-﻿namespace FinanceManagementAppCore.Accounts
+﻿namespace Domain.Entities.Accounts
 {
     public class SimpleAccount : AccountBase
     {

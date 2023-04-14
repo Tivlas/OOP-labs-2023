@@ -1,6 +1,6 @@
-﻿using FinanceManagementAppCore.Interfaces;
+﻿using Domain.Entities.Interfaces;
 
-namespace FinanceManagementAppCore.Transactions
+namespace Domain.Entities.Transactions
 {
     public abstract class TransactionBase : IEntity
     {

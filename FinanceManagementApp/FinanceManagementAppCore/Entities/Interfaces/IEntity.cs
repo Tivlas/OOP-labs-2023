@@ -1,4 +1,4 @@
-﻿namespace FinanceManagementAppCore.Interfaces
+﻿namespace Domain.Entities.Interfaces
 {
     public interface IEntity
     {

@@ -1,6 +1,6 @@
-﻿using FinanceManagementAppCore.Interfaces;
+﻿using Domain.Entities.Interfaces;
 
-namespace FinanceManagementAppCore.Accounts
+namespace Domain.Entities.Accounts
 {
     public abstract class AccountBase : IBankEntity
     {

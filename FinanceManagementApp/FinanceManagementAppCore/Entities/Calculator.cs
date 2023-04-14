@@ -1,6 +1,6 @@
 ﻿using NCalc;
 
-namespace FinanceManagementAppCore
+namespace Domain.Entities
 {
     public static class Calculator
     {

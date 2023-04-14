@@ -1,7 +1,6 @@
-﻿using FinanceManagementAppCore.Interfaces;
-using FinanceManagementAppCore.Transactions;
+﻿using Domain.Entities.Interfaces;
 
-namespace FinanceManagementAppCore
+namespace Domain.Entities
 {
     public class User : IEntity
     {

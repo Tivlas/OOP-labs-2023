@@ -1,6 +1,6 @@
-﻿using FinanceManagementAppCore.Interfaces;
+﻿using Domain.Entities.Interfaces;
 
-namespace FinanceManagementAppCore.Cards
+namespace Domain.Cards
 {
     public class Card : IBankEntity
     {
