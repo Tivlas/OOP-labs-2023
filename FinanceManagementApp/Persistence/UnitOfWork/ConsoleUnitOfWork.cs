@@ -13,7 +13,7 @@ using Persistence.Repository;
 namespace Persistence.UnitOfWork;
 public class ConsoleUnitOfWork : IConsoleUnitOfWork
 {
-    private readonly DbEmulatorContext _context;
+    private readonly IDbEmulatorContext _context;
     private readonly Lazy<IConsoleEntityRepository<SimpleAccount>> _simpleAccountsRepository;
     private readonly Lazy<IConsoleEntityRepository<Card>> _cardsRepository;
     private readonly Lazy<IConsoleEntityRepository<SimpleTransaction>> _simpleTransactionsRepository;
@@ -26,7 +26,7 @@ public class ConsoleUnitOfWork : IConsoleUnitOfWork
     public IConsoleEntityRepository<Transfer> TransfersRepository => _transfersRepository.Value;
     public IConsoleEntityRepository<TransactionCategory> TransactionCategoriesRepository => _transactionCategoriesRepository.Value;
 
-    public ConsoleUnitOfWork(DbEmulatorContext context)
+    public ConsoleUnitOfWork(IDbEmulatorContext context)
     {
         _context = context;
         _simpleAccountsRepository = new Lazy<IConsoleEntityRepository<SimpleAccount>>(

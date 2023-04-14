@@ -10,7 +10,7 @@ using Persistence.Data;
 namespace Persistence.Repository;
 public class ConsoleTransactionsRepository<T> : ConsoleEntityRepository<T>, IConsoleTransactionRepository<T> where T : TransactionBase
 {
-    public ConsoleTransactionsRepository(DbEmulatorContext context) : base(context)
+    public ConsoleTransactionsRepository(IDbEmulatorContext context) : base(context)
     {
 
     }

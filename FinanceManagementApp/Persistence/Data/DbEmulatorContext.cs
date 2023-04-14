@@ -3,7 +3,7 @@ using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 
 namespace Persistence.Data;
-public class DbEmulatorContext
+public class DbEmulatorContext : IDbEmulatorContext
 {
     private List<SimpleAccount> _simpleAccounts { get; set; } = new();
     private List<Card> _cards { get; set; } = new();

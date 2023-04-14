@@ -6,9 +6,9 @@ namespace Persistence.Repository;
 public class ConsoleEntityRepository<T> : IConsoleEntityRepository<T> where T : IEntity
 {
     protected readonly List<T> _entities;
-    protected readonly DbEmulatorContext _context;
+    protected readonly IDbEmulatorContext _context;
 
-    public ConsoleEntityRepository(DbEmulatorContext context)
+    public ConsoleEntityRepository(IDbEmulatorContext context)
     {
         _context = context;
         _entities = _context.GetList<T>()!;
