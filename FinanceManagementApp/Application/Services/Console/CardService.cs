@@ -3,7 +3,7 @@ using Domain.Abstractions.ConsoleSync;
 using Domain.Cards;
 
 namespace Application.Services.Console;
-public class CardService : ICardService<Card>
+public class CardService : ICardService
 {
     private IConsoleUnitOfWork _unit;
 

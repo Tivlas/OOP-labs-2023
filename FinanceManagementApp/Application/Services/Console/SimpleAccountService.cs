@@ -3,7 +3,7 @@ using Domain.Abstractions.ConsoleSync;
 using Domain.Entities.Accounts;
 
 namespace Application.Services.Console;
-public class SimpleAccountService : ISimpleAccountService<SimpleAccount>
+public class SimpleAccountService : ISimpleAccountService
 {
     private IConsoleUnitOfWork _unit;
 
