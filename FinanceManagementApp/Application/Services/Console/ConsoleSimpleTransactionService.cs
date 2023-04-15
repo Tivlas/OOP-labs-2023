@@ -1,17 +1,54 @@
 ﻿using Application.Abstractions.Console;
+using Domain.Abstractions.ConsoleSync;
 using Domain.Entities.Transactions;
 
 namespace Application.Services.Console;
 public class ConsoleSimpleTransactionService : IConsoleSimpleTransactionService
 {
+    IConsoleUnitOfWork _unit;
+
+    public ConsoleSimpleTransactionService(IConsoleUnitOfWork unit)
+    {
+        _unit = unit;
+    }
     public IGrouping<DateTime, SimpleTransaction> GetTransactionsGroupedByDate(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
+
     public IGrouping<DateTime, SimpleTransaction> GetTransactionsGroupedByCategory(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
+
     public IEnumerable<SimpleTransaction> GetTransactionsForTimePeriod(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
-    public bool Exists(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
-    public IReadOnlyList<SimpleTransaction> ListAll() => throw new NotImplementedException();
-    public IReadOnlyList<SimpleTransaction> List(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
-    public void Add(SimpleTransaction entity) => throw new NotImplementedException();
-    public void Update(SimpleTransaction entity) => throw new NotImplementedException();
-    public void Delete(SimpleTransaction entity) => throw new NotImplementedException();
-    public SimpleTransaction FirstOrDefault(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
+
+    public bool Exists(Func<SimpleTransaction, bool> filter)
+    {
+        return _unit.SimpleTransactionsRepository.Exists(filter);
+    }
+
+    public IReadOnlyList<SimpleTransaction> ListAll()
+    {
+        return _unit.SimpleTransactionsRepository.ListAll();
+    }
+
+    public IReadOnlyList<SimpleTransaction> List(Func<SimpleTransaction, bool> filter)
+    {
+        return _unit.SimpleTransactionsRepository.List(filter);
+    }
+
+    public void Add(SimpleTransaction entity)
+    {
+        _unit.SimpleTransactionsRepository.Add(entity);
+    }
+
+    public void Update(SimpleTransaction entity)
+    {
+        _unit.SimpleTransactionsRepository.Update(entity);
+    }
+
+    public void Delete(SimpleTransaction entity)
+    {
+        _unit.SimpleTransactionsRepository.Delete(entity);
+    }
+
+    public SimpleTransaction FirstOrDefault(Func<SimpleTransaction, bool> filter)
+    {
+        return _unit.SimpleTransactionsRepository.FirstOrDefault(filter);
+    }
 }
