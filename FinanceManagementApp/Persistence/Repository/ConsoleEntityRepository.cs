@@ -21,7 +21,7 @@ public class ConsoleEntityRepository<T> : IConsoleEntityRepository<T> where T : 
     }
     public IReadOnlyList<T> List(Func<T, bool> filter)
     {
-        return (IReadOnlyList<T>)_entities.Where(filter);
+        return _entities.Where(filter).ToList();
     }
     public void Add(T entity)
     {
