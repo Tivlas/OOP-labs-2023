@@ -6,6 +6,7 @@ using Domain.Cards;
 using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Interfaces;
+using Domain.Entities.Transactions;
 using Lab2.Const;
 using Lab2.Helpers;
 
@@ -36,12 +37,13 @@ namespace Lab2.UserActions
             AvailableActions[3] = AddSimpleAccount;
             AvailableActions[10] = RemoveSimpleAccount;
             AvailableActions[4] = AddCard;
+            AvailableActions[5] = AddTransactioncategory;
             AvailableActions[11] = RemoveCard;
             //AvailableActions[7] = AddTransactionCategory;
-            //AvailableActions[8] = AddSimpleTransaction;
+            AvailableActions[8] = RemoveTransactionCategory;
             AvailableActions[12] = PrintSimpleAccounts;
             AvailableActions[15] = PrintCards;
-            //AvailableActions[13] = ListBankEntities;
+            AvailableActions[13] = PrintTransactionCategories;
             //AvailableActions[14] = ListCategories;
             //AvailableActions[15] = ListTransactions;
         }
@@ -219,12 +221,39 @@ namespace Lab2.UserActions
             {
                 return;
             }
-            _cardService.Delete(_cardService.FirstOrDefault(acc => acc.Name == name));
+            _cardService.Delete(_cardService.FirstOrDefault(c => c.Name == name));
         }
 
         private void PrintCards(int userId)
         {
             PrintItems(_cardService, userId);
+        }
+        #endregion
+
+        #region Transaction category
+        private void AddTransactioncategory(int userId)
+        {
+            string? name = GetEntityNameMustNotExist(_transactionCategoryService, "Enter name: ", userId);
+            if(name is null)
+            {
+                return;
+            }
+            _transactionCategoryService.Add(new TransactionCategory(name, userId));
+        }
+
+        private void RemoveTransactionCategory(int userId)
+        {
+            string? name = GetEntityNameMustExist(_transactionCategoryService, "Enter category name: ", userId);
+            if (name is null)
+            {
+                return;
+            }
+            _transactionCategoryService.Delete(_transactionCategoryService.FirstOrDefault(tc => tc.Name == name));
+        }
+
+        private void PrintTransactionCategories(int userId)
+        {
+            PrintItems(_transactionCategoryService, userId);
         }
         #endregion
 
