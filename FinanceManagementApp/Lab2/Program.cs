@@ -2,6 +2,7 @@
 using Application.Services.Console;
 using Domain.Abstractions.ConsoleSync;
 using Domain.Entities;
+using Lab2.Const;
 using Lab2.Helpers;
 using Lab2.Services;
 using Lab2.UserActions;
@@ -44,9 +45,9 @@ static IHostBuilder CreateHostBuilder(string[] args)
 
 
 StartActions();
-//ExecuteCommand();
+ExecuteCommand();
 
-#region Login or user registration
+#region Log in or sign up
 void StartActions()
 {
     while (true)
@@ -54,7 +55,7 @@ void StartActions()
         string password = string.Empty;
         string email = string.Empty;
 
-        Console.Write("Do you want't to sign up [1] or sign in [2] (or [exit/e]): ");
+        Console.Write("Do you want't to sign up [1] or log in [2] (or [exit/e]): ");
         string? choice = Console.ReadLine();
 
         if (choice == "1")
@@ -95,6 +96,7 @@ void StartActions()
             }
             curUser.Email = email;
             curUser.Id = actions.GetUserId(u => u.Email == StringHasher.GetHash(email));
+            break;
         }
         else if (choice == "exit" || choice == "e")
         {
@@ -105,32 +107,50 @@ void StartActions()
 }
 #endregion
 
-//#region User actions
+#region User actions
 
-//void ExecuteCommand()
-//{
-//    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
-//    Console.WriteLine(Constants.HelpInfo);
-//    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
-//    while (true)
-//    {
-//        ColorPrinter.Print(ConsoleColor.Yellow, "\nEnter command code: ", false);
-//        if (!int.TryParse(Console.ReadLine(), out int code))
-//        {
-//            ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
-//        }
-//        else
-//        {
-//            if (!Actions.AvailableActions.ContainsKey(code))
-//            {
-//                ColorPrinter.Print(ConsoleColor.Red, "No such command!");
-//            }
-//            else
-//            {
-//                Actions.AvailableActions[code](curUser.Id, storage);
-//            }
-//        }
-//    }
-//}
+void ExecuteCommand()
+{
+    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+    Console.WriteLine(Constants.HelpInfo);
+    ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+    while (true)
+    {
+        if(curUser.Id < 0)
+        {
+            StartActions();
+        }
+        ColorPrinter.Print(ConsoleColor.Yellow, "\nEnter command code: ", false);
+        if (!int.TryParse(Console.ReadLine(), out int code))
+        {
+            ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
+        }
+        else
+        {
+            if(code < 0)
+            {
+                LogOut();
+            }
+            else if(code == 0)
+            {
+                Environment.Exit(0);
+            }
+            else if (!actions.AvailableActions.ContainsKey(code))
+            {
+                ColorPrinter.Print(ConsoleColor.Red, "No such command!");
+            }
+            else
+            {
+                actions.AvailableActions[code](curUser.Id);
+            }
+        }
+    }
+}
 
-//#endregion
+void LogOut()
+{
+    curUser.Email = string.Empty;
+    curUser.Id = -100;
+}
+
+#endregion
