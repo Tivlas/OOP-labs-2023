@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
+using System.Data.SqlTypes;
 using System.Reflection.Metadata;
 using Application.Abstractions.Console;
+using Domain.Cards;
 using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Interfaces;
@@ -30,16 +32,20 @@ namespace Lab2.UserActions
             _transferService = transferService;
             _transactionCategoryService = transactionCategoryService;
             _userService = consoleUserService;
-            //AvailableActions[3] = AddSimpleAccount;
-            //AvailableActions[6] = AddCard;
+
+            AvailableActions[3] = AddSimpleAccount;
+            AvailableActions[10] = RemoveSimpleAccount;
+            AvailableActions[4] = AddCard;
+            AvailableActions[11] = RemoveCard;
             //AvailableActions[7] = AddTransactionCategory;
             //AvailableActions[8] = AddSimpleTransaction;
-            //AvailableActions[10] = RemoveTransactionCategory;
-            //AvailableActions[12] = RemoveBankEntity;
+            AvailableActions[12] = PrintSimpleAccounts;
+            AvailableActions[15] = PrintCards;
             //AvailableActions[13] = ListBankEntities;
             //AvailableActions[14] = ListCategories;
             //AvailableActions[15] = ListTransactions;
         }
+
 
         #region User
         public bool UserExists(Func<User, bool> match)
@@ -59,13 +65,18 @@ namespace Lab2.UserActions
         }
         #endregion
 
-        private string? GetEntityName<T>(IBaseConsoleService<T> service, string message, int userId) where T : INamedEntity, IRelatedToUser
+        #region Receiving args 
+        private string? GetEntityNameMustNotExist<T>(IBaseConsoleService<T> service, string message, int userId) where T : INamedEntity, IRelatedToUser
         {
             string? name;
             while (true)
             {
                 Console.Write(message);
                 name = Console.ReadLine();
+                if (name == Constants.Cancel)
+                {
+                    return null;
+                }
                 if (string.IsNullOrWhiteSpace(name))
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "At least 1 non space character!");
@@ -79,10 +90,35 @@ namespace Lab2.UserActions
                     break;
                 }
             }
-            if (name == Constants.Cancel)
+ 
+            return name;
+        }
+
+        private string? GetEntityNameMustExist<T>(IBaseConsoleService<T> service, string message, int userId) where T : INamedEntity, IRelatedToUser
+        {
+            string? name;
+            while (true)
             {
-                return null;
+                Console.Write(message);
+                name = Console.ReadLine();
+                if (name == Constants.Cancel)
+                {
+                    return null;
+                }
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "At least 1 non space character!");
+                }
+                else if (!service.Exists(e => e.Name == name && e.UserId == userId))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "No such name!");
+                }
+                else
+                {
+                    break;
+                }
             }
+            
             return name;
         }
 
@@ -100,7 +136,7 @@ namespace Lab2.UserActions
                 }
                 if (input == Constants.Cancel)
                 {
-                    return default(T?);
+                    return default(T);
                 }
                 try
                 {
@@ -111,36 +147,103 @@ namespace Lab2.UserActions
                         break;
                     }
                 }
-                catch (NotSupportedException)
+                catch (Exception)
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
                 }
             }
-            return arg;
+            return arg ;
         }
+        #endregion
 
         #region Simple account
-        public void AddSimpleAccount(int userId)
+        private void AddSimpleAccount(int userId)
         {
-            decimal? balance = GetArg<decimal>("Enter balance: ");
+            decimal? balance = GetArg<decimal?>("Enter balance: ");
             if (balance is null)
             {
                 return;
             }
-            string? currencyName = GetArg<string>("Enter currency name: ");
+            string? currencyName = GetArg<string?>("Enter currency name: ");
             if (currencyName is null)
             {
                 return;
             }
-            string? name = GetEntityName<SimpleAccount>(_simpleAccountService, "Enter account name: ", userId);
+            string? name = GetEntityNameMustNotExist(_simpleAccountService, "Enter account name: ", userId);
             if(name is null)
             {
                 return;
             }
             _simpleAccountService.Add(new SimpleAccount(balance.Value, currencyName, name, userId));
         }
+
+        private void RemoveSimpleAccount(int userId)
+        {
+            string? name = GetEntityNameMustExist(_simpleAccountService, "Enter account name: ", userId);
+            if(name is null)
+            {
+                return;
+            }
+            _simpleAccountService.Delete(_simpleAccountService.FirstOrDefault(acc => acc.Name == name));
+        }
+        private void PrintSimpleAccounts(int userId)
+        {
+            PrintItems(_simpleAccountService, userId);
+        }
         #endregion
 
+        #region Card
+        private void AddCard(int userId)
+        {
+            string? name = GetEntityNameMustNotExist(_cardService, "Enter card name: ", userId);
+            if(name is null)
+            {
+                return;
+            }
+            string? accName = GetEntityNameMustExist(_simpleAccountService, "Enter related account name: ", userId);
+            if(accName is null)
+            {
+                return;
+            }
+            var acc = _simpleAccountService.FirstOrDefault(acc => acc.Name == accName);
+            decimal balance = acc.Balance;
+            int accId = acc.Id;
+            string currencyName = acc.CurrencyName;
+            _cardService.Add(new Card(accId, name, balance, currencyName));
+        }
+
+        private void RemoveCard(int userId)
+        {
+            string? name = GetEntityNameMustExist(_cardService, "Enter card name: ", userId);
+            if (name is null)
+            {
+                return;
+            }
+            _cardService.Delete(_cardService.FirstOrDefault(acc => acc.Name == name));
+        }
+
+        private void PrintCards(int userId)
+        {
+            PrintItems(_cardService, userId);
+        }
+        #endregion
+
+        #region Printing
+        private void PrintItems<T>(IBaseConsoleService<T> service,int userId) where T : IEntity,IRelatedToUser
+        {
+            var items = service.List(e => e.UserId == userId);
+            foreach(var item in items)
+            {
+                ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+                var infoList = item.GetInfo();
+                foreach (var infoItem in infoList)
+                {
+                    Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
+                }
+            }
+            ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+        }
+        #endregion
 
         #region Statistics
         // TODO: add methods
