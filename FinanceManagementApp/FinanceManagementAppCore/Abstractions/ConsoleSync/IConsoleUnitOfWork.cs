@@ -1,4 +1,5 @@
 ﻿using Domain.Cards;
+using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 
@@ -10,4 +11,5 @@ public interface IConsoleUnitOfWork
     IConsoleEntityRepository<SimpleTransaction> SimpleTransactionsRepository { get; }
     IConsoleEntityRepository<Transfer> TransfersRepository { get; }
     IConsoleEntityRepository<TransactionCategory> TransactionCategoriesRepository { get; }
+    IConsoleEntityRepository<User> UsersRepository { get; }
 }

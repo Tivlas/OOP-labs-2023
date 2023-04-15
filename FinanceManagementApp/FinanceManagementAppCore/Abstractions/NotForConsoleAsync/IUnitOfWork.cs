@@ -1,4 +1,5 @@
 ﻿using Domain.Cards;
+using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 
@@ -10,6 +11,7 @@ public interface IUnitOfWork
     IEntityRepository<SimpleTransaction> SimpleTransactionsRepository { get; }
     IEntityRepository<Transfer> TransfersRepository { get; }
     IEntityRepository<TransactionCategory> TransactionCategoriesRepository { get; }
+    IEntityRepository<User> UsersRepository { get; }
 
     public Task RemoveDatbaseAsync();
     public Task CreateDatabaseAsync();

@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Console;
+using Domain.Entities;
 
 namespace Lab2.UserActions
 {
@@ -11,16 +12,18 @@ namespace Lab2.UserActions
         private readonly IConsoleSimpleTransactionService _transactionService;
         private readonly IConsoleTransferService _transferService;
         private readonly IConsoleTransactionCategoryService _transactionCategoryService;
+        private readonly IConsoleUserService _userService;
 
         public Actions(IConsoleCardService cardService, IConsoleSimpleAccountService simpleAccountService,
             IConsoleSimpleTransactionService transactionService, IConsoleTransferService transferService,
-            IConsoleTransactionCategoryService transactionCategoryService)
+            IConsoleTransactionCategoryService transactionCategoryService, IConsoleUserService consoleUserService)
         {
             _cardService = cardService;
             _simpleAccountService = simpleAccountService;
             _transactionService = transactionService;
             _transferService = transferService;
             _transactionCategoryService = transactionCategoryService;
+            _userService = consoleUserService;
             //AvailableActions[3] = AddSimpleAccount;
             //AvailableActions[6] = AddCard;
             //AvailableActions[7] = AddTransactionCategory;
@@ -32,10 +35,24 @@ namespace Lab2.UserActions
             //AvailableActions[15] = ListTransactions;
         }
 
-        public void TTT()
+        #region User
+        public bool UserExists(Func<User, bool> match)
         {
-
+            return _userService.Exists(match);
         }
+
+        public void AddUser(User u)
+        {
+            _userService.Add(u);
+        }
+
+        public int GetUserId(Func<User, bool> match)
+        {
+            var user = _userService.FirstOrDefault(match);
+            return user == null ? -1 : user.Id;
+        }
+        #endregion
+
         //#region Bank entity actions
         //// TODO: add loan, deposit
         //private static string GetBankEntityName(int userId, Storage storage)
