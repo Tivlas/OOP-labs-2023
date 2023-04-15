@@ -2,5 +2,5 @@
 
 public interface IDbEmulatorContext
 {
-    List<T>? GetList<T>();
+    IEnumerable<T>? GetList<T>();
 }

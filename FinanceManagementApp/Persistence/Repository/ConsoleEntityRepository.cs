@@ -1,4 +1,5 @@
-﻿using Domain.Abstractions.ConsoleSync;
+﻿using System.Text.RegularExpressions;
+using Domain.Abstractions.ConsoleSync;
 using Domain.Entities.Interfaces;
 using Persistence.Data;
 
@@ -11,7 +12,7 @@ public class ConsoleEntityRepository<T> : IConsoleEntityRepository<T> where T : 
     public ConsoleEntityRepository(IDbEmulatorContext context)
     {
         _context = context;
-        _entities = _context.GetList<T>()!;
+        _entities = _context!.GetList<T>()!.ToList();
     }
 
     public IReadOnlyList<T> ListAll()
