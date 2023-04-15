@@ -1,10 +1,8 @@
 ﻿namespace Domain.Entities.Interfaces
 {
-    public interface IBankEntity : IEntity
+    public interface IBankEntity : INamedEntity, IRelatedToUser
     {
-        string Name { get; set; }
         decimal Balance { get; set; }
         string CurrencyName { get; set; }
-        int UserId { get; init; }
     }
 }

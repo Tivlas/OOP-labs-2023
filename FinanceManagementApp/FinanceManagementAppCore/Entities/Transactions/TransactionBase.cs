@@ -2,7 +2,7 @@
 
 namespace Domain.Entities.Transactions
 {
-    public abstract class TransactionBase : IEntity
+    public abstract class TransactionBase : IEntity, IRelatedToUser
     {
         private static int s_IdController = 0;
         public TransactionBase(DateTime transactionDate, decimal amountOfMoney, int accountId, int userId)

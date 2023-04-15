@@ -1,6 +1,7 @@
 ﻿using Domain.Cards;
 using Domain.Entities;
 using Domain.Entities.Accounts;
+using Domain.Entities.Interfaces;
 using Domain.Entities.Transactions;
 
 namespace Domain.Abstractions.NotForConsoleAsync;

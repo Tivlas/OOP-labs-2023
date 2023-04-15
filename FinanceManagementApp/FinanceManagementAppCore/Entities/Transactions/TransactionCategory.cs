@@ -2,7 +2,7 @@
 
 namespace Domain.Entities.Transactions
 {
-    public class TransactionCategory : IEntity
+    public class TransactionCategory : INamedEntity, IRelatedToUser
     {
         private static int s_IdController = 0;
 
@@ -18,7 +18,7 @@ namespace Domain.Entities.Transactions
 
         public int Id { get; init; }
 
-        public int UserId { get; set; }
+        public int UserId { get; init; }
 
         public IEnumerable<(string PropName, object propValue)> GetInfo()
         {
