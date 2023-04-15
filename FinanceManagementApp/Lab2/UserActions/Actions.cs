@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Data.SqlTypes;
-using System.Reflection.Metadata;
 using Application.Abstractions.Console;
 using Domain.Cards;
 using Domain.Entities;
@@ -92,7 +90,7 @@ namespace Lab2.UserActions
                     break;
                 }
             }
- 
+
             return name;
         }
 
@@ -120,7 +118,7 @@ namespace Lab2.UserActions
                     break;
                 }
             }
-            
+
             return name;
         }
 
@@ -154,7 +152,7 @@ namespace Lab2.UserActions
                     ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
                 }
             }
-            return arg ;
+            return arg;
         }
         #endregion
 
@@ -172,7 +170,7 @@ namespace Lab2.UserActions
                 return;
             }
             string? name = GetEntityNameMustNotExist(_simpleAccountService, "Enter account name: ", userId);
-            if(name is null)
+            if (name is null)
             {
                 return;
             }
@@ -182,7 +180,7 @@ namespace Lab2.UserActions
         private void RemoveSimpleAccount(int userId)
         {
             string? name = GetEntityNameMustExist(_simpleAccountService, "Enter account name: ", userId);
-            if(name is null)
+            if (name is null)
             {
                 return;
             }
@@ -198,12 +196,12 @@ namespace Lab2.UserActions
         private void AddCard(int userId)
         {
             string? name = GetEntityNameMustNotExist(_cardService, "Enter card name: ", userId);
-            if(name is null)
+            if (name is null)
             {
                 return;
             }
             string? accName = GetEntityNameMustExist(_simpleAccountService, "Enter related account name: ", userId);
-            if(accName is null)
+            if (accName is null)
             {
                 return;
             }
@@ -234,7 +232,7 @@ namespace Lab2.UserActions
         private void AddTransactioncategory(int userId)
         {
             string? name = GetEntityNameMustNotExist(_transactionCategoryService, "Enter name: ", userId);
-            if(name is null)
+            if (name is null)
             {
                 return;
             }
@@ -258,10 +256,10 @@ namespace Lab2.UserActions
         #endregion
 
         #region Printing
-        private void PrintItems<T>(IBaseConsoleService<T> service,int userId) where T : IEntity,IRelatedToUser
+        private void PrintItems<T>(IBaseConsoleService<T> service, int userId) where T : IEntity, IRelatedToUser
         {
             var items = service.List(e => e.UserId == userId);
-            foreach(var item in items)
+            foreach (var item in items)
             {
                 ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
                 var infoList = item.GetInfo();

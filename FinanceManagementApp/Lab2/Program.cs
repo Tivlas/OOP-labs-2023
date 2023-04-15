@@ -116,7 +116,7 @@ void ExecuteCommand()
     ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
     while (true)
     {
-        if(curUser.Id < 0)
+        if (curUser.Id < 0)
         {
             StartActions();
         }
@@ -127,11 +127,11 @@ void ExecuteCommand()
         }
         else
         {
-            if(code < 0)
+            if (code < 0)
             {
                 LogOut();
             }
-            else if(code == 0)
+            else if (code == 0)
             {
                 Environment.Exit(0);
             }

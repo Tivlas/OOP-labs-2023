@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using Domain.Abstractions.ConsoleSync;
+﻿using Domain.Abstractions.ConsoleSync;
 using Domain.Entities.Interfaces;
 using Persistence.Data;
 
