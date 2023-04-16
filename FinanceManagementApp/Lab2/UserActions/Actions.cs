@@ -7,6 +7,7 @@ using Domain.Entities.Interfaces;
 using Domain.Entities.Transactions;
 using Lab2.Const;
 using Lab2.Helpers;
+using Lab2.Validators;
 
 namespace Lab2.UserActions
 {
@@ -37,7 +38,7 @@ namespace Lab2.UserActions
             AvailableActions[4] = AddCard;
             AvailableActions[5] = AddTransactioncategory;
             AvailableActions[11] = RemoveCard;
-            //AvailableActions[7] = AddTransactionCategory;
+            AvailableActions[6] = AddSimpleTransaction;
             AvailableActions[8] = RemoveTransactionCategory;
             AvailableActions[12] = PrintSimpleAccounts;
             AvailableActions[15] = PrintCards;
@@ -122,7 +123,7 @@ namespace Lab2.UserActions
             return name;
         }
 
-        private T? GetArg<T>(string message)
+        public T? GetArg<T>(string message, IValidator? validator = null)
         {
             T? arg;
             while (true)
@@ -144,6 +145,11 @@ namespace Lab2.UserActions
                     if (converter != null)
                     {
                         arg = (T?)converter.ConvertFromString(input);
+                        if (validator is not null && !validator.IsValid(input))
+                        {
+                            ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
+                            continue;
+                        }
                         break;
                     }
                 }
@@ -253,6 +259,66 @@ namespace Lab2.UserActions
         {
             PrintItems(_transactionCategoryService, userId);
         }
+        #endregion
+
+        #region Simple transaction
+        private void AddSimpleTransaction(int userId)
+        {
+            DateTime? date = GetArg<DateTime?>("Enter transaction date: ", new DateValidator());
+            if (date is null)
+            {
+                return;
+            }
+            bool? isIncome = GetArg<bool?>("Is income (true/false): ");
+            if (isIncome is null)
+            {
+                return;
+            }
+            decimal? money = GetArg<decimal?>("Enter amount of money: ");
+            if (money is null)
+            {
+                return;
+            }
+            string? cardName = GetEntityNameMustExist(_cardService, "Enter card name: ", userId);
+            if (cardName is null)
+            {
+                return;
+            }
+
+            var card = _cardService.FirstOrDefault(c => c.Name == cardName);
+            var accId = card.AccountId;
+            var acc = _simpleAccountService.FirstOrDefault(a => a.Id == accId);
+            if (isIncome == true)
+            {
+                acc.Balance += money.Value;
+                card.Balance += money.Value;
+            }
+            else
+            {
+                acc.Balance -= money.Value;
+                card.Balance -= money.Value;
+            }
+            _simpleAccountService.Update(acc);
+            _cardService.Update(card);
+
+            string? categoryName = GetEntityNameMustExist(_transactionCategoryService,"Enter category name: ", userId);
+            if(categoryName is null)
+            {
+                return;
+            }
+
+            Console.WriteLine("Enter comment: ");
+            string? comment = Console.ReadLine();
+            if(comment == Constants.Cancel)
+            {
+                return;
+            }
+            comment ??= string.Empty;
+
+            _transactionService.Add(new SimpleTransaction(date.Value, isIncome.Value, money.Value, accId,
+                new TransactionCategory(categoryName, userId), comment, userId));
+        }
+
         #endregion
 
         #region Printing
