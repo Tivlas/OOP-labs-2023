@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using Application.Abstractions.Console;
 using Domain.Cards;
 using Domain.Entities;
@@ -34,17 +35,17 @@ namespace Lab2.UserActions
             _userService = consoleUserService;
 
             AvailableActions[3] = AddSimpleAccount;
-            AvailableActions[10] = RemoveSimpleAccount;
+            AvailableActions[33] = RemoveSimpleAccount;
+            AvailableActions[333] = PrintSimpleAccounts;
             AvailableActions[4] = AddCard;
-            AvailableActions[5] = AddTransactioncategory;
-            AvailableActions[11] = RemoveCard;
+            AvailableActions[44] = RemoveCard;
+            AvailableActions[444] = PrintCards;
+            AvailableActions[5] = AddTransactionCategory;
+            AvailableActions[55] = RemoveTransactionCategory;
+            AvailableActions[555] = PrintTransactionCategories;
             AvailableActions[6] = AddSimpleTransaction;
-            AvailableActions[8] = RemoveTransactionCategory;
-            AvailableActions[9] = RemoveSimpleTransaction;
-            AvailableActions[12] = PrintSimpleAccounts;
-            AvailableActions[15] = PrintCards;
-            AvailableActions[13] = PrintTransactionCategories;
-            AvailableActions[14] = PrintSimpleTransactions;
+            AvailableActions[66] = RemoveSimpleTransaction;
+            AvailableActions[666] = PrintSimpleTransactions;
             //AvailableActions[15] = ListTransactions;
         }
 
@@ -236,7 +237,7 @@ namespace Lab2.UserActions
         #endregion
 
         #region Transaction category
-        private void AddTransactioncategory(int userId)
+        private void AddTransactionCategory(int userId)
         {
             string? name = GetEntityNameMustNotExist(_transactionCategoryService, "Enter name: ", userId);
             if (name is null)
@@ -262,6 +263,36 @@ namespace Lab2.UserActions
         }
         #endregion
 
+        private decimal? GetTransactionAmountOfMoney(string message)
+        {
+            decimal? arg;
+            while (true)
+            {
+                Console.Write(message);
+                string? input = Console.ReadLine();
+                if (string.IsNullOrWhiteSpace(input))
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "Invalid input!");
+                    continue;
+                }
+                if (input == Constants.Cancel)
+                {
+                    return null;
+                }
+                try
+                {
+                    arg = Calculator.Calc(input);
+                }
+                catch (Exception)
+                {
+                    ColorPrinter.Print(ConsoleColor.Red, "Invalid expression!");
+                    continue;
+                }
+                break;
+            }
+            return arg;
+        }
+
         #region Simple transaction
         private void AddSimpleTransaction(int userId)
         {
@@ -277,7 +308,7 @@ namespace Lab2.UserActions
                 return;
             }
 
-            decimal? money = GetArg<decimal?>("Enter amount of money: ");
+            decimal? money = GetTransactionAmountOfMoney("Enter amount of money: ");
             if (money is null)
             {
                 return;
@@ -289,15 +320,15 @@ namespace Lab2.UserActions
                 return;
             }
 
-            string? categoryName = GetEntityNameMustExist(_transactionCategoryService,"Enter category name: ", userId);
-            if(categoryName is null)
+            string? categoryName = GetEntityNameMustExist(_transactionCategoryService, "Enter category name: ", userId);
+            if (categoryName is null)
             {
                 return;
             }
 
             Console.Write("Enter comment: ");
             string? comment = Console.ReadLine();
-            if(comment == Constants.Cancel)
+            if (comment == Constants.Cancel)
             {
                 return;
             }
@@ -311,7 +342,7 @@ namespace Lab2.UserActions
             if (isIncome == true)
             {
                 acc.Balance += money.Value;
-                foreach(var c in cards)
+                foreach (var c in cards)
                 {
                     c.Balance += money.Value;
                     _cardService.Update(c);
@@ -334,12 +365,12 @@ namespace Lab2.UserActions
         private void RemoveSimpleTransaction(int userId)
         {
             int? transactionId = GetArg<int?>("Enter transaction id: ");
-            if(transactionId is null)
+            if (transactionId is null)
             {
                 return;
             }
             var transaction = _transactionService.FirstOrDefault(tr => tr.Id == transactionId);
-            if(transaction is null)
+            if (transaction is null)
             {
                 ColorPrinter.Print(ConsoleColor.Red, "Nu transaction with such Id!");
                 return;
