@@ -40,6 +40,7 @@ namespace Lab2.UserActions
             AvailableActions[11] = RemoveCard;
             AvailableActions[6] = AddSimpleTransaction;
             AvailableActions[8] = RemoveTransactionCategory;
+            AvailableActions[9] = RemoveSimpleTransaction;
             AvailableActions[12] = PrintSimpleAccounts;
             AvailableActions[15] = PrintCards;
             AvailableActions[13] = PrintTransactionCategories;
@@ -328,6 +329,45 @@ namespace Lab2.UserActions
             _simpleAccountService.Update(acc);
             _transactionService.Add(new SimpleTransaction(date.Value, isIncome.Value, money.Value, accId,
                 new TransactionCategory(categoryName, userId), comment, userId));
+        }
+
+        private void RemoveSimpleTransaction(int userId)
+        {
+            int? transactionId = GetArg<int?>("Enter transaction id: ");
+            if(transactionId is null)
+            {
+                return;
+            }
+            var transaction = _transactionService.FirstOrDefault(tr => tr.Id == transactionId);
+            if(transaction is null)
+            {
+                ColorPrinter.Print(ConsoleColor.Red, "Nu transaction with such Id!");
+                return;
+            }
+
+            var account = _simpleAccountService.FirstOrDefault(acc => acc.Id == transaction.AccountId);
+            var cards = _cardService.List(c => c.AccountId == account.Id);
+
+            if (transaction.IsIncome == true)
+            {
+                account.Balance -= transaction.AmountOfMoney;
+                foreach (var c in cards)
+                {
+                    c.Balance -= transaction.AmountOfMoney;
+                    _cardService.Update(c);
+                }
+            }
+            else
+            {
+                account.Balance += transaction.AmountOfMoney;
+                foreach (var c in cards)
+                {
+                    c.Balance += transaction.AmountOfMoney;
+                    _cardService.Update(c);
+                }
+            }
+            _simpleAccountService.Update(account);
+            _transactionService.Delete(transaction);
         }
 
         private void PrintSimpleTransactions(int userId)
