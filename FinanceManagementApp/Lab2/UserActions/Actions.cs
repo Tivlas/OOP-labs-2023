@@ -43,7 +43,7 @@ namespace Lab2.UserActions
             AvailableActions[12] = PrintSimpleAccounts;
             AvailableActions[15] = PrintCards;
             AvailableActions[13] = PrintTransactionCategories;
-            //AvailableActions[14] = ListCategories;
+            AvailableActions[14] = PrintSimpleTransactions;
             //AvailableActions[15] = ListTransactions;
         }
 
@@ -269,37 +269,24 @@ namespace Lab2.UserActions
             {
                 return;
             }
+
             bool? isIncome = GetArg<bool?>("Is income (true/false): ");
             if (isIncome is null)
             {
                 return;
             }
+
             decimal? money = GetArg<decimal?>("Enter amount of money: ");
             if (money is null)
             {
                 return;
             }
+
             string? cardName = GetEntityNameMustExist(_cardService, "Enter card name: ", userId);
             if (cardName is null)
             {
                 return;
             }
-
-            var card = _cardService.FirstOrDefault(c => c.Name == cardName);
-            var accId = card.AccountId;
-            var acc = _simpleAccountService.FirstOrDefault(a => a.Id == accId);
-            if (isIncome == true)
-            {
-                acc.Balance += money.Value;
-                card.Balance += money.Value;
-            }
-            else
-            {
-                acc.Balance -= money.Value;
-                card.Balance -= money.Value;
-            }
-            _simpleAccountService.Update(acc);
-            _cardService.Update(card);
 
             string? categoryName = GetEntityNameMustExist(_transactionCategoryService,"Enter category name: ", userId);
             if(categoryName is null)
@@ -307,7 +294,7 @@ namespace Lab2.UserActions
                 return;
             }
 
-            Console.WriteLine("Enter comment: ");
+            Console.Write("Enter comment: ");
             string? comment = Console.ReadLine();
             if(comment == Constants.Cancel)
             {
@@ -315,8 +302,37 @@ namespace Lab2.UserActions
             }
             comment ??= string.Empty;
 
+            var card = _cardService.FirstOrDefault(c => c.Name == cardName);
+            var accId = card.AccountId;
+            var cards = _cardService.List(c => c.AccountId == accId);
+            var acc = _simpleAccountService.FirstOrDefault(a => a.Id == accId);
+
+            if (isIncome == true)
+            {
+                acc.Balance += money.Value;
+                foreach(var c in cards)
+                {
+                    c.Balance += money.Value;
+                    _cardService.Update(c);
+                }
+            }
+            else
+            {
+                acc.Balance -= money.Value;
+                foreach (var c in cards)
+                {
+                    c.Balance -= money.Value;
+                    _cardService.Update(c);
+                }
+            }
+            _simpleAccountService.Update(acc);
             _transactionService.Add(new SimpleTransaction(date.Value, isIncome.Value, money.Value, accId,
                 new TransactionCategory(categoryName, userId), comment, userId));
+        }
+
+        private void PrintSimpleTransactions(int userId)
+        {
+            PrintItems(_transactionService, userId);
         }
 
         #endregion
@@ -331,7 +347,7 @@ namespace Lab2.UserActions
                 var infoList = item.GetInfo();
                 foreach (var infoItem in infoList)
                 {
-                    Console.WriteLine($"{infoItem.PropName,3}: {infoItem.propValue}");
+                    Console.WriteLine($"{infoItem.PropName}: {infoItem.propValue}");
                 }
             }
             ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
