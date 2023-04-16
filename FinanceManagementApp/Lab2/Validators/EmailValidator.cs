@@ -3,9 +3,9 @@ using System.Text.RegularExpressions;
 
 namespace Lab2.Validators
 {
-    public static class EmailValidator
+    public class EmailValidator : IValidator
     {
-        public static bool IsValidEmail(string? email)
+        public bool IsValid(string? email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
