@@ -21,6 +21,7 @@
             info!.Add(("Category", Category.Name));
             info!.Add(("Comment", Comment));
             info!.Add(("IsIncome", IsIncome));
+            info!.Add(("Id", Id));
             return info;
         }
     }
