@@ -43,6 +43,9 @@ static IHostBuilder CreateHostBuilder(string[] args)
         });
 }
 
+Console.CancelKeyPress += ConsoleCancelationHandler;
+AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+
 
 StartActions();
 ExecuteCommand();
@@ -154,3 +157,12 @@ void LogOut()
 }
 
 #endregion
+
+void ConsoleCancelationHandler(object? sender, ConsoleCancelEventArgs e)
+{
+    Console.WriteLine("Cancelation handled successfully!");
+}
+void CurrentDomain_ProcessExit(object? sender, EventArgs e)
+{
+    File.WriteAllText("D:\\University\\OOP\\FinanceManagementApp\\Lab2\\process_exit.txt", "Testing");
+}
