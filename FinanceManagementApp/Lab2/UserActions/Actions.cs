@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
 using Application.Abstractions.Console;
 using Domain.Cards;
 using Domain.Entities;
@@ -19,12 +20,11 @@ namespace Lab2.UserActions
         private readonly IConsoleCardService _cardService;
         private readonly IConsoleSimpleAccountService _simpleAccountService;
         private readonly IConsoleSimpleTransactionService _transactionService;
-        private readonly IConsoleTransferService _transferService;
         private readonly IConsoleTransactionCategoryService _transactionCategoryService;
         private readonly IConsoleUserService _userService;
 
         public Actions(IConsoleCardService cardService, IConsoleSimpleAccountService simpleAccountService,
-            IConsoleSimpleTransactionService transactionService, IConsoleTransferService transferService,
+            IConsoleSimpleTransactionService transactionService,
             IConsoleTransactionCategoryService transactionCategoryService, IConsoleUserService consoleUserService)
         {
             _cardService = cardService;
@@ -407,6 +407,7 @@ namespace Lab2.UserActions
         }
 
         #endregion
+
 
         #region Printing
         private void PrintItems<T>(IBaseConsoleService<T> service, int userId) where T : IEntity, IRelatedToUser
