@@ -8,7 +8,7 @@ public interface IConsoleUnitOfWork
 {
     IConsoleEntityRepository<SimpleAccount> SimpleAccountsRepository { get; }
     IConsoleEntityRepository<Card> CardsRepository { get; }
-    IConsoleEntityRepository<SimpleTransaction> SimpleTransactionsRepository { get; }
+    IConsoleTransactionRepository<SimpleTransaction> SimpleTransactionsRepository { get; }
     IConsoleEntityRepository<Transfer> TransfersRepository { get; }
     IConsoleEntityRepository<TransactionCategory> TransactionCategoriesRepository { get; }
     IConsoleEntityRepository<User> UsersRepository { get; }
