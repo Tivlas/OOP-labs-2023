@@ -10,7 +10,8 @@ public class ConsoleTransactionsRepository<T> : ConsoleEntityRepository<T>, ICon
 
     }
 
-    public IGrouping<DateTime, T> GetTransactionsGroupedByDate(Func<T, bool> filter) => throw new NotImplementedException();
-    public IGrouping<DateTime, T> GetTransactionsGroupedByCategory(Func<T, bool> filter) => throw new NotImplementedException();
-    public IEnumerable<T> GetTransactionsForTimePeriod(Func<T, bool> filter) => throw new NotImplementedException();
+    public IEnumerable<IGrouping<TKey, T>> GetGroupedTransactions<TKey>(Func<T, TKey> keySelector)
+    {
+        return _entities.GroupBy(keySelector);
+    }
 }

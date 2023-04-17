@@ -11,12 +11,8 @@ public class ConsoleSimpleTransactionService : IConsoleSimpleTransactionService
     {
         _unit = unit;
     }
-    public IGrouping<DateTime, SimpleTransaction> GetTransactionsGroupedByDate(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
 
-    public IGrouping<DateTime, SimpleTransaction> GetTransactionsGroupedByCategory(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
-
-    public IEnumerable<SimpleTransaction> GetTransactionsForTimePeriod(Func<SimpleTransaction, bool> filter) => throw new NotImplementedException();
-
+  
     public bool Exists(Func<SimpleTransaction, bool> filter)
     {
         return _unit.SimpleTransactionsRepository.Exists(filter);
@@ -50,5 +46,10 @@ public class ConsoleSimpleTransactionService : IConsoleSimpleTransactionService
     public SimpleTransaction FirstOrDefault(Func<SimpleTransaction, bool> filter)
     {
         return _unit.SimpleTransactionsRepository.FirstOrDefault(filter);
+    }
+
+    public IEnumerable<IGrouping<TKey, SimpleTransaction>> GetGroupedTransactions<TKey>(Func<SimpleTransaction, TKey> keySelector)
+    {
+        return _unit.SimpleTransactionsRepository.GetGroupedTransactions(keySelector);
     }
 }
