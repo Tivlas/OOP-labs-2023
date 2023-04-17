@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.InteropServices;
+using Antlr.Runtime.Tree;
 using Application.Abstractions.Console;
 using Domain.Cards;
 using Domain.Entities;
@@ -30,7 +31,6 @@ namespace Lab2.UserActions
             _cardService = cardService;
             _simpleAccountService = simpleAccountService;
             _transactionService = transactionService;
-            _transferService = transferService;
             _transactionCategoryService = transactionCategoryService;
             _userService = consoleUserService;
 
@@ -46,7 +46,7 @@ namespace Lab2.UserActions
             AvailableActions[6] = AddSimpleTransaction;
             AvailableActions[66] = RemoveSimpleTransaction;
             AvailableActions[666] = PrintSimpleTransactions;
-            //AvailableActions[15] = ListTransactions;
+            AvailableActions[7] = PrintTransactionsGroupedByDate;
         }
 
 
@@ -263,6 +263,7 @@ namespace Lab2.UserActions
         }
         #endregion
 
+        #region Simple transaction
         private decimal? GetTransactionAmountOfMoney(string message)
         {
             decimal? arg;
@@ -293,7 +294,6 @@ namespace Lab2.UserActions
             return arg;
         }
 
-        #region Simple transaction
         private void AddSimpleTransaction(int userId)
         {
             DateTime? date = GetArg<DateTime?>("Enter transaction date: ", new DateValidator());
@@ -408,7 +408,6 @@ namespace Lab2.UserActions
 
         #endregion
 
-
         #region Printing
         private void PrintItems<T>(IBaseConsoleService<T> service, int userId) where T : IEntity, IRelatedToUser
         {
@@ -427,7 +426,37 @@ namespace Lab2.UserActions
         #endregion
 
         #region Statistics
-        // TODO: add methods
+
+        private void PrintGroup<T>(IEnumerable<T> items) where T : IEntity
+        {
+            foreach (var item in items)
+            {
+                ColorPrinter.Print(ConsoleColor.Green, Constants.Delimiter);
+                var infoList = item.GetInfo();
+                foreach (var infoItem in infoList)
+                {
+                    Console.WriteLine($"{infoItem.PropName}: {infoItem.propValue}");
+                }
+            }
+        }
+
+        private void PrintTransactionsGroupedByDate(int userId)
+        {
+            var query = _transactionService.GetGroupedTransactions(trn => new { trn.UserId, trn.TransactionDate.Date })
+                .Where(g => g.Key.UserId == userId)
+                .Select(g => new
+                {
+                    Date = g.Key.Date,
+                    Transactions = g.ToList()
+                });
+
+            foreach (var group in query)
+            {
+                Console.Write($"\nTransaction on ");
+                ColorPrinter.Print(ConsoleColor.Green, group.Date.ToShortDateString());
+                PrintGroup(group.Transactions);
+            }
+        }
         #endregion
     }
 }
