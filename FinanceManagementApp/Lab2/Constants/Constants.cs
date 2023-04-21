@@ -18,7 +18,7 @@
             $"Enter {66,3} to remove transaction\r\n" +
             $"Enter {666,3} to print ur transactions\r\n" +
             $"Enter {7,3} to print ur transactions grouped by date\r\n" +
-            $"Enter {8,3} to print ur transactions grouped by category";
+            $"Enter {8,3} to print ur transactions statistics by category";
 
         public static string Delimiter => "———————————————————————————————————————";
 

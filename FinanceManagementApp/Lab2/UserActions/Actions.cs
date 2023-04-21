@@ -47,6 +47,7 @@ namespace Lab2.UserActions
             AvailableActions[66] = RemoveSimpleTransaction;
             AvailableActions[666] = PrintSimpleTransactions;
             AvailableActions[7] = PrintTransactionsGroupedByDate;
+            AvailableActions[8] = GetStatisticsByCategory;
         }
 
 
@@ -442,19 +443,30 @@ namespace Lab2.UserActions
 
         private void PrintTransactionsGroupedByDate(int userId)
         {
-            var query = _transactionService.GetGroupedTransactions(trn => new { trn.UserId, trn.TransactionDate.Date })
-                .Where(g => g.Key.UserId == userId)
-                .Select(g => new
-                {
-                    Date = g.Key.Date,
-                    Transactions = g.ToList()
-                });
-
+            var transactions = _transactionService.List(trn => trn.UserId == userId);
+            var query = transactions.GroupBy(trn => trn.TransactionDate.Date);
             foreach (var group in query)
             {
                 Console.Write($"\nTransaction on ");
-                ColorPrinter.Print(ConsoleColor.Green, group.Date.ToShortDateString());
-                PrintGroup(group.Transactions);
+                ColorPrinter.Print(ConsoleColor.Green, group.Key.ToShortDateString());
+                PrintGroup(group.ToList());
+            }
+        }
+
+        private void GetStatisticsByCategory(int userId)
+        {
+            var transactions = _transactionService.List(trn => trn.UserId == userId);
+            var query = transactions.GroupBy(trn => trn.Category.Name);
+            var result = query.Select(g => new
+            {
+                Name = g.Key,
+                Count = g.Count(),
+                Percentage = (double)g.Count() / transactions.Count() * 100
+            });
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"{item.Name}: {item.Count} ({item.Percentage:F2}%)");
             }
         }
         #endregion

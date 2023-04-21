@@ -47,9 +47,4 @@ public class ConsoleSimpleTransactionService : IConsoleSimpleTransactionService
     {
         return _unit.SimpleTransactionsRepository.FirstOrDefault(filter);
     }
-
-    public IEnumerable<IGrouping<TKey, SimpleTransaction>> GetGroupedTransactions<TKey>(Func<SimpleTransaction, TKey> keySelector)
-    {
-        return _unit.SimpleTransactionsRepository.GetGroupedTransactions(keySelector);
-    }
 }
