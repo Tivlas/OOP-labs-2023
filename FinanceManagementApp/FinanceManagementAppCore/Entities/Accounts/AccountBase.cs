@@ -1,5 +1,4 @@
-﻿using Domain.Cards;
-using Domain.Entities.Interfaces;
+﻿using Domain.Entities.Interfaces;
 
 namespace Domain.Entities.Accounts
 {
@@ -26,8 +25,6 @@ namespace Domain.Entities.Accounts
         public int UserId { get; init; }
 
         public int Id { get; init; }
-
-        public List<Card> Cards { get; set; }
 
         public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
         {

@@ -33,10 +33,8 @@ static IHostBuilder CreateHostBuilder(string[] args)
         {
             services.AddSingleton<Actions>();
             services.AddSingleton<IConsoleUnitOfWork, ConsoleUnitOfWork>();
-            services.AddSingleton<IConsoleCardService, ConsoleCardService>();
             services.AddSingleton<IConsoleSimpleAccountService, ConsoleSimpleAccountService>();
             services.AddSingleton<IConsoleTransactionCategoryService, ConsoleTransactionCategoryService>();
-            services.AddSingleton<IConsoleTransferService, ConsoleTransferService>();
             services.AddSingleton<IConsoleSimpleTransactionService, ConsoleSimpleTransactionService>();
             services.AddSingleton<IConsoleUserService, ConsoleUserService>();
             services.AddSingleton<IDbEmulatorContext, DbEmulatorContext>();

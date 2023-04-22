@@ -12,7 +12,7 @@ public class ConsoleSimpleTransactionService : IConsoleSimpleTransactionService
         _unit = unit;
     }
 
-  
+
     public bool Exists(Func<SimpleTransaction, bool> filter)
     {
         return _unit.SimpleTransactionsRepository.Exists(filter);

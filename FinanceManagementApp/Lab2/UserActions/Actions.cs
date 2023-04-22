@@ -1,9 +1,5 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.InteropServices;
-using Antlr.Runtime.Tree;
 using Application.Abstractions.Console;
-using Domain.Cards;
 using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Interfaces;
@@ -18,17 +14,15 @@ namespace Lab2.UserActions
     {
         public Dictionary<int, Action<int>> AvailableActions = new Dictionary<int, Action<int>>();
 
-        private readonly IConsoleCardService _cardService;
         private readonly IConsoleSimpleAccountService _simpleAccountService;
         private readonly IConsoleSimpleTransactionService _transactionService;
         private readonly IConsoleTransactionCategoryService _transactionCategoryService;
         private readonly IConsoleUserService _userService;
 
-        public Actions(IConsoleCardService cardService, IConsoleSimpleAccountService simpleAccountService,
+        public Actions(IConsoleSimpleAccountService simpleAccountService,
             IConsoleSimpleTransactionService transactionService,
             IConsoleTransactionCategoryService transactionCategoryService, IConsoleUserService consoleUserService)
         {
-            _cardService = cardService;
             _simpleAccountService = simpleAccountService;
             _transactionService = transactionService;
             _transactionCategoryService = transactionCategoryService;
@@ -37,15 +31,12 @@ namespace Lab2.UserActions
             AvailableActions[3] = AddSimpleAccount;
             AvailableActions[33] = RemoveSimpleAccount;
             AvailableActions[333] = PrintSimpleAccounts;
-            AvailableActions[4] = AddCard;
-            AvailableActions[44] = RemoveCard;
-            AvailableActions[444] = PrintCards;
-            AvailableActions[5] = AddTransactionCategory;
-            AvailableActions[55] = RemoveTransactionCategory;
-            AvailableActions[555] = PrintTransactionCategories;
-            AvailableActions[6] = AddSimpleTransaction;
-            AvailableActions[66] = RemoveSimpleTransaction;
-            AvailableActions[666] = PrintSimpleTransactions;
+            AvailableActions[4] = AddTransactionCategory;
+            AvailableActions[44] = RemoveTransactionCategory;
+            AvailableActions[444] = PrintTransactionCategories;
+            AvailableActions[5] = AddSimpleTransaction;
+            AvailableActions[55] = RemoveSimpleTransaction;
+            AvailableActions[555] = PrintSimpleTransactions;
             AvailableActions[7] = PrintTransactionsGroupedByDate;
             AvailableActions[8] = GetStatisticsByCategory;
         }
@@ -109,7 +100,12 @@ namespace Lab2.UserActions
                 {
                     return null;
                 }
-                if (string.IsNullOrWhiteSpace(name))
+                if (string.IsNullOrWhiteSpace(name) && service is IConsoleTransactionCategoryService)
+                {
+                    name = "No category";
+                    return name;
+                }
+                else if (string.IsNullOrWhiteSpace(name))
                 {
                     ColorPrinter.Print(ConsoleColor.Red, "At least 1 non space character!");
                 }
@@ -178,17 +174,16 @@ namespace Lab2.UserActions
             {
                 return;
             }
-            string? name = GetEntityNameMustNotExist(_simpleAccountService, "Enter account name: ", userId);
+            string? name = GetEntityNameMustNotExist(_simpleAccountService, "Enter storage name: ", userId);
             if (name is null)
             {
                 return;
             }
             _simpleAccountService.Add(new SimpleAccount(balance.Value, currencyName, name, userId));
         }
-
         private void RemoveSimpleAccount(int userId)
         {
-            string? name = GetEntityNameMustExist(_simpleAccountService, "Enter account name: ", userId);
+            string? name = GetEntityNameMustExist(_simpleAccountService, "Enter storage name: ", userId);
             if (name is null)
             {
                 return;
@@ -198,42 +193,6 @@ namespace Lab2.UserActions
         private void PrintSimpleAccounts(int userId)
         {
             PrintItems(_simpleAccountService, userId);
-        }
-        #endregion
-
-        #region Card
-        private void AddCard(int userId)
-        {
-            string? name = GetEntityNameMustNotExist(_cardService, "Enter card name: ", userId);
-            if (name is null)
-            {
-                return;
-            }
-            string? accName = GetEntityNameMustExist(_simpleAccountService, "Enter related account name: ", userId);
-            if (accName is null)
-            {
-                return;
-            }
-            var acc = _simpleAccountService.FirstOrDefault(acc => acc.Name == accName);
-            decimal balance = acc.Balance;
-            int accId = acc.Id;
-            string currencyName = acc.CurrencyName;
-            _cardService.Add(new Card(accId, name, balance, currencyName));
-        }
-
-        private void RemoveCard(int userId)
-        {
-            string? name = GetEntityNameMustExist(_cardService, "Enter card name: ", userId);
-            if (name is null)
-            {
-                return;
-            }
-            _cardService.Delete(_cardService.FirstOrDefault(c => c.Name == name));
-        }
-
-        private void PrintCards(int userId)
-        {
-            PrintItems(_cardService, userId);
         }
         #endregion
 
@@ -315,8 +274,8 @@ namespace Lab2.UserActions
                 return;
             }
 
-            string? cardName = GetEntityNameMustExist(_cardService, "Enter card name: ", userId);
-            if (cardName is null)
+            string? storName = GetEntityNameMustExist(_simpleAccountService, "Enter storage name: ", userId);
+            if (storName is null)
             {
                 return;
             }
@@ -335,31 +294,18 @@ namespace Lab2.UserActions
             }
             comment ??= string.Empty;
 
-            var card = _cardService.FirstOrDefault(c => c.Name == cardName);
-            var accId = card.AccountId;
-            var cards = _cardService.List(c => c.AccountId == accId);
-            var acc = _simpleAccountService.FirstOrDefault(a => a.Id == accId);
+            var acc = _simpleAccountService.FirstOrDefault(c => c.Name == storName);
 
             if (isIncome == true)
             {
                 acc.Balance += money.Value;
-                foreach (var c in cards)
-                {
-                    c.Balance += money.Value;
-                    _cardService.Update(c);
-                }
             }
             else
             {
                 acc.Balance -= money.Value;
-                foreach (var c in cards)
-                {
-                    c.Balance -= money.Value;
-                    _cardService.Update(c);
-                }
             }
             _simpleAccountService.Update(acc);
-            _transactionService.Add(new SimpleTransaction(date.Value, isIncome.Value, money.Value, accId,
+            _transactionService.Add(new SimpleTransaction(date.Value, isIncome.Value, money.Value, acc.Id,
                 new TransactionCategory(categoryName, userId), comment, userId));
         }
 
@@ -378,25 +324,14 @@ namespace Lab2.UserActions
             }
 
             var account = _simpleAccountService.FirstOrDefault(acc => acc.Id == transaction.AccountId);
-            var cards = _cardService.List(c => c.AccountId == account.Id);
 
             if (transaction.IsIncome == true)
             {
                 account.Balance -= transaction.AmountOfMoney;
-                foreach (var c in cards)
-                {
-                    c.Balance -= transaction.AmountOfMoney;
-                    _cardService.Update(c);
-                }
             }
             else
             {
                 account.Balance += transaction.AmountOfMoney;
-                foreach (var c in cards)
-                {
-                    c.Balance += transaction.AmountOfMoney;
-                    _cardService.Update(c);
-                }
             }
             _simpleAccountService.Update(account);
             _transactionService.Delete(transaction);
