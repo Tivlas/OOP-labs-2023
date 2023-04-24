@@ -1,35 +1,45 @@
 ﻿using System.Collections;
+using System.Text.Json;
 using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
+using Serialization;
 
 namespace Persistence.Data;
 public class DbEmulatorContext : IDbEmulatorContext
 {
-    private List<SimpleAccount> _simpleAccounts { get; set; } = new();
-    private List<SimpleTransaction> _simpleTransactions { get; set; } = new();
-    private List<TransactionCategory> _transactionCategories { get; set; } = new();
-    private List<User> _users { get; set; } = new();
+    public List<SimpleAccount> SimpleAccounts { get; set; }
+    public List<SimpleTransaction> SimpleTransactions { get; set; }
+    public List<TransactionCategory> TransactionCategories { get; set; }
+    public List<User> Users { get; set; }
 
-    private Dictionary<Type, object> _entitiesLists;
 
-    public DbEmulatorContext()
+    private readonly ISerializer _serializer;
+    private readonly string _simpleAccountsPath = Path.Combine(Directory.GetCurrentDirectory(), typeof(SimpleAccount).Name + ".json");
+    private readonly string _simpleTransactionsPath = Path.Combine(Directory.GetCurrentDirectory(), typeof(SimpleTransaction).Name + ".json");
+    private readonly string _transactionCategoriesPath = Path.Combine(Directory.GetCurrentDirectory(), typeof(TransactionCategory).Name + ".json");
+    private readonly string _usersPath = Path.Combine(Directory.GetCurrentDirectory(), typeof(User).Name + ".json");
+
+
+    public DbEmulatorContext(ISerializer serializer)
     {
-        _entitiesLists = new Dictionary<Type, object>(){
-            { typeof(SimpleAccount),  _simpleAccounts},
-            { typeof(SimpleTransaction), _simpleTransactions },
-            { typeof(TransactionCategory), _users },
-            { typeof(User), _transactionCategories }
-        };
+        _serializer = serializer;
+
+        SimpleAccounts = _serializer.DeserializeJson<SimpleAccount>(_simpleAccountsPath)?.ToList() ?? new();
+        SimpleTransactions = _serializer.DeserializeJson<SimpleTransaction>(_simpleTransactionsPath)?.ToList() ?? new();
+        TransactionCategories = _serializer.DeserializeJson<TransactionCategory>(_transactionCategoriesPath)?.ToList() ?? new();
+        Users = _serializer.DeserializeJson<User>(_usersPath)?.ToList() ?? new();
     }
 
-    public IEnumerable<T>? GetList<T>()
+    public void Save()
     {
-        if (_entitiesLists.TryGetValue(typeof(T), out object? list))
+        var options = new JsonSerializerOptions
         {
-            var ret = list as IEnumerable;
-            return ret!.OfType<T>();
-        }
-        return null;
+            WriteIndented = true
+        };
+        _serializer.SerializeJson(SimpleAccounts, _simpleAccountsPath, options);
+        _serializer.SerializeJson(SimpleTransactions, _simpleTransactionsPath, options);
+        _serializer.SerializeJson(TransactionCategories, _transactionCategoriesPath, options);
+        _serializer.SerializeJson(Users, _usersPath, options);
     }
 }

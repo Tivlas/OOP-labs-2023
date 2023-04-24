@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinanceManagementAppCore\Domain.csproj" />
+    <ProjectReference Include="..\Serialization\Serialization.csproj" />
   </ItemGroup>
 
 </Project>
