@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 
 namespace Serialization;
-public class Serializer
+public class Serializer : ISerializer
 {
     public void SerializeJson<T>(IEnumerable<T> collection, string fileName, JsonSerializerOptions? options = null)
     {
@@ -22,11 +22,19 @@ public class Serializer
 
     public IEnumerable<T>? DeserializeJson<T>(string fileName)
     {
+        if (!File.Exists(fileName))
+        {
+            return null;
+        }
         return JsonSerializer.Deserialize<IEnumerable<T>>(File.ReadAllText(fileName));
     }
 
     public async Task<IEnumerable<T>?> DeserializeJsonAsync<T>(string fileName)
     {
+        if (!File.Exists(fileName))
+        {
+            return null;
+        }
         using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
         {
             return await JsonSerializer.DeserializeAsync<IEnumerable<T>>(fs);
@@ -49,6 +57,10 @@ public class Serializer
 
     public IEnumerable<T>? DeserializeXml<T>(string fileName)
     {
+        if (!File.Exists(fileName))
+        {
+            return null;
+        }
         using (FileStream fs = File.OpenRead(fileName))
         {
             XmlSerializer xmlSerializer = new(typeof(IEnumerable<T>));
@@ -59,6 +71,10 @@ public class Serializer
 
     public async Task<IEnumerable<T>?> DeserializeXmlAsync<T>(string fileName)
     {
+        if (!File.Exists(fileName))
+        {
+            return null;
+        }
         return await Task.Run(() => DeserializeXml<T>(fileName));
     }
 
