@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence.Data;
 using Persistence.UnitOfWork;
+using Serialization;
 
 using IHost host = CreateHostBuilder(args).Build();
 using var scope = host.Services.CreateScope();
@@ -38,6 +39,7 @@ static IHostBuilder CreateHostBuilder(string[] args)
             services.AddSingleton<IConsoleSimpleTransactionService, ConsoleSimpleTransactionService>();
             services.AddSingleton<IConsoleUserService, ConsoleUserService>();
             services.AddSingleton<IDbEmulatorContext, DbEmulatorContext>();
+            services.AddSingleton<ISerializer, Serializer>();
         });
 }
 
@@ -158,9 +160,9 @@ void LogOut()
 
 void ConsoleCancelationHandler(object? sender, ConsoleCancelEventArgs e)
 {
-    Console.WriteLine("Cancelation handled successfully!");
+    services.GetRequiredService<DbEmulatorContext>().Save();
 }
 void CurrentDomain_ProcessExit(object? sender, EventArgs e)
 {
-    File.WriteAllText("D:\\University\\OOP\\FinanceManagementApp\\Lab2\\process_exit.txt", "Testing");
+    services.GetRequiredService<IDbEmulatorContext>().Save();
 }
