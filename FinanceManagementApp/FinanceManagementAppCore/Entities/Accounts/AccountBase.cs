@@ -6,6 +6,10 @@ namespace Domain.Entities.Accounts
     {
         private static int s_IdController = 0;
 
+        public AccountBase()
+        {
+            
+        }
         public AccountBase(decimal balance, string currencyName, string name, int userId)
         {
             Balance = balance;

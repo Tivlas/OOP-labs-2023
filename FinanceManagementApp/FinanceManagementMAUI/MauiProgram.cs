@@ -1,11 +1,14 @@
-﻿using Application.Abstractions.NotConsole;
+﻿using System.Reflection;
+using Application.Abstractions.NotConsole;
 using Application.Services.NotConsole;
 using CommunityToolkit.Maui;
 using Domain.Abstractions.NotForConsoleAsync;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Persistence.Repository;
+using Persistence.Data;
 using Persistence.UnitOfWork;
 
 namespace FinanceManagementMAUI;
@@ -13,6 +16,7 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        string settingsStream = "FinanceManagementMAUI.appsettings.json";
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -23,12 +27,19 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        var a = Assembly.GetExecutingAssembly();
+        using var stream = a.GetManifestResourceStream(settingsStream);
+        builder.Configuration.AddJsonStream(stream);
+
+
 #if DEBUG
-		builder.Logging.AddDebug();
+        builder.Logging.AddDebug();
 #endif
+
         SetupServices(builder.Services);
-        SetupPages(builder.Services);
         SetupViewModels(builder.Services);
+        SetupPages(builder.Services);
+        SetupDbContext(builder);
 
         return builder.Build();
     }
@@ -50,5 +61,22 @@ public static class MauiProgram
     private static void SetupViewModels(IServiceCollection services)
     {
         services.AddSingleton<LoginViewModel>();
+    }
+
+    private static void SetupDbContext(MauiAppBuilder builder)
+    {
+        var connectionString = builder.Configuration
+            .GetConnectionString("SqliteConnection");
+        string dataDirectory = string.Empty;
+#if ANDROID
+            dataDirectory = FileSystem.AppDataDirectory + Path.DirectorySeparatorChar;
+#else
+        dataDirectory = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar;
+#endif
+
+        connectionString = string.Format(connectionString, dataDirectory);
+        var options = new DbContextOptionsBuilder<AppDbContext>().UseSqlite(connectionString).Options;
+        builder.Services.AddSingleton((s) => new AppDbContext(options));
+
     }
 }

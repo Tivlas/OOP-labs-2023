@@ -6,6 +6,10 @@ namespace Domain.Entities.Transactions
     {
         private static int s_IdController = 0;
 
+        public TransactionCategory()
+        {
+            
+        }
         public TransactionCategory(string name, int userId)
         {
             Name = name;
