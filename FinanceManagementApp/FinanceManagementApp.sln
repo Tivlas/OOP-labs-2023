@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab2", "Lab2\Lab2.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{42D5E637-7660-41A3-9690-8D6710ABE664}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{30FC85F3-37C7-4F72-8001-75005AC24985}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{30FC85F3-37C7-4F72-8001-75005AC24985}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialization", "Serialization\Serialization.csproj", "{6BB0E76B-928A-40E6-BBFC-83E005532D4A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{30FC85F3-37C7-4F72-8001-75005AC24985}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30FC85F3-37C7-4F72-8001-75005AC24985}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30FC85F3-37C7-4F72-8001-75005AC24985}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB0E76B-928A-40E6-BBFC-83E005532D4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB0E76B-928A-40E6-BBFC-83E005532D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB0E76B-928A-40E6-BBFC-83E005532D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB0E76B-928A-40E6-BBFC-83E005532D4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

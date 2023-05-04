@@ -1,5 +1,8 @@
 ﻿using Domain.Abstractions.ConsoleSync;
+using Domain.Entities.Accounts;
+using Domain.Entities;
 using Domain.Entities.Interfaces;
+using Domain.Entities.Transactions;
 using Persistence.Data;
 
 namespace Persistence.Repository;
@@ -11,7 +14,27 @@ public class ConsoleEntityRepository<T> : IConsoleEntityRepository<T> where T : 
     public ConsoleEntityRepository(IDbEmulatorContext context)
     {
         _context = context;
-        _entities = _context!.GetList<T>()!.ToList();
+        var type = typeof(T);
+        if (type == typeof(SimpleAccount))
+        {
+            _entities = (_context.SimpleAccounts as List<T>)!;
+        }
+        else if (type == typeof(SimpleTransaction))
+        {
+            _entities = (_context.SimpleTransactions as List<T>)!;
+        }
+        else if (type == typeof(TransactionCategory))
+        {
+            _entities = (_context.TransactionCategories as List<T>)!;
+        }
+        else if (type == typeof(User))
+        {
+            _entities = (_context.Users as List<T>)!;
+        }
+        else
+        {
+            _entities = new List<T>();
+        }
     }
 
     public IReadOnlyList<T> ListAll()
