@@ -8,12 +8,12 @@
             <Label FontSize="Medium"
                    HorizontalOptions="Start"
                    Margin="10,20,10,0"
-                   Text="User Name"
+                   Text="Email"
                    VerticalOptions="Center"
                    VerticalTextAlignment="Center" />
             <Entry HorizontalOptions="End"
-                   Placeholder="User Name"
-                   Text="{Binding Name}"
+                   Placeholder="testemail@gmail.com"
+                   Text="{Binding Email}"
                    WidthRequest="150" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
