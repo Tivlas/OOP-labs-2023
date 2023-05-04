@@ -1,4 +1,4 @@
-﻿namespace FinanceManagementMAUI;
+﻿namespace FinanceManagementMAUI.Pages;
 
 public partial class MainPage : ContentPage
 {
