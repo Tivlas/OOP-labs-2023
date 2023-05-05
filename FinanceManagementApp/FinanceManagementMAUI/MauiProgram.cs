@@ -54,6 +54,7 @@ public static class MauiProgram
         services.AddSingleton<IUnitOfWork, EfUnitOfWork>();
         services.AddSingleton<IPasswordValidator, PasswordValidator>();
         services.AddSingleton<IEmailValidator, EmailValidator>();
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
     }
 
     private static void SetupPages(IServiceCollection services)
