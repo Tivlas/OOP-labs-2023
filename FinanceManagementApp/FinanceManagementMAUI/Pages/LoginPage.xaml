@@ -8,7 +8,7 @@
              iOsSpecific:Page.UseSafeArea="True"
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
-             BackgroundColor="White">
+             >
     <ContentPage.Resources>
         <converters:LoginPageEmailToColorConverter x:Key="EmailConverter" />
         <converters:LoginPagePasswordToColorConverter x:Key="PasswordConverter" />
@@ -16,7 +16,7 @@
             <Style x:Key="Prompt"
                    TargetType="Label">
                 <Setter Property="TextColor"
-                        Value="Black" />
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
                 <Setter Property="FontSize"
                         Value="Medium" />
                 <Setter Property="FontAttributes"
@@ -38,9 +38,13 @@
                 <Setter Property="Margin"
                         Value="0,20,0,0" />
                 <Setter Property="TextColor"
-                        Value="Black" />
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource Primary}}" />
                 <Setter Property="WidthRequest"
                         Value="125" />
+                <Setter Property="HeightRequest"
+                        Value="60" />
+                <Setter Property="LineBreakMode"
+                        Value="WordWrap" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -56,7 +60,7 @@
             <Entry Grid.Row="0"
                    Grid.Column="1"
                    Grid.ColumnSpan="2"
-                   Placeholder="email_address@gmail.com"
+                   Placeholder="test@gmail.com"
                    Text="{Binding Email}"
                    WidthRequest="150"
                    TextColor="{Binding IsEmailValid, Converter={StaticResource EmailConverter}}" />
@@ -77,7 +81,7 @@
                     Grid.Column="0"
                     Command="{Binding DoLoginCommand}"
                     Style="{StaticResource LoginButton}"
-                    Text="Submit" />
+                    Text="Log in" />
             <Button Grid.Row="2"
                     Grid.Column="1"
                     Command="{Binding DoCreateAccountCommand}"
