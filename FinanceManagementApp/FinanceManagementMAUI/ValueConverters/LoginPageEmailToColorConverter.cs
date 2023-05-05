@@ -3,7 +3,7 @@
 namespace FinanceManagementMAUI.ValueConverters;
 public class LoginPageEmailToColorConverter : IValueConverter
 {
-    private readonly Color _valid = Colors.Black;
+    private readonly Color _valid = App.Current.PlatformAppTheme == AppTheme.Dark ? Colors.White : Colors.Black;
     private readonly Color _invalid = Colors.Red;
 
     public LoginPageEmailToColorConverter()
