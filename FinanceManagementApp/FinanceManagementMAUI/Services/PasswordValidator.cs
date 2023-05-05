@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FinanceManagementMAUI.Models;
+﻿namespace FinanceManagementMAUI.Services;
 public class PasswordValidator : IPasswordValidator
 {
     public bool IsValid(string? password)

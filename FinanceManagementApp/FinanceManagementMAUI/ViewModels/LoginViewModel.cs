@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Abstractions.NotConsole;
+﻿using Application.Abstractions.NotConsole;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities;
-using FinanceManagementMAUI.Models;
+using FinanceManagementMAUI.Services;
 
 namespace FinanceManagementMAUI.ViewModels;
 public partial class LoginViewModel : ObservableObject
@@ -50,6 +45,5 @@ public partial class LoginViewModel : ObservableObject
             await _userService.AddAsync(new User(Email, Password));
             ShowActivityIndicator = false;
         }
-
     }
 }

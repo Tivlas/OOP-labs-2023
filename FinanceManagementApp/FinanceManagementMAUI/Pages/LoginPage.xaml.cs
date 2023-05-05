@@ -7,8 +7,8 @@ public partial class LoginPage : ContentPage
     private readonly LoginViewModel _vm;
 
     public LoginPage(LoginViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }

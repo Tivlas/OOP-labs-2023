@@ -1,4 +1,4 @@
-﻿namespace FinanceManagementMAUI.Models;
+﻿namespace FinanceManagementMAUI.Services;
 
 public interface IPasswordValidator : IValidator
 {
