@@ -3,6 +3,7 @@ using Application.Abstractions.NotConsole;
 using Application.Services.NotConsole;
 using CommunityToolkit.Maui;
 using Domain.Abstractions.NotForConsoleAsync;
+using FinanceManagementMAUI.Models;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -46,11 +47,13 @@ public static class MauiProgram
 
     private static void SetupServices(IServiceCollection services)
     {
-        services.AddSingleton<IUnitOfWork, EfUnitOfWork>();
         services.AddSingleton<ISimpleAccountService, SimpleAccountService>();
         services.AddSingleton<ISimpleTransactionService, SimpleTransactionService>();
         services.AddSingleton<IUserService, UserService>();
         services.AddSingleton<ITransactionCategoryService, TransactionCategoryService>();
+        services.AddSingleton<IUnitOfWork, EfUnitOfWork>();
+        services.AddSingleton<IPasswordValidator, PasswordValidator>();
+        services.AddSingleton<IEmailValidator, EmailValidator>();
     }
 
     private static void SetupPages(IServiceCollection services)
