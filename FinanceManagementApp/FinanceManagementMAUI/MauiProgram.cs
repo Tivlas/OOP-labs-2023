@@ -41,7 +41,7 @@ public static class MauiProgram
         SetupViewModels(builder.Services);
         SetupPages(builder.Services);
         SetupDbContext(builder);
-
+        DropDbForDevelopmentPurposes(builder.Services.BuildServiceProvider());
         return builder.Build();
     }
 
@@ -55,6 +55,7 @@ public static class MauiProgram
         services.AddSingleton<IPasswordValidator, PasswordValidator>();
         services.AddSingleton<IEmailValidator, EmailValidator>();
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
+        services.AddSingleton<IPopupService, PopupService>();
     }
 
     private static void SetupPages(IServiceCollection services)
@@ -81,6 +82,11 @@ public static class MauiProgram
         connectionString = string.Format(connectionString, dataDirectory);
         var options = new DbContextOptionsBuilder<AppDbContext>().UseSqlite(connectionString).Options;
         builder.Services.AddSingleton((s) => new AppDbContext(options));
+    }
 
+    private static void DropDbForDevelopmentPurposes(IServiceProvider provider)
+    {
+        var unitOfWork = provider.GetRequiredService<IUnitOfWork>();
+        unitOfWork.RemoveDatbaseAsync();
     }
 }
