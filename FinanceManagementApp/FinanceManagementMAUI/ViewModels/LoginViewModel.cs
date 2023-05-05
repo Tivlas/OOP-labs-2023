@@ -12,6 +12,7 @@ public partial class LoginViewModel : ObservableObject
     private readonly IEmailValidator _emailValidator;
     private readonly IPasswordHasher _passwordHasher;
     private readonly IPopupService _popupService;
+    private readonly IEmailVerifier _emailVerifier;
     [ObservableProperty] private string _email;
     [ObservableProperty] private string _password;
     [ObservableProperty] private bool _showActivityIndicator;
@@ -19,16 +20,19 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty] private bool _isPasswordValid = true;
 
     public LoginViewModel(IUserService userService, IPasswordValidator passwordValidator,
-        IEmailValidator emailValidator, IPasswordHasher passwordHasher, IPopupService popupService)
+        IEmailValidator emailValidator, IPasswordHasher passwordHasher, 
+        IPopupService popupService, IEmailVerifier emailVerifier)
     {
         _userService = userService;
         _passwordValidator = passwordValidator;
         _emailValidator = emailValidator;
         _passwordHasher = passwordHasher;
         _popupService = popupService;
+        _emailVerifier = emailVerifier;
     }
 
     [RelayCommand] async Task DoLogin() => await Login();
+    [RelayCommand] async Task DoCreateAccount() => await CreateAccount();
 
     private void SetValidFlags()
     {
@@ -57,11 +61,32 @@ public partial class LoginViewModel : ObservableObject
             }
             else
             {
-                ShowActivityIndicator = true;
-                await _userService.AddAsync(new User(Email, _passwordHasher.Hash(Password)));
-                ShowActivityIndicator = false;
+                // TODO
             }
 
+        }
+    }
+
+    public async Task CreateAccount()
+    {
+        SetValidFlags();
+        if (BothFlagsValid())
+        {
+            var user = await _userService.FirstOrDefaultAsync(u => u.Email == Email);
+            if (user is null)
+            {
+                ShowActivityIndicator = true;
+                bool valid = await _emailVerifier.Verify(Email);
+                ShowActivityIndicator = false;
+                if (!valid)
+                {
+                    await _popupService.Alert("Wrong email address", "Such email does not exist!", "Ok");
+                }
+                else
+                {
+                    await _userService.AddAsync(new User(Email, _passwordHasher.Hash(Password)));
+                }
+            }
         }
     }
 }
