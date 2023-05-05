@@ -3,6 +3,7 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+FinanceManagementApp/FinanceManagementMAUI/Models/PasswordHasher.cs
 # User-specific files
 *.rsuser
 *.suo
