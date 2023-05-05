@@ -2,10 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities;
-using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Xaml;
 
 namespace FinanceManagementMAUI.ViewModels;
 public partial class LoginViewModel : ObservableObject

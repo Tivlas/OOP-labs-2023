@@ -74,7 +74,7 @@ public static class MauiProgram
             .GetConnectionString("SqliteConnection");
         string dataDirectory = string.Empty;
 #if ANDROID
-            dataDirectory = FileSystem.AppDataDirectory + Path.DirectorySeparatorChar;
+        dataDirectory = FileSystem.AppDataDirectory + Path.DirectorySeparatorChar;
 #else
         dataDirectory = AppDomain.CurrentDomain.BaseDirectory + Path.DirectorySeparatorChar;
 #endif

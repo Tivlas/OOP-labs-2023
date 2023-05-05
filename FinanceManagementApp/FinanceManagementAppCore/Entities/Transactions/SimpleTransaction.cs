@@ -4,7 +4,7 @@
     {
         public SimpleTransaction()
         {
-            
+
         }
         public SimpleTransaction(DateTime transactionDate, bool isIncome, decimal amountOfMoney, int accountId, TransactionCategory category, string comment, int userId) : base(transactionDate, amountOfMoney, accountId, userId)
         {

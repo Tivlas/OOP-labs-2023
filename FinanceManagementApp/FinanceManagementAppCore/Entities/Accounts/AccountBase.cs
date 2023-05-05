@@ -8,7 +8,7 @@ namespace Domain.Entities.Accounts
 
         public AccountBase()
         {
-            
+
         }
         public AccountBase(decimal balance, string currencyName, string name, int userId)
         {

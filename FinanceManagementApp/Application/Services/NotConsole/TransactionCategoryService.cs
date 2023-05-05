@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Application.Abstractions.NotConsole;
 using Domain.Abstractions.NotForConsoleAsync;
-using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 
 namespace Application.Services.NotConsole;

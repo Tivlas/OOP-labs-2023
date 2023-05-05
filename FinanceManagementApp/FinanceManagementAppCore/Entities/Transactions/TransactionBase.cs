@@ -8,7 +8,7 @@ namespace Domain.Entities.Transactions
 
         public TransactionBase()
         {
-            
+
         }
         public TransactionBase(DateTime transactionDate, decimal amountOfMoney, int accountId, int userId)
         {

@@ -8,7 +8,7 @@ namespace Domain.Entities.Transactions
 
         public TransactionCategory()
         {
-            
+
         }
         public TransactionCategory(string name, int userId)
         {
