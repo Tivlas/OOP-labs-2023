@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
+	  <None Remove="Resources\Images\wallet_icon.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
