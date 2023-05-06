@@ -52,8 +52,8 @@
     </ContentPage.Resources>
 
     <VerticalStackLayout>
-        <Grid ColumnDefinitions="*,*,*"
-              RowDefinitions="Auto,Auto,Auto,Auto"
+        <Grid ColumnDefinitions="*,*"
+              RowDefinitions="Auto,Auto,Auto"
               RowSpacing="10">
             <Label Grid.Row="0"
                    Grid.Column="0"
@@ -61,7 +61,6 @@
                    Text="Email" />
             <Entry Grid.Row="0"
                    Grid.Column="1"
-                   Grid.ColumnSpan="2"
                    Placeholder="test@gmail.com"
                    Text="{Binding Email}"
                    WidthRequest="150"
@@ -73,7 +72,6 @@
                    Text="Password" />
             <Entry Grid.Row="1"
                    Grid.Column="1"
-                   Grid.ColumnSpan="2"
                    IsPassword="True"
                    Placeholder="Password"
                    Text="{Binding Password}"
@@ -89,12 +87,6 @@
                     Command="{Binding DoCreateAccountCommand}"
                     Style="{StaticResource LoginButton}"
                     Text="Create Account" />
-            <Button Grid.Row="2"
-                    Grid.Column="2"
-                    BackgroundColor="LightGray"
-                    Command="{Binding ForgotPasswordCommand}"
-                    Style="{StaticResource LoginButton}"
-                    Text="Forgot Password" />
         </Grid>
 
         <ActivityIndicator x:Name="activityIndicator"
