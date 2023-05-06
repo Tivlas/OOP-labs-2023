@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels;
 public partial class LoginViewModel : ObservableObject
@@ -13,6 +14,7 @@ public partial class LoginViewModel : ObservableObject
     private readonly IPasswordHasher _passwordHasher;
     private readonly IPopupService _popupService;
     private readonly IEmailVerifier _emailVerifier;
+    private readonly IPreferencesService _preferencesService;
     [ObservableProperty] private string _email;
     [ObservableProperty] private string _password;
     [ObservableProperty] private bool _showActivityIndicator;
@@ -21,7 +23,7 @@ public partial class LoginViewModel : ObservableObject
 
     public LoginViewModel(IUserService userService, IPasswordValidator passwordValidator,
         IEmailValidator emailValidator, IPasswordHasher passwordHasher, 
-        IPopupService popupService, IEmailVerifier emailVerifier)
+        IPopupService popupService, IEmailVerifier emailVerifier, IPreferencesService preferencesService)
     {
         _userService = userService;
         _passwordValidator = passwordValidator;
@@ -29,6 +31,7 @@ public partial class LoginViewModel : ObservableObject
         _passwordHasher = passwordHasher;
         _popupService = popupService;
         _emailVerifier = emailVerifier;
+        _preferencesService = preferencesService;
     }
 
     [RelayCommand] async Task DoLogin() => await Login();
@@ -61,8 +64,8 @@ public partial class LoginViewModel : ObservableObject
             }
             else
             {
-                Preferences.Default.Set("id", user.Id);
-                await Shell.Current.GoToAsync("..");
+                _preferencesService.SetUserData(user.Id, user.Email);
+                await Shell.Current.GoToAsync("//MainPage");
             }
         }
     }
@@ -87,7 +90,7 @@ public partial class LoginViewModel : ObservableObject
                 {
                     var u = new User(Email, _passwordHasher.Hash(Password));
                     await _userService.AddAsync(u);
-                    Preferences.Default.Set("id", u.Id);
+                    _preferencesService.SetUserData(u.Id, u.Email);
                     await Shell.Current.GoToAsync("//MainPage");
                 }
             }

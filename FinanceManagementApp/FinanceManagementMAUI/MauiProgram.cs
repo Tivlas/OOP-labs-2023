@@ -5,6 +5,7 @@ using CommunityToolkit.Maui;
 using Domain.Abstractions.NotForConsoleAsync;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.PreferencesServices;
 using FinanceManagementMAUI.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -57,6 +58,7 @@ public static class MauiProgram
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IPopupService, PopupService>();
         services.AddSingleton<IEmailVerifier, EmailVeifier>();
+        services.AddSingleton<IPreferencesService, PreferencesService>();
     }
 
     private static void SetupPages(IServiceCollection services)
