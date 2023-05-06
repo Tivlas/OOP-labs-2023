@@ -20,4 +20,6 @@ public interface IBaseService<T> where T : IEntity
 
     Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, CancellationToken
    cancellationToken = default);
+
+    Task SaveChangesAsync();
 }

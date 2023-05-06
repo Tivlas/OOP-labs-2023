@@ -47,4 +47,9 @@ public class UserService : IUserService
     {
         return _unitOfWork.UsersRepository.FirstOrDefaultAsync(filter, cancellationToken);
     }
+
+    public Task SaveChangesAsync()
+    {
+        return _unitOfWork.SaveAllAsync();
+    }
 }

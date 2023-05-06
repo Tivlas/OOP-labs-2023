@@ -46,4 +46,9 @@ public class SimpleAccountService : ISimpleAccountService
     {
         return _unitOfWork.SimpleAccountsRepository.FirstOrDefaultAsync(filter, cancellationToken);
     }
+
+    public Task SaveChangesAsync()
+    {
+        return _unitOfWork.SaveAllAsync();
+    }
 }

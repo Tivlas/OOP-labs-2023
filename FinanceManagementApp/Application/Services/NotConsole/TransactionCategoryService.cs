@@ -47,4 +47,9 @@ public class TransactionCategoryService : ITransactionCategoryService
     {
         return _unitOfWork.TransactionCategoriesRepository.FirstOrDefaultAsync(filter, cancellationToken);
     }
+
+    public Task SaveChangesAsync()
+    {
+        return _unitOfWork.SaveAllAsync();
+    }
 }

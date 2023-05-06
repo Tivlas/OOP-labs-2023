@@ -47,4 +47,9 @@ public class SimpleTransactionService : ISimpleTransactionService
     {
         return _unitOfWork.SimpleTransactionsRepository.FirstOrDefaultAsync(filter, cancellationToken);
     }
+
+    public Task SaveChangesAsync()
+    {
+        return _unitOfWork.SaveAllAsync();
+    }
 }
