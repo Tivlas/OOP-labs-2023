@@ -19,6 +19,7 @@ public partial class MainViewModel : ObservableObject
         int id = _preferencesService.Get("id", -1);
         if (id == -1)
         {
+            await App.Current.MainPage.DisplayAlert("No account", "You are not logged in", "Log in");
             await Shell.Current.GoToAsync("login");
         }
     }
