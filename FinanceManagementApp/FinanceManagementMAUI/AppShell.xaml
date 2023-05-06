@@ -11,9 +11,6 @@
                       ContentTemplate="{DataTemplate pages:MainPage}"
                       Route="MainPage" />
         
-        <ShellContent Title="Login"
-                      ContentTemplate="{DataTemplate pages:LoginPage}"
-                      Route="LoginPage" />
 
     </TabBar>
 

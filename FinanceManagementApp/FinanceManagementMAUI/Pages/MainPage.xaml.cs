@@ -1,24 +1,16 @@
-﻿namespace FinanceManagementMAUI.Pages;
+﻿using FinanceManagementMAUI.ViewModels;
+
+namespace FinanceManagementMAUI.Pages;
 
 public partial class MainPage : ContentPage
 {
-    int count = 0;
+    private readonly MainViewModel _vm;
 
-    public MainPage()
+    public MainPage(MainViewModel vm)
     {
         InitializeComponent();
-    }
-
-    private void OnCounterClicked(object sender, EventArgs e)
-    {
-        count++;
-
-        if (count == 1)
-            CounterBtn.Text = $"Clicked {count} time";
-        else
-            CounterBtn.Text = $"Clicked {count} times";
-
-        SemanticScreenReader.Announce(CounterBtn.Text);
+        _vm = vm;
+        BindingContext = _vm;
     }
 }
 

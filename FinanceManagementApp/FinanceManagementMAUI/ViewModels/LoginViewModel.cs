@@ -61,9 +61,9 @@ public partial class LoginViewModel : ObservableObject
             }
             else
             {
-                // TODO
+                Preferences.Default.Set("id", user.Id);
+                await Shell.Current.GoToAsync("..");
             }
-
         }
     }
 
@@ -76,7 +76,8 @@ public partial class LoginViewModel : ObservableObject
             if (user is null)
             {
                 ShowActivityIndicator = true;
-                bool valid = await _emailVerifier.Verify(Email);
+                //bool valid = await _emailVerifier.Verify(Email); // Закоментил, тк в месяц ограничение на количество проверок
+                bool valid = true;
                 ShowActivityIndicator = false;
                 if (!valid)
                 {
@@ -84,7 +85,10 @@ public partial class LoginViewModel : ObservableObject
                 }
                 else
                 {
-                    await _userService.AddAsync(new User(Email, _passwordHasher.Hash(Password)));
+                    var u = new User(Email, _passwordHasher.Hash(Password));
+                    await _userService.AddAsync(u);
+                    Preferences.Default.Set("id", u.Id);
+                    await Shell.Current.GoToAsync("//MainPage");
                 }
             }
         }

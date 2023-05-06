@@ -61,12 +61,14 @@ public static class MauiProgram
 
     private static void SetupPages(IServiceCollection services)
     {
+        services.AddSingleton<MainPage>();
         services.AddSingleton<LoginPage>();
     }
 
     private static void SetupViewModels(IServiceCollection services)
     {
         services.AddSingleton<LoginViewModel>();
+        services.AddSingleton<MainViewModel>();
     }
 
     private static void SetupDbContext(MauiAppBuilder builder)
@@ -89,5 +91,6 @@ public static class MauiProgram
     {
         var unitOfWork = provider.GetRequiredService<IUnitOfWork>();
         unitOfWork.RemoveDatbaseAsync();
+        Preferences.Default.Remove("id");
     }
 }

@@ -9,6 +9,8 @@
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
              >
+    
+    
     <ContentPage.Resources>
         <converters:LoginPageEmailToColorConverter x:Key="EmailConverter" />
         <converters:LoginPagePasswordToColorConverter x:Key="PasswordConverter" />
