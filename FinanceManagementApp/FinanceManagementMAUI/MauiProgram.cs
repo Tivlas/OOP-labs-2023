@@ -89,10 +89,11 @@ public static class MauiProgram
         builder.Services.AddSingleton((s) => new AppDbContext(options));
     }
 
-    private static void DropDbForDevelopmentPurposes(IServiceProvider provider)
+    private async static void DropDbForDevelopmentPurposes(IServiceProvider provider)
     {
         var unitOfWork = provider.GetRequiredService<IUnitOfWork>();
-        unitOfWork.RemoveDatbaseAsync();
+        var u = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.Email == "tima051003@gmail.com");
+        await unitOfWork.RemoveDatbaseAsync();
         Preferences.Default.Remove("id");
     }
 }

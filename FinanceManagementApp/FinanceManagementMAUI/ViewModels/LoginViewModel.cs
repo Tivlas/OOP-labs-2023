@@ -90,6 +90,7 @@ public partial class LoginViewModel : ObservableObject
                 {
                     var u = new User(Email, _passwordHasher.Hash(Password));
                     await _userService.AddAsync(u);
+                    await _userService.SaveChangesAsync();
                     _preferencesService.SetUserData(u.Id, u.Email);
                     await Shell.Current.GoToAsync("//MainPage");
                 }
