@@ -35,10 +35,11 @@ namespace FinanceManagementMAUI.ViewModels
             var userId = _preferencesService.Get("id", -1);
             if (userId != -1 && await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == Name) is null)
             {
+                
                 var tc = new TransactionCategory(Name, userId);
                 await _transactionCategoryService.AddAsync(tc);
                 await _transactionCategoryService.SaveChangesAsync();
-                await _popupService.ShowToast("Successfully added!", ToastDuration.Long, 14);
+                await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
             }
         }
     }

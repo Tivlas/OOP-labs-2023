@@ -1,11 +1,10 @@
 ﻿using Domain.Entities.Interfaces;
+using SQLite;
 
 namespace Domain.Entities.Accounts
 {
     public abstract class AccountBase : IBankEntity
     {
-        private static int s_IdController = 0;
-
         public AccountBase()
         {
 
@@ -16,8 +15,6 @@ namespace Domain.Entities.Accounts
             CurrencyName = currencyName;
             Name = name;
             UserId = userId;
-            Id = s_IdController;
-            ++s_IdController;
         }
 
         public decimal Balance { get; set; }
@@ -26,11 +23,12 @@ namespace Domain.Entities.Accounts
 
         public string Name { get; set; }
 
-        public int UserId { get; init; }
+        public int UserId { get; set; }
 
         public User? User { get; set; }
 
-        public int Id { get; init; }
+        [PrimaryKey, Indexed, AutoIncrement]
+        public int Id { get; set; }
 
         public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
         {

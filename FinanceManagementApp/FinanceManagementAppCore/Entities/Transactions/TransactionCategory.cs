@@ -1,11 +1,9 @@
 ﻿using Domain.Entities.Interfaces;
-
+using SQLite;
 namespace Domain.Entities.Transactions
 {
     public class TransactionCategory : INamedEntity, IRelatedToUser
     {
-        private static int s_IdController = 0;
-
         public TransactionCategory()
         {
 
@@ -14,15 +12,14 @@ namespace Domain.Entities.Transactions
         {
             Name = name;
             UserId = userId;
-            Id = s_IdController;
-            ++s_IdController;
         }
 
         public string Name { get; set; }
 
-        public int Id { get; init; }
+        [PrimaryKey, Indexed, AutoIncrement]
+        public int Id { get; set; }
 
-        public int UserId { get; init; }
+        public int UserId { get; set; }
 
         public User? User { get; set; }
 

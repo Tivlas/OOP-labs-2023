@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entities.Accounts;
 using Domain.Entities.Interfaces;
+using SQLite;
 
 namespace Domain.Entities.Transactions
 {
     public abstract class TransactionBase : IEntity, IRelatedToUser
     {
-        private static int s_IdController = 0;
-
         public TransactionBase()
         {
 
@@ -17,17 +16,16 @@ namespace Domain.Entities.Transactions
             TransactionDate = transactionDate;
             AmountOfMoney = amountOfMoney;
             UserId = userId;
-            Id = s_IdController;
-            ++s_IdController;
         }
 
         public DateTime TransactionDate { get; set; }
 
         public decimal AmountOfMoney { get; set; }
 
-        public int Id { get; init; }
+        [PrimaryKey, Indexed, AutoIncrement]
+        public int Id { get; set; }
 
-        public int UserId { get; init; }
+        public int UserId { get; set; }
 
         public User? User { get; set; }
 

@@ -86,7 +86,7 @@ public static class MauiProgram
 #endif
 
         connectionString = string.Format(connectionString, dataDirectory);
-        var options = new DbContextOptionsBuilder<AppDbContext>().UseSqlite(connectionString).Options;
+        var options = new DbContextOptionsBuilder<AppDbContext>().UseSqlite(connectionString).EnableSensitiveDataLogging().Options;
         builder.Services.AddSingleton((s) => new AppDbContext(options));
     }
 }

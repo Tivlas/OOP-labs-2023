@@ -20,11 +20,15 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>().HasKey(u => u.Id);
         modelBuilder.Entity<User>().HasAlternateKey(u => u.Email);
-        modelBuilder.Entity<User>().HasMany(u => u.SimpleAccounts).WithOne(sa => sa.User).HasForeignKey(u => u.UserId);
-        modelBuilder.Entity<User>().HasMany(u => u.SimpleTransactions).WithOne(st => st.User).HasForeignKey(u => u.UserId);
-        modelBuilder.Entity<User>().HasMany(u => u.TransactionCategories).WithOne(tc => tc.User).HasForeignKey(u => u.UserId);
-        modelBuilder.Entity<SimpleTransaction>().HasOne(st => st.SimpleAccount).WithMany(sa => sa.SimpleTransactions).HasForeignKey(st => st.SimpleAccountId);
+        modelBuilder.Entity<User>().HasMany(u => u.SimpleAccounts).WithOne(sa => sa.User).HasForeignKey(sa => sa.UserId);
+        modelBuilder.Entity<User>().HasMany(u => u.SimpleTransactions).WithOne(st => st.User).HasForeignKey(sa => sa.UserId);
+        modelBuilder.Entity<User>().HasMany(u => u.TransactionCategories).WithOne(tc => tc.User).HasForeignKey(sa => sa.UserId);
+        modelBuilder.Entity<SimpleTransaction>().HasOne(st => st.SimpleAccount).WithMany(sa => sa.SimpleTransactions).HasForeignKey(sa => sa.UserId);
+
+        modelBuilder.Entity<User>().Property(u => u.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<TransactionCategory>().Property(tc => tc.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<SimpleTransaction>().Property(st => st.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<SimpleAccount>().Property(sa => sa.Id).ValueGeneratedOnAdd();
     }
 }
