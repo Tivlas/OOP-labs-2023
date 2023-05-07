@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
+using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels;
@@ -48,5 +49,12 @@ public partial class DisplaySimpleAccountsViewModel : ObservableObject
         });
         await _simpleAccountService.DeleteAsync(simpleAccount);
         await _simpleAccountService.SaveChangesAsync();
+    }
+
+    [RelayCommand] async Task DoAddSimpleAccount() => await AddSimpleAccount();
+
+    async Task AddSimpleAccount()
+    {
+        await Shell.Current.GoToAsync(nameof(AddSimpleAccountPage));
     }
 }
