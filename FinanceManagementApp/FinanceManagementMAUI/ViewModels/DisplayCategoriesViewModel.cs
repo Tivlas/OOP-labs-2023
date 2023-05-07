@@ -33,7 +33,7 @@ namespace FinanceManagementMAUI.ViewModels
             var tcs = await _transactionCategoryService.ListAsync(tc => tc.UserId == _preferencesService.Get("id", -1));
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                foreach(var tc in tcs)
+                foreach (var tc in tcs)
                 {
                     Categories.Add(tc);
                 }
@@ -45,6 +45,18 @@ namespace FinanceManagementMAUI.ViewModels
         async Task AddCategory()
         {
             await Shell.Current.GoToAsync(nameof(AddCategoryPage));
+        }
+
+        [RelayCommand] async Task DoEdit(TransactionCategory category) => await Edit(category);
+
+        async Task Edit(TransactionCategory category)
+        {
+            IDictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"TransactionCategory", (category)}
+                };
+
+            await Shell.Current.GoToAsync(nameof(EditCategoryPage), parameters);
         }
     }
 }

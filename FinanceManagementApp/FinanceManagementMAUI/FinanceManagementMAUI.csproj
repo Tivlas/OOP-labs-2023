@@ -75,13 +75,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\EditCategoryPage.xaml.cs">
+	    <DependentUpon>EditCategoryPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\AddCategoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\DisplayCategoriesPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\EditOrRemoveCategoryPage.xaml">
+	  <MauiXaml Update="Pages\EditCategoryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\LoginPage.xaml">
