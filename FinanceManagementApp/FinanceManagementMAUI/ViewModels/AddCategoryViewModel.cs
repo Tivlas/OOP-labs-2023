@@ -38,7 +38,7 @@ namespace FinanceManagementMAUI.ViewModels
         {
             var userId = _preferencesService.Get("id", -1);
             Name ??= Const.Constants.NoCategory;
-            if (userId != -1 && await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == Name) is null)
+            if (userId != -1 && await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == Name && tc.UserId == userId) is null)
             {
                 
                 var tc = new TransactionCategory(Name, userId);
