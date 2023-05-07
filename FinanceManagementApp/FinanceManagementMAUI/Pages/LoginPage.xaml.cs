@@ -4,12 +4,8 @@ namespace FinanceManagementMAUI.Pages;
 
 public partial class LoginPage : ContentPage
 {
-    private readonly LoginViewModel _vm;
-
-    public LoginPage(LoginViewModel vm)
+    public LoginPage()
     {
         InitializeComponent();
-        _vm = vm;
-        BindingContext = _vm;
     }
 }

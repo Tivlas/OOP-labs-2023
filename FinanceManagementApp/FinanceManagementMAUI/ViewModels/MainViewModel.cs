@@ -7,6 +7,11 @@ public partial class MainViewModel : ObservableObject
 {
     private readonly IPreferencesService _preferencesService;
 
+    public MainViewModel()
+    {
+        
+    }
+
     public MainViewModel(IPreferencesService preferencesService)
     {
         _preferencesService = preferencesService;

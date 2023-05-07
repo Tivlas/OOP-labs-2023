@@ -2,6 +2,7 @@
 <ContentPage x:Class="FinanceManagementMAUI.Pages.LoginPage"
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:FinanceManagementMAUI.ViewModels"
              xmlns:converters="clr-namespace:FinanceManagementMAUI.ValueConverters"
              xmlns:iOsSpecific="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              Title="Login"
@@ -9,7 +10,9 @@
              Shell.NavBarIsVisible="False"
              Shell.PresentationMode="ModalAnimated"
              >
-    
+    <ContentPage.BindingContext>
+        <viewmodels:LoginViewModel />
+    </ContentPage.BindingContext>
     
     <ContentPage.Resources>
         <converters:LoginPageEmailToColorConverter x:Key="EmailConverter" />

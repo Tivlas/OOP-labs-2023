@@ -21,6 +21,11 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty] private bool _isEmailValid = true;
     [ObservableProperty] private bool _isPasswordValid = true;
 
+    public LoginViewModel()
+    {
+        
+    }
+
     public LoginViewModel(IUserService userService, IPasswordValidator passwordValidator,
         IEmailValidator emailValidator, IPasswordHasher passwordHasher,
         IPopupService popupService, IEmailVerifier emailVerifier, IPreferencesService preferencesService)

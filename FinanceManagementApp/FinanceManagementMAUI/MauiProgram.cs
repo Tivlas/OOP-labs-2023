@@ -65,12 +65,14 @@ public static class MauiProgram
     {
         services.AddSingleton<MainPage>();
         services.AddSingleton<LoginPage>();
+        services.AddSingleton<AddCategoryPage>();
     }
 
     private static void SetupViewModels(IServiceCollection services)
     {
-        services.AddSingleton<LoginViewModel>();
         services.AddSingleton<MainViewModel>();
+        services.AddSingleton<LoginViewModel>();
+        services.AddSingleton<AddCategoryViewModel>();
     }
 
     private static void SetupDbContext(MauiAppBuilder builder)
