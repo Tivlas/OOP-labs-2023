@@ -41,8 +41,8 @@ public partial class EditSimpleAccountViewModel : ObservableObject, IQueryAttrib
         NewCurrencyName = SelectedAccount.CurrencyName;
     }
 
-    [RelayCommand] async Task DoEditCategory() => await EditCategory();
-    async Task EditCategory()
+    [RelayCommand] async Task DoEditCard() => await EditCard();
+    async Task EditCard()
     {
         if (string.IsNullOrWhiteSpace(NewName) || string.IsNullOrWhiteSpace(NewCurrencyName))
         {
