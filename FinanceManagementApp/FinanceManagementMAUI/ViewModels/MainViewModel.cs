@@ -28,4 +28,11 @@ public partial class MainViewModel : ObservableObject
             await Shell.Current.GoToAsync("login");
         }
     }
+
+    [RelayCommand] async Task DoAddCategory() => await AddCategory();
+
+    async Task AddCategory()
+    {
+        await Shell.Current.GoToAsync("addCategory");
+    }
 }
