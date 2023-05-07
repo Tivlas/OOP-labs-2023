@@ -28,16 +28,17 @@ namespace FinanceManagementMAUI.ViewModels
         }
 
         [ObservableProperty] private string _name;
-        [RelayCommand] async Task DoAddCategoryCommand() => await AddCategory();
+        [RelayCommand] async Task DoAddCategory() => await AddCategory();
 
         public async Task AddCategory()
         {
             var userId = _preferencesService.Get("id", -1);
-            if (userId != -1)
+            if (userId != -1 && await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == Name) is null)
             {
                 var tc = new TransactionCategory(Name, userId);
                 await _transactionCategoryService.AddAsync(tc);
-                await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
+                await _transactionCategoryService.SaveChangesAsync();
+                await _popupService.ShowToast("Successfully added!", ToastDuration.Long, 14);
             }
         }
     }

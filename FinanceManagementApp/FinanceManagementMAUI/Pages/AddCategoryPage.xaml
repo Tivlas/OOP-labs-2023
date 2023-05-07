@@ -21,19 +21,21 @@
                 <Setter Property="VerticalOptions"
                         Value="Center" />
                 <Setter Property="HorizontalOptions"
-                        Value="End" />
+                        Value="Center" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <VerticalStackLayout>
 
-        <Label Text="Название"
-               Style="{StaticResource JustLabel}" />
-        <Entry Text="{Binding Name}"
-               HeightRequest="50"
-               Placeholder="Family"
-               WidthRequest="150" />
+        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+            <Label Text="Название: "
+                   Style="{StaticResource JustLabel}" />
+            <Entry Text="{Binding Name}"
+                   HeightRequest="50"
+                   Placeholder="Family"
+                   WidthRequest="150" />
+        </HorizontalStackLayout>
 
         <Button Text="Добавить"
                 WidthRequest="200"
