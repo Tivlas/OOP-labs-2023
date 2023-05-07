@@ -1,12 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using FinanceManagementMAUI.ViewModels;
 
 namespace FinanceManagementMAUI.Pages;
 
 public partial class DisplayCategoriesPage : ContentPage
 {
-    private readonly DisplayColumnAttribute _vm;
+    private readonly DisplayCategoriesViewModel _vm;
 
-    public DisplayCategoriesPage(DisplayColumnAttribute vm)
+    public DisplayCategoriesPage(DisplayCategoriesViewModel vm)
 	{
 		InitializeComponent();
         _vm = vm;
