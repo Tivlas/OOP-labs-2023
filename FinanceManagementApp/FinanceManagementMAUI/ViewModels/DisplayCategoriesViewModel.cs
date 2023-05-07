@@ -28,6 +28,7 @@ namespace FinanceManagementMAUI.ViewModels
         [RelayCommand] async Task DoGetCategories() => await GetCategories();
         async Task GetCategories()
         {
+            Categories.Clear();
             var tcs = await _transactionCategoryService.ListAsync(tc => tc.UserId == _preferencesService.Get("id", -1));
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
