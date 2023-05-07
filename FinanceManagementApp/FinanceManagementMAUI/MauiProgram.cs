@@ -42,7 +42,6 @@ public static class MauiProgram
         SetupViewModels(builder.Services);
         SetupPages(builder.Services);
         SetupDbContext(builder);
-        DropDbForDevelopmentPurposes(builder.Services.BuildServiceProvider());
         return builder.Build();
     }
 
@@ -89,13 +88,5 @@ public static class MauiProgram
         connectionString = string.Format(connectionString, dataDirectory);
         var options = new DbContextOptionsBuilder<AppDbContext>().UseSqlite(connectionString).Options;
         builder.Services.AddSingleton((s) => new AppDbContext(options));
-    }
-
-    private async static void DropDbForDevelopmentPurposes(IServiceProvider provider)
-    {
-        var unitOfWork = provider.GetRequiredService<IUnitOfWork>();
-        var u = await unitOfWork.UsersRepository.FirstOrDefaultAsync(u => u.Email == "tima051003@gmail.com");
-        await unitOfWork.RemoveDatbaseAsync();
-        Preferences.Default.Remove("id");
     }
 }
