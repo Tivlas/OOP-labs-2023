@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinanceManagementMAUI.Pages.AddCategoryPage"
-             Title="AddCategoryPage">
+             Title="Adding category">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -29,7 +29,7 @@
     <VerticalStackLayout>
 
         <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-            <Label Text="Название: "
+            <Label Text="Name: "
                    Style="{StaticResource JustLabel}" />
             <Entry Text="{Binding Name}"
                    HeightRequest="50"
@@ -37,7 +37,7 @@
                    WidthRequest="150" />
         </HorizontalStackLayout>
 
-        <Button Text="Добавить"
+        <Button Text="Add"
                 WidthRequest="200"
                 Command="{Binding DoAddCategoryCommand}"/>
     </VerticalStackLayout>
