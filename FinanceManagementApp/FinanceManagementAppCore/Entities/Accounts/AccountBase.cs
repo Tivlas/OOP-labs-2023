@@ -28,6 +28,8 @@ namespace Domain.Entities.Accounts
 
         public int UserId { get; init; }
 
+        public User? User { get; set; }
+
         public int Id { get; init; }
 
         public virtual IEnumerable<(string PropName, object propValue)> GetInfo()

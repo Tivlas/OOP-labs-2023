@@ -24,6 +24,8 @@ namespace Domain.Entities.Transactions
 
         public int UserId { get; init; }
 
+        public User? User { get; set; }
+
         public IEnumerable<(string PropName, object propValue)> GetInfo()
         {
             List<(string PropName, object propValue)> info = new();

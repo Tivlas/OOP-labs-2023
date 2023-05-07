@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities.Transactions
+﻿using Domain.Entities.Accounts;
+
+namespace Domain.Entities.Transactions
 {
     public class SimpleTransaction : TransactionBase
     {
@@ -6,12 +8,17 @@
         {
 
         }
-        public SimpleTransaction(DateTime transactionDate, bool isIncome, decimal amountOfMoney, int accountId, TransactionCategory category, string comment, int userId) : base(transactionDate, amountOfMoney, accountId, userId)
+        public SimpleTransaction(int simpleAccountId, DateTime transactionDate, bool isIncome, decimal amountOfMoney, int accountId, TransactionCategory category, string comment, int userId) : base(transactionDate, amountOfMoney,  userId)
         {
             Category = category;
             Comment = comment;
             IsIncome = isIncome;
+            SimpleAccountId = simpleAccountId;
         }
+
+        public int SimpleAccountId { get; set; }
+
+        public SimpleAccount? SimpleAccount { get; set; }
 
         public TransactionCategory Category { get; set; }
 

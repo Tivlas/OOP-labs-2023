@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Interfaces;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Domain.Entities.Accounts;
+using Domain.Entities.Interfaces;
 
 namespace Domain.Entities.Transactions
 {
@@ -10,11 +12,10 @@ namespace Domain.Entities.Transactions
         {
 
         }
-        public TransactionBase(DateTime transactionDate, decimal amountOfMoney, int accountId, int userId)
+        public TransactionBase(DateTime transactionDate, decimal amountOfMoney, int userId)
         {
             TransactionDate = transactionDate;
             AmountOfMoney = amountOfMoney;
-            AccountId = accountId;
             UserId = userId;
             Id = s_IdController;
             ++s_IdController;
@@ -24,18 +25,17 @@ namespace Domain.Entities.Transactions
 
         public decimal AmountOfMoney { get; set; }
 
-        public int AccountId { get; set; }
-
         public int Id { get; init; }
 
         public int UserId { get; init; }
+
+        public User? User { get; set; }
 
         public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
         {
             List<(string PropName, object propValue)> info = new();
             info.Add(("TransactionDate", TransactionDate.Date.ToShortDateString()));
             info.Add(("AmountOfMoney", AmountOfMoney));
-            info.Add(("AccountId", AccountId));
             return info;
         }
     }

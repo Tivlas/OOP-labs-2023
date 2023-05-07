@@ -1,4 +1,6 @@
-﻿using Domain.Entities.Interfaces;
+﻿using Domain.Entities.Accounts;
+using Domain.Entities.Interfaces;
+using Domain.Entities.Transactions;
 
 namespace Domain.Entities
 {
@@ -19,6 +21,10 @@ namespace Domain.Entities
         public string Email { get; set; }
 
         public string Password { get; set; }
+
+        public List<TransactionCategory> TransactionCategories { get; set; } = new();
+        public List<SimpleAccount> SimpleAccounts { get; set; } = new();
+        public List<SimpleTransaction> SimpleTransactions { get; set; } = new();
 
         public IEnumerable<(string PropName, object propValue)> GetInfo()
         {
