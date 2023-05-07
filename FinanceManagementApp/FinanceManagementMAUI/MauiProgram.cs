@@ -65,6 +65,7 @@ public static class MauiProgram
         services.AddSingleton<MainPage>();
         services.AddSingleton<LoginPage>();
         services.AddSingleton<AddCategoryPage>();
+        services.AddSingleton<DisplayCategoriesPage>();
     }
 
     private static void SetupViewModels(IServiceCollection services)
@@ -72,6 +73,7 @@ public static class MauiProgram
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<AddCategoryViewModel>();
+        services.AddSingleton<DisplayCategoriesViewModel>();
     }
 
     private static void SetupDbContext(MauiAppBuilder builder)
