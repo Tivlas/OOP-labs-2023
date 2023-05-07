@@ -38,5 +38,12 @@ namespace FinanceManagementMAUI.ViewModels
                 }
             });
         }
+
+        [RelayCommand] async Task DoAddCategory() => await AddCategory();
+
+        async Task AddCategory()
+        {
+            await Shell.Current.GoToAsync("addCategory");
+        }
     }
 }

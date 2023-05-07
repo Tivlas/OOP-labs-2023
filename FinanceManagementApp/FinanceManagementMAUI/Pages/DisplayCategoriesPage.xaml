@@ -12,32 +12,38 @@
     </ContentPage.Behaviors>
 
 
-    <CollectionView x:Name="ResponsibilitiesView"
-                    ItemsSource="{Binding Categories}"
-                    HorizontalOptions="FillAndExpand"
-                    Margin="100, 0, 100, 0"
-                    >
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="entities:TransactionCategory">
-                <Frame BackgroundColor="Orange">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding 
+    <Grid RowDefinitions="*,7*"
+          RowSpacing="10">
+        <Button Grid.Row="0"
+                Text="Add transaction category"
+                WidthRequest="260"
+                HorizontalOptions="Center"
+                Command="{Binding DoAddCategoryCommand}" />
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Categories}"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="100, 0, 100, 0"
+                        VerticalScrollBarVisibility="Always">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="entities:TransactionCategory">
+                    <Frame BackgroundColor="Orange">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding 
                                 Source={RelativeSource AncestorType={x:Type models:DisplayCategoriesViewModel} },
                                     Path=DoEditCommand}"
-                                              CommandParameter="{Binding}" />
-                    </Frame.GestureRecognizers>
-                    <Label Grid.Row="0"
-                           Text="{Binding Name, StringFormat='Name: {0}'}"
-                           FontSize="Medium"
-                           HorizontalOptions="Fill"
-                           VerticalOptions="Fill"
-                           FontAutoScalingEnabled="True">
-                    </Label>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-
-
+                                                  CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
+                        <Label Grid.Row="0"
+                               Text="{Binding Name, StringFormat='Name: {0}'}"
+                               FontSize="Medium"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill"
+                               FontAutoScalingEnabled="True">
+                        </Label>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 
 </ContentPage>
