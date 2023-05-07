@@ -22,49 +22,58 @@
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding SimpleAccounts}"
                         HorizontalOptions="FillAndExpand"
-                        Margin="100, 0, 100, 0"
-                        VerticalScrollBarVisibility="Always">
+                        Margin="100, 0, 100, 0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="entities:SimpleAccount">
-                    <Frame BackgroundColor="Orange">
+                    <Frame BackgroundColor="Orange" HeightRequest="200">
                         <Frame.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding 
                                 Source={RelativeSource AncestorType={x:Type models:DisplaySimpleAccountsViewModel} },
                                     Path=DoEditCommand}"
                                                   CommandParameter="{Binding}" />
                         </Frame.GestureRecognizers>
-                        <HorizontalStackLayout Spacing="15">
-                            <Grid RowDefinitions="*,*,*">
-                                <Label Grid.Row="0"
-                                       Text="{Binding Name, StringFormat='Name: {0}'}"
-                                       FontSize="Medium"
-                                       HorizontalOptions="Fill"
-                                       VerticalOptions="Fill"
-                                       FontAutoScalingEnabled="True">
-                                </Label>
-                                <Label Grid.Row="1"
-                                       Text="{Binding CurrencyName, StringFormat='Currency: {0}'}"
-                                       FontSize="Medium"
-                                       HorizontalOptions="Fill"
-                                       VerticalOptions="Fill"
-                                       FontAutoScalingEnabled="True">
-                                </Label>
-                                <Label Grid.Row="2"
-                                       Text="{Binding Balance, StringFormat='Balance: {0}'}"
-                                       FontSize="Medium"
-                                       HorizontalOptions="Fill"
-                                       VerticalOptions="Fill"
-                                       FontAutoScalingEnabled="True">
-                                </Label>
-                            </Grid>
+                        <Grid RowDefinitions="*,*,*"
+                              ColumnDefinitions="*,Auto">
+                            <Label Grid.Row="0"
+                                   Grid.Column="0"
+                                   Text="{Binding Name, StringFormat='Name: {0}'}"
+                                   FontSize="Medium"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   FontAutoScalingEnabled="True"
+                                   HeightRequest="50">
+                            </Label>
+                            <Label Grid.Row="1"
+                                   Grid.Column="0"
+                                   Text="{Binding CurrencyName, StringFormat='Currency: {0}'}"
+                                   FontSize="Medium"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   FontAutoScalingEnabled="True"
+                                   HeightRequest="50">
+                            </Label>
+                            <Label Grid.Row="2"
+                                   Grid.Column="0"
+                                   Text="{Binding Balance, StringFormat='Balance: {0}'}"
+                                   FontSize="Medium"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   FontAutoScalingEnabled="True"
+                                   HeightRequest="50">
+                            </Label>
                             <Button x:DataType="models:DisplayCategoriesViewModel"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    HorizontalOptions="End"
                                     Text="X"
                                     BackgroundColor="Red"
+                                    HeightRequest="50"
+                                    WidthRequest="50"
                                     Command="{Binding 
                                 Source={RelativeSource AncestorType={x:Type models:DisplaySimpleAccountsViewModel} },
                                     Path=DoRemoveCommand}"
                                     CommandParameter="{Binding}" />
-                        </HorizontalStackLayout>
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
