@@ -22,8 +22,7 @@
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding Categories}"
                         HorizontalOptions="FillAndExpand"
-                        Margin="100, 0, 100, 0"
-                        VerticalScrollBarVisibility="Always">
+                        Margin="100, 0, 100, 0">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="entities:TransactionCategory">
                     <Frame BackgroundColor="Orange">
