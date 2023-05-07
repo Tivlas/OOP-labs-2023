@@ -11,7 +11,7 @@
                                         Command="{Binding DoCheckIfAlreadyLoggedInCommand}" />
     </ContentPage.Behaviors>
     <ScrollView>
-        <VerticalStackLayout Spacing="25"
+        <VerticalStackLayout Spacing="10"
                              Padding="30,0"
                              VerticalOptions="Center">
 
@@ -23,7 +23,9 @@
             <Button Text="Add transaction category"
                     WidthRequest="260"
                     Command="{Binding DoAddCategoryCommand}" />
-
+            <Button Text="Add card"
+                    WidthRequest="260"
+                    Command="{Binding DoAddCardCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 

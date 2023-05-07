@@ -33,4 +33,11 @@ public partial class MainViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync(nameof(AddCategoryPage));
     }
+
+    [RelayCommand] async Task DoAddCard() => await AddCard();
+
+    async Task AddCard()
+    {
+        await Shell.Current.GoToAsync(nameof(AddSimpleAccountPage));
+    }
 }
