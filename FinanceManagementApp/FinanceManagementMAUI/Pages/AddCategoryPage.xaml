@@ -4,10 +4,40 @@
              x:Class="FinanceManagementMAUI.Pages.AddCategoryPage"
              Title="AddCategoryPage">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="JustLabel"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                <Setter Property="FontSize"
+                        Value="Medium" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <Label Text="Название"
+               Style="{StaticResource JustLabel}" />
+        <Entry Text="{Binding Name}"
+               HeightRequest="50"
+               Placeholder="Family"
+               WidthRequest="150" />
+
+        <Button Text="Добавить"
+                WidthRequest="200"
+                Command="{Binding DoAddCategoryCommand}"
+                CommandParameter="{Binding}" />
     </VerticalStackLayout>
 </ContentPage>
