@@ -17,7 +17,6 @@ namespace FinanceManagementMAUI.ViewModels
     {
         private readonly ITransactionCategoryService _transactionCategoryService;
         private readonly IPreferencesService _preferencesService;
-
         public ObservableCollection<TransactionCategory> Categories { get; set; } = new();
         public DisplayCategoriesViewModel(ITransactionCategoryService transactionCategoryService,
             IPreferencesService preferencesService)
@@ -57,6 +56,17 @@ namespace FinanceManagementMAUI.ViewModels
                 };
 
             await Shell.Current.GoToAsync(nameof(EditCategoryPage), parameters);
+        }
+
+        [RelayCommand] async Task DoRemove(TransactionCategory category) => await RemoveCategory(category);
+        async Task RemoveCategory(TransactionCategory category)
+        {
+            await MainThread.InvokeOnMainThreadAsync(() =>
+            {
+                Categories.Remove(category);
+            });
+            await _transactionCategoryService.DeleteAsync(category);
+            await _transactionCategoryService.SaveChangesAsync();
         }
     }
 }

@@ -33,13 +33,23 @@
                                     Path=DoEditCommand}"
                                                   CommandParameter="{Binding}" />
                         </Frame.GestureRecognizers>
-                        <Label Grid.Row="0"
-                               Text="{Binding Name, StringFormat='Name: {0}'}"
-                               FontSize="Medium"
-                               HorizontalOptions="Fill"
-                               VerticalOptions="Fill"
-                               FontAutoScalingEnabled="True">
-                        </Label>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0"
+                                   Text="{Binding Name, StringFormat='Name: {0}'}"
+                                   FontSize="Medium"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   FontAutoScalingEnabled="True">
+                            </Label>
+                            <Button Grid.Column="1"
+                                    x:DataType="models:DisplayCategoriesViewModel"
+                                    Text="X"
+                                    BackgroundColor="Red"
+                                    Command="{Binding 
+                                Source={RelativeSource AncestorType={x:Type models:DisplayCategoriesViewModel} },
+                                    Path=DoRemoveCommand}" 
+                                    CommandParameter="{Binding}"/>
+                        </Grid>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
