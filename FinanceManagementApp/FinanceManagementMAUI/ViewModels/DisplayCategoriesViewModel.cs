@@ -8,6 +8,7 @@ using Application.Abstractions.NotConsole;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Transactions;
+using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels
@@ -43,7 +44,7 @@ namespace FinanceManagementMAUI.ViewModels
 
         async Task AddCategory()
         {
-            await Shell.Current.GoToAsync("addCategory");
+            await Shell.Current.GoToAsync(nameof(AddCategoryPage));
         }
     }
 }
