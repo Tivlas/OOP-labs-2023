@@ -4,9 +4,13 @@ namespace FinanceManagementMAUI.Pages;
 
 public partial class MainPage : ContentPage
 {
-    public MainPage()
+    private readonly MainViewModel _vm;
+
+    public MainPage(MainViewModel vm)
     {
         InitializeComponent();
+        _vm = vm;
+        BindingContext = _vm;
     }
 }
 
