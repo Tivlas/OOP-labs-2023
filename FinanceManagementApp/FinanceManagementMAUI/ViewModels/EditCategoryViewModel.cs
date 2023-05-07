@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Const;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels
 {
@@ -18,27 +19,31 @@ namespace FinanceManagementMAUI.ViewModels
         private readonly ITransactionCategoryService _transactionCategoryService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IPopupService _popupService;
+        private readonly IPreferencesService _preferencesService;
         [ObservableProperty] private TransactionCategory _selectedCategory;
         [ObservableProperty] private string _newName;
 
         public EditCategoryViewModel(ITransactionCategoryService transactionCategoryService, IServiceProvider serviceProvider,
-            IPopupService popupService)
+            IPopupService popupService, IPreferencesService preferencesService)
         {
             _transactionCategoryService = transactionCategoryService;
             _serviceProvider = serviceProvider;
             _popupService = popupService;
+            _preferencesService = preferencesService;
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             SelectedCategory = query["TransactionCategory"] as TransactionCategory;
+            NewName = SelectedCategory.Name;
         }
 
         [RelayCommand] async Task DoEditCategory() => await EditCategory();
         async Task EditCategory()
         {
             var tcs = _serviceProvider.GetRequiredService<DisplayCategoriesViewModel>().Categories;
-            var tcToEdit = await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == SelectedCategory.Name);
+            var tcToEdit = await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == SelectedCategory.Name &&
+            tc.UserId == _preferencesService.Get("id", -1));
             if (tcToEdit is not null)
             {
                 tcToEdit.Name = NewName ?? Constants.NoCategory;
