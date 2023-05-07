@@ -43,7 +43,7 @@ namespace FinanceManagementMAUI.ViewModels
             {
                 await _popupService.Alert("Wrong input", "Name and currency name must not be empty or white space", "Ok");
             }
-            else if (!decimal.TryParse(_balance, out decimal balance) || balance < 0)
+            else if (!decimal.TryParse(Balance, out decimal balance) || balance < 0)
             {
                 await _popupService.Alert("Wrong balance input", "Enter number greater than zero", "Ok");
             }
@@ -52,6 +52,11 @@ namespace FinanceManagementMAUI.ViewModels
                 var card = new SimpleAccount(balance, CurrencyName, Name, userId);
                 await _simpleAccountService.AddAsync(card);
                 await _simpleAccountService.SaveChangesAsync();
+                var saccs = _serviceProvider.GetRequiredService<DisplaySimpleAccountsViewModel>().SimpleAccounts;
+                await MainThread.InvokeOnMainThreadAsync(() =>
+                {
+                    saccs.Add(card);
+                });
                 await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
             }
         }
