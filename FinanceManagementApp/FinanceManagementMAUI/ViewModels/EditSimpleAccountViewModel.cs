@@ -74,7 +74,7 @@ public partial class EditSimpleAccountViewModel : ObservableObject, IQueryAttrib
                 SelectedAccount.Balance = balance;
                 saccs[index] = SelectedAccount;
             });
-            await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
+            await _popupService.ShowToast("Successfully edited!", ToastDuration.Short, 14);
         }
     }
 }

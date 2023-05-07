@@ -67,7 +67,7 @@
                    WidthRequest="150" />
         </Grid>
 
-        <Button Text="Add"
+        <Button Text="Edit"
                 WidthRequest="200"
                 VerticalOptions="End"
                 HorizontalOptions="Center"
