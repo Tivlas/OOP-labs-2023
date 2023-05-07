@@ -37,7 +37,6 @@
 
         <Button Text="Добавить"
                 WidthRequest="200"
-                Command="{Binding DoAddCategoryCommand}"
-                CommandParameter="{Binding}" />
+                Command="{Binding DoAddCategoryCommand}"/>
     </VerticalStackLayout>
 </ContentPage>
