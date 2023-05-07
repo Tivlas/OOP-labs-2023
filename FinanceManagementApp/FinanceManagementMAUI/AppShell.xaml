@@ -12,6 +12,10 @@
         <ShellContent Title="Categories"
                       ContentTemplate="{DataTemplate pages:DisplayCategoriesPage}"
                       Route="DisplayCategoriesPage" />
+
+        <ShellContent Title="Accounts"
+                      ContentTemplate="{DataTemplate pages:DisplaySimpleAccountsPage}"
+                      Route="DisplaySimpleAccountsPage" />
     </TabBar>
 
 

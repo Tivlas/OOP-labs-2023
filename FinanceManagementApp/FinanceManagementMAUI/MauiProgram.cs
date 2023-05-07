@@ -67,6 +67,7 @@ public static class MauiProgram
         services.AddSingleton<AddCategoryPage>();
         services.AddSingleton<AddSimpleAccountPage>();
         services.AddSingleton<DisplayCategoriesPage>();
+        services.AddSingleton<DisplaySimpleAccountsPage>();
         services.AddSingleton<EditCategoryPage>();
     }
 
@@ -77,6 +78,7 @@ public static class MauiProgram
         services.AddSingleton<AddCategoryViewModel>();
         services.AddSingleton<AddSimpleAccountViewModel>();
         services.AddSingleton<DisplayCategoriesViewModel>();
+        services.AddSingleton<DisplaySimpleAccountsViewModel>();
         services.AddSingleton<EditCategoryViewModel>();
     }
 
