@@ -64,22 +64,30 @@ public static class MauiProgram
     {
         services.AddSingleton<MainPage>();
         services.AddSingleton<LoginPage>();
+
         services.AddSingleton<AddCategoryPage>();
         services.AddSingleton<AddSimpleAccountPage>();
+
         services.AddSingleton<DisplayCategoriesPage>();
         services.AddSingleton<DisplaySimpleAccountsPage>();
+
         services.AddSingleton<EditCategoryPage>();
+        services.AddSingleton<EditSimpleAccountPage>();
     }
 
     private static void SetupViewModels(IServiceCollection services)
     {
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<LoginViewModel>();
+
         services.AddSingleton<AddCategoryViewModel>();
         services.AddSingleton<AddSimpleAccountViewModel>();
+
         services.AddSingleton<DisplayCategoriesViewModel>();
         services.AddSingleton<DisplaySimpleAccountsViewModel>();
+
         services.AddSingleton<EditCategoryViewModel>();
+        services.AddSingleton<EditSimpleAccountViewModel>();
     }
 
     private static void SetupDbContext(MauiAppBuilder builder)

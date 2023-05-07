@@ -57,4 +57,16 @@ public partial class DisplaySimpleAccountsViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync(nameof(AddSimpleAccountPage));
     }
+
+    [RelayCommand] async Task DoEdit(SimpleAccount account) => await Edit(account);
+
+    async Task Edit(SimpleAccount account)
+    {
+        IDictionary<string, object> parameters = new Dictionary<string, object>()
+                {
+                    {"SimpleAccount", (account)}
+                };
+
+        await Shell.Current.GoToAsync(nameof(EditSimpleAccountPage), parameters);
+    }
 }
