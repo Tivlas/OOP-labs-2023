@@ -50,10 +50,7 @@ namespace FinanceManagementMAUI.ViewModels
         [RelayCommand] async Task DoRemove(TransactionCategory category) => await RemoveCategory(category);
         async Task RemoveCategory(TransactionCategory category)
         {
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                MutualTransactionCategoryBindings.TransactionCategories.Remove(category);
-            });
+            MutualTransactionCategoryBindings.Remove(category);
             await _transactionCategoryService.DeleteAsync(category);
             await _transactionCategoryService.SaveChangesAsync();
         }

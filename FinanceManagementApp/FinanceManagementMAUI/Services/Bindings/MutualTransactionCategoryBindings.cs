@@ -8,6 +8,7 @@ using Application.Abstractions.NotConsole;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Services.PreferencesServices;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FinanceManagementMAUI.Services.Bindings;
 public class MutualTransactionCategoryBindings
@@ -44,6 +45,14 @@ public class MutualTransactionCategoryBindings
         MainThread.BeginInvokeOnMainThread(() =>
         {
             TransactionCategories[index] = ctg;
+        });
+    }
+
+    public void Remove(TransactionCategory ctg)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            TransactionCategories.Remove(ctg);
         });
     }
 }
