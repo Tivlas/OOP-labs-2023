@@ -38,4 +38,12 @@ public class MutualTransactionCategoryBindings
             TransactionCategories.Add(ctg);
         });
     }
+
+    public void Edit(TransactionCategory ctg, int index)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            TransactionCategories[index] = ctg;
+        });
+    }
 }

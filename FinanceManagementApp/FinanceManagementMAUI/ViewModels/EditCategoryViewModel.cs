@@ -53,13 +53,10 @@ namespace FinanceManagementMAUI.ViewModels
                 await _transactionCategoryService.UpdateAsync(tcToEdit);
                 await _transactionCategoryService.SaveChangesAsync();
             }
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                int index = _mutualTransactionCategoryBindings.TransactionCategories.IndexOf(SelectedCategory);
-                SelectedCategory.Name = NewName ?? Constants.NoCategory;
-                _mutualTransactionCategoryBindings.TransactionCategories[index] = SelectedCategory;
+            int index = _mutualTransactionCategoryBindings.TransactionCategories.IndexOf(SelectedCategory);
+            SelectedCategory.Name = NewName ?? Constants.NoCategory;
+            _mutualTransactionCategoryBindings.Edit(SelectedCategory, index);
 
-            });
             await _popupService.ShowToast("Successfully edited", ToastDuration.Short, 14);
         }
     }
