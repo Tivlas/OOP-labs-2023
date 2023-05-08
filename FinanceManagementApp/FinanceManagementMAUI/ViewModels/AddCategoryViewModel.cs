@@ -21,16 +21,14 @@ namespace FinanceManagementMAUI.ViewModels
         private readonly ITransactionCategoryService _transactionCategoryService;
         private readonly IPreferencesService _preferencesService;
         private readonly IPopupService _popupService;
-        private readonly IServiceProvider _serviceProvider;
         private readonly MutualTransactionCategoryBindings _mutualTransactionCategoryBindings;
 
         public AddCategoryViewModel(ITransactionCategoryService transactionCategoryService, IPreferencesService preferencesService,
-            IPopupService popupService, IServiceProvider serviceProvider, MutualTransactionCategoryBindings mutualTransactionCategoryBindings)
+            IPopupService popupService, MutualTransactionCategoryBindings mutualTransactionCategoryBindings)
         {
             _transactionCategoryService = transactionCategoryService;
             _preferencesService = preferencesService;
             _popupService = popupService;
-            _serviceProvider = serviceProvider;
             _mutualTransactionCategoryBindings = mutualTransactionCategoryBindings;
         }
 
@@ -43,14 +41,11 @@ namespace FinanceManagementMAUI.ViewModels
             Name ??= Const.Constants.NoCategory;
             if (userId != -1 && await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == Name && tc.UserId == userId) is null)
             {
-                
+
                 var tc = new TransactionCategory(Name, userId);
                 await _transactionCategoryService.AddAsync(tc);
                 await _transactionCategoryService.SaveChangesAsync();
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    _mutualTransactionCategoryBindings.TransactionCategories.Add(tc);
-                });
+                _mutualTransactionCategoryBindings.Add(tc);
                 await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
             }
         }

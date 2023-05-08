@@ -30,4 +30,12 @@ public class MutualTransactionCategoryBindings
     }
 
     public ObservableCollection<TransactionCategory> TransactionCategories { get; set; } = new();
+
+    public void Add(TransactionCategory ctg)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            TransactionCategories.Add(ctg);
+        });
+    }
 }
