@@ -53,10 +53,7 @@ namespace FinanceManagementMAUI.ViewModels
                 var card = new SimpleAccount(balance, CurrencyName, Name, userId);
                 await _simpleAccountService.AddAsync(card);
                 await _simpleAccountService.SaveChangesAsync();
-                await MainThread.InvokeOnMainThreadAsync(() =>
-                {
-                    _mutualSimpleAccountsBinding.SimpleAccounts.Add(card);
-                });
+                _mutualSimpleAccountsBinding.Add(card);
                 await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
             }
         }

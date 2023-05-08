@@ -33,10 +33,7 @@ public partial class DisplaySimpleAccountsViewModel : ObservableObject
     [RelayCommand] async Task DoRemove(SimpleAccount simpleAccount) => await RemoveSimpleAccount(simpleAccount);
     async Task RemoveSimpleAccount(SimpleAccount simpleAccount)
     {
-        await MainThread.InvokeOnMainThreadAsync(() =>
-        {
-            MutualSimpleAccountsBinding.SimpleAccounts.Remove(simpleAccount);
-        });
+        MutualSimpleAccountsBinding.Remove(simpleAccount);
         await _simpleAccountService.DeleteAsync(simpleAccount);
         await _simpleAccountService.SaveChangesAsync();
     }

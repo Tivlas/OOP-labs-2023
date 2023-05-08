@@ -30,4 +30,28 @@ public class MutualSimpleAccountsBinding
     }
 
     public ObservableCollection<SimpleAccount> SimpleAccounts { get; set; } = new();
+
+    public void Add(SimpleAccount acc)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            SimpleAccounts.Add(acc);
+        });
+    }
+
+    public void Edit(SimpleAccount acc, int index)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            SimpleAccounts[index] = acc;
+        });
+    }
+
+    public void Remove(SimpleAccount acc)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            SimpleAccounts.Remove(acc);
+        });
+    }
 }

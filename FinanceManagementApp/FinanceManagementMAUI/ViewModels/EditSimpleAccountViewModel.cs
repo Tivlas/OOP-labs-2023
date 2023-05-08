@@ -66,14 +66,12 @@ public partial class EditSimpleAccountViewModel : ObservableObject, IQueryAttrib
                 await _simpleAccountService.SaveChangesAsync();
             }
 
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                int index = _mutualSimpleAccountsBinding.SimpleAccounts.IndexOf(SelectedAccount);
-                SelectedAccount.Name = NewName;
-                SelectedAccount.CurrencyName = NewCurrencyName;
-                SelectedAccount.Balance = balance;
-                _mutualSimpleAccountsBinding.SimpleAccounts[index] = SelectedAccount;
-            });
+            int index = _mutualSimpleAccountsBinding.SimpleAccounts.IndexOf(SelectedAccount);
+            SelectedAccount.Name = NewName;
+            SelectedAccount.CurrencyName = NewCurrencyName;
+            SelectedAccount.Balance = balance;
+            _mutualSimpleAccountsBinding.Edit(SelectedAccount, index);
+
             await _popupService.ShowToast("Successfully edited!", ToastDuration.Short, 14);
         }
     }
