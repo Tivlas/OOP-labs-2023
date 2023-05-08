@@ -55,5 +55,8 @@ public partial class AddSimpleTransactionViewModel : ObservableObject, IQueryAtt
         });
     }
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query) => throw new NotImplementedException();
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        SelectedSimpleAccount = query["SimpleAccount"] as SimpleAccount;
+    }
 }

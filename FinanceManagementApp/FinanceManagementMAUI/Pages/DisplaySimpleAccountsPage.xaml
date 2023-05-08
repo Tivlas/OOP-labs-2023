@@ -62,8 +62,8 @@
                                    HeightRequest="50">
                             </Label>
                             <Button x:DataType="models:DisplayCategoriesViewModel"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
                                     HorizontalOptions="End"
                                     Text="X"
                                     BackgroundColor="Red"
@@ -72,6 +72,18 @@
                                     Command="{Binding 
                                 Source={RelativeSource AncestorType={x:Type models:DisplaySimpleAccountsViewModel} },
                                     Path=DoRemoveCommand}"
+                                    CommandParameter="{Binding}" />
+                            <Button x:DataType="models:DisplayCategoriesViewModel"
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    HorizontalOptions="End"
+                                    Text="+"
+                                    BackgroundColor="Green"
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                    Command="{Binding 
+                                Source={RelativeSource AncestorType={x:Type models:DisplaySimpleAccountsViewModel} },
+                                    Path=DoAddSimpleTransactionCommand}"
                                     CommandParameter="{Binding}" />
                         </Grid>
                     </Frame>
