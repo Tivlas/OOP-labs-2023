@@ -60,6 +60,7 @@ public static class MauiProgram
         services.AddSingleton<IEmailVerifier, EmailVeifier>();
         services.AddSingleton<IPreferencesService, PreferencesService>();
         services.AddSingleton<MutualTransactionCategoryBindings>();
+        services.AddSingleton<MutualSimpleAccountsBinding>();
     }
 
     private static void SetupPages(IServiceCollection services)
