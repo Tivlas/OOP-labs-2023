@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Const;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 using Microsoft.VisualBasic;
 
@@ -21,14 +22,16 @@ namespace FinanceManagementMAUI.ViewModels
         private readonly IPreferencesService _preferencesService;
         private readonly IPopupService _popupService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly MutualTransactionCategoryBindings _mutualTransactionCategoryBindings;
 
         public AddCategoryViewModel(ITransactionCategoryService transactionCategoryService, IPreferencesService preferencesService,
-            IPopupService popupService, IServiceProvider serviceProvider)
+            IPopupService popupService, IServiceProvider serviceProvider, MutualTransactionCategoryBindings mutualTransactionCategoryBindings)
         {
             _transactionCategoryService = transactionCategoryService;
             _preferencesService = preferencesService;
             _popupService = popupService;
             _serviceProvider = serviceProvider;
+            _mutualTransactionCategoryBindings = mutualTransactionCategoryBindings;
         }
 
         [ObservableProperty] private string _name;
@@ -44,10 +47,9 @@ namespace FinanceManagementMAUI.ViewModels
                 var tc = new TransactionCategory(Name, userId);
                 await _transactionCategoryService.AddAsync(tc);
                 await _transactionCategoryService.SaveChangesAsync();
-                var tcs = _serviceProvider.GetRequiredService<DisplayCategoriesViewModel>().Categories;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
-                    tcs.Add(tc);
+                    _mutualTransactionCategoryBindings.TransactionCategories.Add(tc);
                 });
                 await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
             }

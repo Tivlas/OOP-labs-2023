@@ -6,10 +6,6 @@
              x:Class="FinanceManagementMAUI.Pages.AddSimpleTransactionPage"
              Title="Adding a transaction">
 
-    <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior EventName="Loaded"
-                                        Command="{Binding DoGetCategoriesCommand}" />
-    </ContentPage.Behaviors>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -86,8 +82,7 @@
                    Grid.Row="4"
                    Grid.Column="0"
                    Style="{StaticResource JustLabel}" />
-            <Picker 
-                    ItemsSource="{Binding Categories}"
+            <Picker ItemsSource="{Binding MutualTransactionCategoryBindings.TransactionCategories}"
                     ItemDisplayBinding="{Binding Name}"
                     WidthRequest="200"
                     Grid.Row="4"

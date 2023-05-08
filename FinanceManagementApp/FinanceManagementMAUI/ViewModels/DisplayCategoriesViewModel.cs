@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Pages;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels
@@ -17,26 +18,14 @@ namespace FinanceManagementMAUI.ViewModels
     {
         private readonly ITransactionCategoryService _transactionCategoryService;
         private readonly IPreferencesService _preferencesService;
-        public ObservableCollection<TransactionCategory> Categories { get; set; } = new();
+        public MutualTransactionCategoryBindings MutualTransactionCategoryBindings { get; }
+
         public DisplayCategoriesViewModel(ITransactionCategoryService transactionCategoryService,
-            IPreferencesService preferencesService)
+            IPreferencesService preferencesService, MutualTransactionCategoryBindings mutualTransactionCategoryBindings)
         {
             _transactionCategoryService = transactionCategoryService;
             _preferencesService = preferencesService;
-        }
-
-        [RelayCommand] async Task DoGetCategories() => await GetCategories();
-        async Task GetCategories()
-        {
-            Categories.Clear();
-            var tcs = await _transactionCategoryService.ListAsync(tc => tc.UserId == _preferencesService.Get("id", -1));
-            await MainThread.InvokeOnMainThreadAsync(() =>
-            {
-                foreach (var tc in tcs)
-                {
-                    Categories.Add(tc);
-                }
-            });
+            MutualTransactionCategoryBindings = mutualTransactionCategoryBindings;
         }
 
         [RelayCommand] async Task DoAddCategory() => await AddCategory();
@@ -63,7 +52,7 @@ namespace FinanceManagementMAUI.ViewModels
         {
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                Categories.Remove(category);
+                MutualTransactionCategoryBindings.TransactionCategories.Remove(category);
             });
             await _transactionCategoryService.DeleteAsync(category);
             await _transactionCategoryService.SaveChangesAsync();

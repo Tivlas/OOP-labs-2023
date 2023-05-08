@@ -6,11 +6,6 @@
              xmlns:entities="clr-namespace:Domain.Entities.Transactions;assembly=Domain"
              x:Class="FinanceManagementMAUI.Pages.DisplayCategoriesPage"
              Title="Your categories">
-    <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior EventName="Loaded"
-                                        Command="{Binding DoGetCategoriesCommand}" />
-    </ContentPage.Behaviors>
-
 
     <Grid RowDefinitions="*,7*"
           RowSpacing="10">
@@ -20,7 +15,7 @@
                 HorizontalOptions="Center"
                 Command="{Binding DoAddCategoryCommand}" />
         <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Categories}"
+                        ItemsSource="{Binding MutualTransactionCategoryBindings.TransactionCategories}"
                         HorizontalOptions="FillAndExpand"
                         Margin="100, 0, 100, 0">
             <CollectionView.ItemTemplate>

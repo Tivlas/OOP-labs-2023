@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels;
@@ -28,31 +29,17 @@ public partial class AddSimpleTransactionViewModel : ObservableObject, IQueryAtt
     private readonly IServiceProvider _serviceProvider;
 
     public ObservableCollection<TransactionCategory> Categories { get; set; } = new();
+    public MutualTransactionCategoryBindings MutualTransactionCategoryBindings { get; }
 
-    public AddSimpleTransactionViewModel(ISimpleTransactionService simpleTransactionService, ITransactionCategoryService transactionCategoryService,
+    public AddSimpleTransactionViewModel(ISimpleTransactionService simpleTransactionService, 
         IPopupService popupService, IPreferencesService preferencesService,
-        IServiceProvider serviceProvider)
+        IServiceProvider serviceProvider, MutualTransactionCategoryBindings mutualTransactionCategoryBindings)
     {
         _simpleTransactionService = simpleTransactionService;
-        _transactionCategoryService = transactionCategoryService;
         _popupService = popupService;
         _preferencesService = preferencesService;
         _serviceProvider = serviceProvider;
-    }
-
-    [RelayCommand] async Task DoGetCategories() => await GetCategories();
-
-    async Task GetCategories()
-    {
-        var ctgs = await _transactionCategoryService.ListAsync(tc => tc.UserId == _preferencesService.Get("id", -1));
-        await MainThread.InvokeOnMainThreadAsync(() =>
-        {
-            Categories.Clear();
-            foreach (var tc in ctgs)
-            {
-                Categories.Add(tc);
-            }
-        });
+        MutualTransactionCategoryBindings = mutualTransactionCategoryBindings;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
