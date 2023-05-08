@@ -61,6 +61,7 @@ public static class MauiProgram
         services.AddSingleton<IPreferencesService, PreferencesService>();
         services.AddSingleton<MutualTransactionCategoryBindings>();
         services.AddSingleton<MutualSimpleAccountsBinding>();
+        services.AddSingleton<MutualSimpleTransactionBinding>();
     }
 
     private static void SetupPages(IServiceCollection services)
