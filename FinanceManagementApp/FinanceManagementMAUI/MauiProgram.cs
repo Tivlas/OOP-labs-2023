@@ -5,6 +5,7 @@ using CommunityToolkit.Maui;
 using Domain.Abstractions.NotForConsoleAsync;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 using FinanceManagementMAUI.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,7 @@ public static class MauiProgram
         services.AddSingleton<IPopupService, PopupService>();
         services.AddSingleton<IEmailVerifier, EmailVeifier>();
         services.AddSingleton<IPreferencesService, PreferencesService>();
+        services.AddSingleton<MutualTransactionCategoryBindings>();
     }
 
     private static void SetupPages(IServiceCollection services)
