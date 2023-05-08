@@ -38,7 +38,7 @@
               Padding="20,20,20,20"
               Margin="20,20,20,20"
               ColumnSpacing="20"
-              RowSpacing="30">
+              RowSpacing="20">
 
             <Label Grid.Row="0"
                    Grid.Column="0"

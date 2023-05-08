@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Application.Abstractions.NotConsole;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Services;
@@ -51,11 +52,20 @@ public partial class AddSimpleTransactionViewModel : ObservableObject, IQueryAtt
     async Task AddTransaction()
     {
         Comment ??= string.Empty;
-        if (!decimal.TryParse(AmoutOfMoney, out decimal money) || money <= 0)
+        decimal money = 0;
+        try
+        {
+            money = Calculator.Calc(AmoutOfMoney);
+        }
+        catch (Exception)
+        {
+            await _popupService.Alert("Wrong input", "Amount of money must be a number greater than 0 or expression (eg: 5 * 3 - 4)", "Ok");
+        }
+        if(money <= 0)
         {
             await _popupService.Alert("Wrong input", "Amount of money must be a number greater than 0", "Ok");
         }
-        else if (Category is null)
+        if (Category is null)
         {
             await _popupService.Alert("Error", "Select transaction category", "Ok");
         }
