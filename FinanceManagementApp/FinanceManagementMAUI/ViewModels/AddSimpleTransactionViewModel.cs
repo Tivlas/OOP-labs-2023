@@ -19,31 +19,53 @@ public partial class AddSimpleTransactionViewModel : ObservableObject, IQueryAtt
     [ObservableProperty] private bool _isIncome;
     [ObservableProperty] private string _comment;
     [ObservableProperty] private DateTime _date = DateTime.Today;
-    [ObservableProperty] private decimal _amoutOfMoney;
+    [ObservableProperty] private string _amoutOfMoney = "0";
     [ObservableProperty] private TransactionCategory _category;
     [ObservableProperty] private SimpleAccount _selectedSimpleAccount;
     private readonly ISimpleTransactionService _simpleTransactionService;
-    private readonly ITransactionCategoryService _transactionCategoryService;
     private readonly IPopupService _popupService;
     private readonly IPreferencesService _preferencesService;
-    private readonly IServiceProvider _serviceProvider;
+    private readonly MutualSimpleTransactionBinding _mutualSimpleTransactionBinding;
 
-    public ObservableCollection<TransactionCategory> Categories { get; set; } = new();
     public MutualTransactionCategoryBindings MutualTransactionCategoryBindings { get; }
 
-    public AddSimpleTransactionViewModel(ISimpleTransactionService simpleTransactionService, 
+    public AddSimpleTransactionViewModel(ISimpleTransactionService simpleTransactionService,
         IPopupService popupService, IPreferencesService preferencesService,
-        IServiceProvider serviceProvider, MutualTransactionCategoryBindings mutualTransactionCategoryBindings)
+        MutualTransactionCategoryBindings mutualTransactionCategoryBindings,
+        MutualSimpleTransactionBinding mutualSimpleTransactionBinding)
     {
         _simpleTransactionService = simpleTransactionService;
         _popupService = popupService;
         _preferencesService = preferencesService;
-        _serviceProvider = serviceProvider;
         MutualTransactionCategoryBindings = mutualTransactionCategoryBindings;
+        _mutualSimpleTransactionBinding = mutualSimpleTransactionBinding;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
         SelectedSimpleAccount = query["SimpleAccount"] as SimpleAccount;
+    }
+
+    [RelayCommand] async Task DoAddTransaction() => await AddTransaction();
+
+    async Task AddTransaction()
+    {
+        Comment ??= string.Empty;
+        if (!decimal.TryParse(AmoutOfMoney, out decimal money) || money <= 0)
+        {
+            await _popupService.Alert("Wrong input", "Amount of money must be a number greater than 0", "Ok");
+        }
+        else if (Category is null)
+        {
+            await _popupService.Alert("Error", "Select transaction category", "Ok");
+        }
+        else
+        {
+            var transaction = new SimpleTransaction(SelectedSimpleAccount.Id, Date, IsIncome, money, Category,
+                Comment, _preferencesService.Get("id", -1));
+            await _simpleTransactionService.AddAsync(transaction);
+            await _simpleTransactionService.SaveChangesAsync();
+            _mutualSimpleTransactionBinding.Add(transaction);
+        }
     }
 }
