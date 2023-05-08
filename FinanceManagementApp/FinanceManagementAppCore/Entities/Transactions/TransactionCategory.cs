@@ -23,6 +23,8 @@ namespace Domain.Entities.Transactions
 
         public User? User { get; set; }
 
+        public List<SimpleTransaction> SimpleTransactions { get; set; } = new();
+
         public IEnumerable<(string PropName, object propValue)> GetInfo()
         {
             List<(string PropName, object propValue)> info = new();

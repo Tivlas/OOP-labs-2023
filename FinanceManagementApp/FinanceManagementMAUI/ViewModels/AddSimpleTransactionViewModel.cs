@@ -76,7 +76,7 @@ public partial class AddSimpleTransactionViewModel : ObservableObject, IQueryAtt
         }
         else
         {
-            var transaction = new SimpleTransaction(SelectedSimpleAccount.Id, Date, IsIncome, money, Category,
+            var transaction = new SimpleTransaction(SelectedSimpleAccount.Id, Date, IsIncome, money, Category.Id,
                 Comment, _preferencesService.Get("id", -1));
 
             int index = _mutualSimpleAccountsBinding.SimpleAccounts.IndexOf(SelectedSimpleAccount);
