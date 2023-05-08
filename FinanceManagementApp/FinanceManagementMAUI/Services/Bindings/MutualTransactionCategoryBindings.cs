@@ -10,7 +10,7 @@ using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.Services.Bindings;
-public partial class MutualTransactionCategoryBindings
+public class MutualTransactionCategoryBindings
 {
     private readonly ITransactionCategoryService _transactionCategoryService;
     private readonly IPreferencesService _preferencesService;
