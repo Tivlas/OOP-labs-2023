@@ -21,7 +21,7 @@ public class MutualSimpleTransactionBinding
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             var transactions = await _simpleTransactionService.ListAsync(st => st.UserId == _preferencesService.Get("id", -1));
-            foreach(var t in transactions)
+            foreach (var t in transactions)
             {
                 SimpleTransactions.Add(t);
             }
@@ -29,4 +29,28 @@ public class MutualSimpleTransactionBinding
     }
 
     public ObservableCollection<SimpleTransaction> SimpleTransactions { get; set; } = new();
+
+    public void Add(SimpleTransaction st)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            SimpleTransactions.Add(st);
+        });
+    }
+
+    public void Edit(SimpleTransaction st, int index)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            SimpleTransactions[index] = st;
+        });
+    }
+
+    public void Remove(SimpleTransaction st)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            SimpleTransactions.Remove(st);
+        });
+    }
 }
