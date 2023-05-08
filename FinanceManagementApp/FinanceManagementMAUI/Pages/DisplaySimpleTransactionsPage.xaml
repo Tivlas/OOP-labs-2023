@@ -14,7 +14,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="entities:SimpleTransaction">
                 <Frame BackgroundColor="Orange"
-                       HeightRequest="250"
+                       HeightRequest="300"
                        Margin="10,10,10,10">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding 
@@ -32,7 +32,7 @@
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
                                FontAutoScalingEnabled="True"
-                               HeightRequest="70">
+                               HeightRequest="40">
                         </Label>
                         <Label Grid.Row="1"
                                Grid.Column="0"
@@ -41,7 +41,7 @@
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
                                FontAutoScalingEnabled="True"
-                               HeightRequest="70">
+                               HeightRequest="40">
                         </Label>
                         <Label Grid.Row="2"
                                Grid.Column="0"
@@ -50,7 +50,7 @@
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
                                FontAutoScalingEnabled="True"
-                               HeightRequest="70">
+                               HeightRequest="40">
                         </Label>
                         <Label Grid.Row="3"
                                Grid.Column="0"
@@ -59,7 +59,7 @@
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
                                FontAutoScalingEnabled="True"
-                               HeightRequest="70">
+                               HeightRequest="40">
                         </Label>
                         <Label Grid.Row="4"
                                Grid.Column="0"
@@ -68,7 +68,7 @@
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
                                FontAutoScalingEnabled="True"
-                               HeightRequest="70">
+                               HeightRequest="40">
                         </Label>
                         <Button Grid.Row="0"
                                 Grid.Column="1"
