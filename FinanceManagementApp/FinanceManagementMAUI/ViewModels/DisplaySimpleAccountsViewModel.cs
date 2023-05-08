@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Pages;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels;
@@ -18,34 +19,23 @@ public partial class DisplaySimpleAccountsViewModel : ObservableObject
 {
     private readonly ISimpleAccountService _simpleAccountService;
     private readonly IPreferencesService _preferencesService;
-    public ObservableCollection<SimpleAccount> SimpleAccounts { get; set; } = new();
 
-    public DisplaySimpleAccountsViewModel(ISimpleAccountService simpleAccountService, IPreferencesService preferencesService)
+    public MutualSimpleAccountsBinding MutualSimpleAccountsBinding { get; }
+
+    public DisplaySimpleAccountsViewModel(ISimpleAccountService simpleAccountService, IPreferencesService preferencesService,
+        MutualSimpleAccountsBinding mutualSimpleAccountsBinding)
     {
         _simpleAccountService = simpleAccountService;
         _preferencesService = preferencesService;
+        MutualSimpleAccountsBinding = mutualSimpleAccountsBinding;
     }
 
-    [RelayCommand] async Task DoGetSimpleAccounts() => await GetSimpleAccounts();
-    async Task GetSimpleAccounts()
-    {
-        SimpleAccounts.Clear();
-        var tcs = await _simpleAccountService.ListAsync(sa => sa.UserId == _preferencesService.Get("id", -1));
-        await MainThread.InvokeOnMainThreadAsync(() =>
-        {
-            foreach (var tc in tcs)
-            {
-                SimpleAccounts.Add(tc);
-            }
-        });
-    }
-
-    [RelayCommand] async Task DoRemove(SimpleAccount simpleAccount) => await RemoveCategory(simpleAccount);
-    async Task RemoveCategory(SimpleAccount simpleAccount)
+    [RelayCommand] async Task DoRemove(SimpleAccount simpleAccount) => await RemoveSimpleAccount(simpleAccount);
+    async Task RemoveSimpleAccount(SimpleAccount simpleAccount)
     {
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
-            SimpleAccounts.Remove(simpleAccount);
+            MutualSimpleAccountsBinding.SimpleAccounts.Remove(simpleAccount);
         });
         await _simpleAccountService.DeleteAsync(simpleAccount);
         await _simpleAccountService.SaveChangesAsync();

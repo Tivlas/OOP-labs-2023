@@ -10,24 +10,25 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Accounts;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels
 {
     public partial class AddSimpleAccountViewModel : ObservableObject
     {
-        private readonly IServiceProvider _serviceProvider;
         private readonly ISimpleAccountService _simpleAccountService;
         private readonly IPopupService _popupService;
         private readonly IPreferencesService _preferencesService;
+        private readonly MutualSimpleAccountsBinding _mutualSimpleAccountsBinding;
 
-        public AddSimpleAccountViewModel(IServiceProvider serviceProvider, ISimpleAccountService simpleAccountService,
-            IPopupService popupService, IPreferencesService preferencesService)
+        public AddSimpleAccountViewModel(ISimpleAccountService simpleAccountService, IPopupService popupService,
+            IPreferencesService preferencesService, MutualSimpleAccountsBinding mutualSimpleAccountsBinding)
         {
-            _serviceProvider = serviceProvider;
             _simpleAccountService = simpleAccountService;
             _popupService = popupService;
             _preferencesService = preferencesService;
+            _mutualSimpleAccountsBinding = mutualSimpleAccountsBinding;
         }
 
         [ObservableProperty] private string _name;
@@ -52,10 +53,9 @@ namespace FinanceManagementMAUI.ViewModels
                 var card = new SimpleAccount(balance, CurrencyName, Name, userId);
                 await _simpleAccountService.AddAsync(card);
                 await _simpleAccountService.SaveChangesAsync();
-                var saccs = _serviceProvider.GetRequiredService<DisplaySimpleAccountsViewModel>().SimpleAccounts;
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
-                    saccs.Add(card);
+                    _mutualSimpleAccountsBinding.SimpleAccounts.Add(card);
                 });
                 await _popupService.ShowToast("Successfully added!", ToastDuration.Short, 14);
             }

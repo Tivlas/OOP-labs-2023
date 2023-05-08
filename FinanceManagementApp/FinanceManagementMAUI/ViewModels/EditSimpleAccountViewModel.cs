@@ -11,26 +11,27 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Accounts;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels;
 public partial class EditSimpleAccountViewModel : ObservableObject, IQueryAttributable
 {
     private readonly ISimpleAccountService _simpleAccountService;
-    private readonly IServiceProvider _serviceProvider;
     private readonly IPopupService _popupService;
     private readonly IPreferencesService _preferencesService;
+    private readonly MutualSimpleAccountsBinding _mutualSimpleAccountsBinding;
     [ObservableProperty] private SimpleAccount _selectedAccount;
     [ObservableProperty] private string _newName;
     [ObservableProperty] private string _newCurrencyName;
     [ObservableProperty] private string _newBalance;
-    public EditSimpleAccountViewModel(ISimpleAccountService simpleAccountService, IServiceProvider serviceProvider,
-            IPopupService popupService, IPreferencesService preferencesService)
+    public EditSimpleAccountViewModel(ISimpleAccountService simpleAccountService,
+            IPopupService popupService, IPreferencesService preferencesService, MutualSimpleAccountsBinding mutualSimpleAccountsBinding)
     {
         _simpleAccountService = simpleAccountService;
-        _serviceProvider = serviceProvider;
         _popupService = popupService;
         _preferencesService = preferencesService;
+        _mutualSimpleAccountsBinding = mutualSimpleAccountsBinding;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -67,12 +68,11 @@ public partial class EditSimpleAccountViewModel : ObservableObject, IQueryAttrib
 
             await MainThread.InvokeOnMainThreadAsync(() =>
             {
-                var saccs = _serviceProvider.GetRequiredService<DisplaySimpleAccountsViewModel>().SimpleAccounts;
-                int index = saccs.IndexOf(SelectedAccount);
+                int index = _mutualSimpleAccountsBinding.SimpleAccounts.IndexOf(SelectedAccount);
                 SelectedAccount.Name = NewName;
                 SelectedAccount.CurrencyName = NewCurrencyName;
                 SelectedAccount.Balance = balance;
-                saccs[index] = SelectedAccount;
+                _mutualSimpleAccountsBinding.SimpleAccounts[index] = SelectedAccount;
             });
             await _popupService.ShowToast("Successfully edited!", ToastDuration.Short, 14);
         }
