@@ -5,7 +5,7 @@
              xmlns:entities="clr-namespace:Domain.Entities.Accounts;assembly=Domain"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinanceManagementMAUI.Pages.DisplaySimpleAccountsPage"
-             Title="DisplaySimpleAccountsPage">
+             Title="Your cards">
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Loaded"
                                         Command="{Binding DoGetSimpleAccountsCommand}" />
