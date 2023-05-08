@@ -85,6 +85,7 @@
             <Picker ItemsSource="{Binding MutualTransactionCategoryBindings.TransactionCategories}"
                     ItemDisplayBinding="{Binding Name}"
                     WidthRequest="200"
+                    SelectedItem="{Binding Category}"
                     Grid.Row="4"
                     Grid.Column="1" />
         </Grid>
