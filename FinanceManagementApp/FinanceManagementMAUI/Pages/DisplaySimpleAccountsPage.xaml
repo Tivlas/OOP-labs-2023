@@ -60,8 +60,7 @@
                                    FontAutoScalingEnabled="True"
                                    HeightRequest="70">
                             </Label>
-                            <Button x:DataType="models:DisplayCategoriesViewModel"
-                                    Grid.Row="0"
+                            <Button Grid.Row="0"
                                     Grid.Column="1"
                                     HorizontalOptions="End"
                                     Text="X"
@@ -70,8 +69,7 @@
                                 Source={RelativeSource AncestorType={x:Type models:DisplaySimpleAccountsViewModel} },
                                     Path=DoRemoveCommand}"
                                     CommandParameter="{Binding}" />
-                            <Button x:DataType="models:DisplayCategoriesViewModel"
-                                    Grid.Row="3"
+                            <Button Grid.Row="3"
                                     Grid.Column="1"
                                     HorizontalOptions="End"
                                     Text="+"
