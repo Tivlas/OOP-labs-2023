@@ -20,7 +20,8 @@ public class MutualSimpleTransactionBinding
         _preferencesService = preferencesService;
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            var transactions = await _simpleTransactionService.ListAsync(st => st.UserId == _preferencesService.Get("id", -1), default, st => st.Category);
+            var transactions = await _simpleTransactionService.ListAsync(st => st.UserId == _preferencesService.Get("id", -1), default,
+                st => st.Category, st => st.SimpleAccount);
             foreach (var t in transactions)
             {
                 SimpleTransactions.Add(t);

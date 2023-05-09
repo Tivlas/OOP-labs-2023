@@ -14,7 +14,7 @@
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="entities:SimpleTransaction">
                 <Frame BackgroundColor="Orange"
-                       HeightRequest="300"
+                       HeightRequest="350"
                        Margin="10,10,10,10">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding 
@@ -22,7 +22,7 @@
                                     Path=DoEditCommand}"
                                               CommandParameter="{Binding}" />
                     </Frame.GestureRecognizers>
-                    <Grid RowDefinitions="*,*,*,*,*"
+                    <Grid RowDefinitions="*,*,*,*,*,*"
                           ColumnDefinitions="*,Auto"
                           RowSpacing="8">
                         <Label Grid.Row="0"
@@ -64,6 +64,15 @@
                         <Label Grid.Row="4"
                                Grid.Column="0"
                                Text="{Binding Comment, StringFormat='Comment: {0}'}"
+                               FontSize="Medium"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill"
+                               FontAutoScalingEnabled="True"
+                               HeightRequest="40">
+                        </Label>
+                        <Label Grid.Row="5"
+                               Grid.Column="0"
+                               Text="{Binding SimpleAccount.Name, StringFormat='Card: {0}'}"
                                FontSize="Medium"
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
