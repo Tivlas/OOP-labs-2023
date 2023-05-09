@@ -23,9 +23,9 @@ public class SimpleTransactionService : ISimpleTransactionService
         return _unitOfWork.SimpleTransactionsRepository.ListAllAsync(cancellationToken);
     }
 
-    public Task<IReadOnlyList<SimpleTransaction>> ListAsync(Expression<Func<SimpleTransaction, bool>> filter, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyList<SimpleTransaction>> ListAsync(Expression<Func<SimpleTransaction, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<SimpleTransaction, object>>[] includesProperties)
     {
-        return _unitOfWork.SimpleTransactionsRepository.ListAsync(filter, cancellationToken);
+        return _unitOfWork.SimpleTransactionsRepository.ListAsync(filter, cancellationToken, includesProperties);
     }
 
     public Task AddAsync(SimpleTransaction entity, CancellationToken cancellationToken = default)

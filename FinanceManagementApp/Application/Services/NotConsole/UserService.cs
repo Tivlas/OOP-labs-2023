@@ -23,9 +23,9 @@ public class UserService : IUserService
         return _unitOfWork.UsersRepository.ListAllAsync(cancellationToken);
     }
 
-    public Task<IReadOnlyList<User>> ListAsync(Expression<Func<User, bool>> filter, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyList<User>> ListAsync(Expression<Func<User, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<User, object>>[] includesProperties)
     {
-        return _unitOfWork.UsersRepository.ListAsync(filter, cancellationToken);
+        return _unitOfWork.UsersRepository.ListAsync(filter, cancellationToken, includesProperties);
     }
 
     public Task AddAsync(User entity, CancellationToken cancellationToken = default)

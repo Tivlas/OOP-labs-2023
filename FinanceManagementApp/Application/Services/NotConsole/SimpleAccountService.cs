@@ -22,9 +22,9 @@ public class SimpleAccountService : ISimpleAccountService
         return _unitOfWork.SimpleAccountsRepository.ListAllAsync(cancellationToken);
     }
 
-    public Task<IReadOnlyList<SimpleAccount>> ListAsync(Expression<Func<SimpleAccount, bool>> filter, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyList<SimpleAccount>> ListAsync(Expression<Func<SimpleAccount, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<SimpleAccount, object>>[] includesProperties)
     {
-        return _unitOfWork.SimpleAccountsRepository.ListAsync(filter, cancellationToken);
+        return _unitOfWork.SimpleAccountsRepository.ListAsync(filter, cancellationToken, includesProperties);
     }
 
     public Task AddAsync(SimpleAccount entity, CancellationToken cancellationToken = default)

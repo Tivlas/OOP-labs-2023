@@ -23,9 +23,9 @@ public class TransactionCategoryService : ITransactionCategoryService
         return _unitOfWork.TransactionCategoriesRepository.ListAllAsync(cancellationToken);
     }
 
-    public Task<IReadOnlyList<TransactionCategory>> ListAsync(Expression<Func<TransactionCategory, bool>> filter, CancellationToken cancellationToken = default)
+    public Task<IReadOnlyList<TransactionCategory>> ListAsync(Expression<Func<TransactionCategory, bool>> filter, CancellationToken cancellationToken = default, params Expression<Func<TransactionCategory, object>>[] includesProperties)
     {
-        return _unitOfWork.TransactionCategoriesRepository.ListAsync(filter, cancellationToken);
+        return _unitOfWork.TransactionCategoriesRepository.ListAsync(filter, cancellationToken, includesProperties);
     }
 
     public Task AddAsync(TransactionCategory entity, CancellationToken cancellationToken = default)

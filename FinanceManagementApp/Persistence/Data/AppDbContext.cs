@@ -21,6 +21,11 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<User>().HasAlternateKey(u => u.Email);
+        modelBuilder.Entity<User>().HasKey(en => en.Id);
+        modelBuilder.Entity<SimpleTransaction>().HasKey(en => en.Id);
+        modelBuilder.Entity<SimpleAccount>().HasKey(en => en.Id);
+        modelBuilder.Entity<TransactionCategory>().HasKey(en => en.Id);
+
         modelBuilder.Entity<User>().HasMany(u => u.SimpleAccounts).WithOne(sa => sa.User).HasForeignKey(sa => sa.UserId);
         modelBuilder.Entity<User>().HasMany(u => u.SimpleTransactions).WithOne(st => st.User).HasForeignKey(st => st.UserId);
         modelBuilder.Entity<User>().HasMany(u => u.TransactionCategories).WithOne(tc => tc.User).HasForeignKey(tc => tc.UserId);
@@ -32,5 +37,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<SimpleTransaction>().Property(st => st.Id).ValueGeneratedOnAdd();
         modelBuilder.Entity<SimpleAccount>().Property(sa => sa.Id).ValueGeneratedOnAdd();
         modelBuilder.Entity<SimpleAccount>().HasAlternateKey(sa => sa.Name);
+
     }
 }
