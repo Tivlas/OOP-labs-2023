@@ -2,10 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:converters="clr-namespace:FinanceManagementMAUI.ValueConverters"
              xmlns:models="clr-namespace:FinanceManagementMAUI.ViewModels"
              xmlns:entities="clr-namespace:Domain.Entities.Transactions;assembly=Domain"
              x:Class="FinanceManagementMAUI.Pages.DisplaySimpleTransactionsPage"
              Title="Your transactions">
+
+    <ContentPage.Resources>
+        <converters:SimpleTransactionIsIncomeToColorConverter x:Key="IsIncomeToColor" />
+    </ContentPage.Resources>
 
     <CollectionView Grid.Row="1"
                     ItemsSource="{Binding MutualSimpleTransactionBinding.SimpleTransactions}"
@@ -22,7 +27,7 @@
                                     Path=DoEditCommand}"
                                               CommandParameter="{Binding}" />
                     </Frame.GestureRecognizers>
-                    <Grid RowDefinitions="*,*,*,*,*,*"
+                    <Grid RowDefinitions="*,*,*,*,*"
                           ColumnDefinitions="*,Auto"
                           RowSpacing="8">
                         <Label Grid.Row="0"
@@ -36,23 +41,15 @@
                         </Label>
                         <Label Grid.Row="1"
                                Grid.Column="0"
-                               Text="{Binding IsIncome, StringFormat='Is income: {0}'}"
-                               FontSize="Medium"
-                               HorizontalOptions="Fill"
-                               VerticalOptions="Fill"
-                               FontAutoScalingEnabled="True"
-                               HeightRequest="40">
-                        </Label>
-                        <Label Grid.Row="2"
-                               Grid.Column="0"
                                Text="{Binding AmountOfMoney, StringFormat='Amount: {0}'}"
                                FontSize="Medium"
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
                                FontAutoScalingEnabled="True"
-                               HeightRequest="40">
+                               HeightRequest="40"
+                               TextColor="{Binding IsIncome,Converter={StaticResource IsIncomeToColor}}">
                         </Label>
-                        <Label Grid.Row="3"
+                        <Label Grid.Row="2"
                                Grid.Column="0"
                                Text="{Binding Category.Name, StringFormat='Category: {0}'}"
                                FontSize="Medium"
@@ -61,7 +58,7 @@
                                FontAutoScalingEnabled="True"
                                HeightRequest="40">
                         </Label>
-                        <Label Grid.Row="4"
+                        <Label Grid.Row="3"
                                Grid.Column="0"
                                Text="{Binding Comment, StringFormat='Comment: {0}'}"
                                FontSize="Medium"
@@ -70,7 +67,7 @@
                                FontAutoScalingEnabled="True"
                                HeightRequest="40">
                         </Label>
-                        <Label Grid.Row="5"
+                        <Label Grid.Row="4"
                                Grid.Column="0"
                                Text="{Binding SimpleAccount.Name, StringFormat='Card: {0}'}"
                                FontSize="Medium"
