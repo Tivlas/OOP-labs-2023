@@ -55,8 +55,7 @@ public partial class EditSimpleAccountViewModel : ObservableObject, IQueryAttrib
         }
         else
         {
-            var accToEdit = await _simpleAccountService.FirstOrDefaultAsync(sa => sa.UserId == _preferencesService.Get("id", -1) &&
-            sa.Name == SelectedAccount.Name);
+            var accToEdit = await _simpleAccountService.FirstOrDefaultAsync(sa => sa.Id == SelectedAccount.Id);
             if (accToEdit is not null)
             {
                 accToEdit.Name = NewName;

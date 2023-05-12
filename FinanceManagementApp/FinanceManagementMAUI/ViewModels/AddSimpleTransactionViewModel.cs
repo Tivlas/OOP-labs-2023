@@ -90,8 +90,7 @@ public partial class AddSimpleTransactionViewModel : ObservableObject, IQueryAtt
                 SelectedSimpleAccount.Balance -= money;
             }
 
-            var accToEdit = await _simpleAccountService.FirstOrDefaultAsync(a => a.UserId == SelectedSimpleAccount.UserId &&
-            a.Name == SelectedSimpleAccount.Name);
+            var accToEdit = await _simpleAccountService.FirstOrDefaultAsync(a => a.Id == SelectedSimpleAccount.Id);
             if (accToEdit is not null)
             {
                 accToEdit.Balance = SelectedSimpleAccount.Balance;

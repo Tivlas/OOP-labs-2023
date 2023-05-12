@@ -16,7 +16,7 @@ namespace Domain.Entities.Transactions
             SimpleAccountId = simpleAccountId;
         }
 
-        public int SimpleAccountId { get; set; }
+        public int? SimpleAccountId { get; set; }
 
         public SimpleAccount? SimpleAccount { get; set; }
 

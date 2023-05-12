@@ -48,7 +48,7 @@ namespace FinanceManagementMAUI.ViewModels
             {
                 await _popupService.Alert("Wrong balance input", "Enter number greater than zero", "Ok");
             }
-            else if (userId != -1 && await _simpleAccountService.FirstOrDefaultAsync(a => a.UserId == userId && a.Name == Name) is null)
+            else if (userId != -1)
             {
                 var card = new SimpleAccount(balance, CurrencyName, Name, userId);
                 await _simpleAccountService.AddAsync(card);

@@ -29,7 +29,7 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>().HasMany(u => u.SimpleAccounts).WithOne(sa => sa.User).HasForeignKey(sa => sa.UserId);
         modelBuilder.Entity<User>().HasMany(u => u.SimpleTransactions).WithOne(st => st.User).HasForeignKey(st => st.UserId);
         modelBuilder.Entity<User>().HasMany(u => u.TransactionCategories).WithOne(tc => tc.User).HasForeignKey(tc => tc.UserId);
-        modelBuilder.Entity<SimpleTransaction>().HasOne(st => st.SimpleAccount).WithMany(sa => sa.SimpleTransactions).HasForeignKey(st => st.SimpleAccountId);
+        modelBuilder.Entity<SimpleTransaction>().HasOne(st => st.SimpleAccount).WithMany(sa => sa.SimpleTransactions).HasForeignKey(st => st.SimpleAccountId).OnDelete(DeleteBehavior.SetNull);
         modelBuilder.Entity<SimpleTransaction>().HasOne(st => st.Category).WithMany(tc => tc.SimpleTransactions).HasForeignKey(st => st.CategoryId);
 
         modelBuilder.Entity<User>().Property(u => u.Id).ValueGeneratedOnAdd();

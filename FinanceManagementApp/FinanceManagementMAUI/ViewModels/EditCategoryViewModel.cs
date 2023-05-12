@@ -45,8 +45,7 @@ namespace FinanceManagementMAUI.ViewModels
         [RelayCommand] async Task DoEditCategory() => await EditCategory();
         async Task EditCategory()
         {
-            var tcToEdit = await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Name == SelectedCategory.Name &&
-            tc.UserId == _preferencesService.Get("id", -1));
+            var tcToEdit = await _transactionCategoryService.FirstOrDefaultAsync(tc => tc.Id == SelectedCategory.Id);
             if (tcToEdit is not null)
             {
                 tcToEdit.Name = NewName ?? Constants.NoCategory;
