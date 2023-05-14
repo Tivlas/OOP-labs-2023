@@ -24,7 +24,7 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView HeightRequest="400">
+    <ScrollView >
         <VerticalStackLayout>
             <lvc:PieChart Series="{Binding IncomeByCategorySeries}"
                           Title="{Binding IncomeByCategoryTitle}"

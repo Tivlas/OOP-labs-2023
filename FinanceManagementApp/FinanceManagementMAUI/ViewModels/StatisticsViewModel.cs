@@ -47,11 +47,12 @@ public partial class StatisticsViewModel : ObservableObject
             series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30));
             series.DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle;
             series.DataLabelsFormatter = p => $"{p.StackedValue.Share:P2}";
+            series.DataLabelsSize = 40;
         });
         IncomeByCategoryTitle = new LabelVisual
         {
             Text = "Income by category",
-            TextSize = 25,
+            TextSize = 40,
             Padding = new Padding(15),
             Paint = new SolidColorPaint(SKColors.DarkSlateGray)
         };
@@ -74,11 +75,12 @@ public partial class StatisticsViewModel : ObservableObject
             series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30));
             series.DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle;
             series.DataLabelsFormatter = p => $"{p.StackedValue.Share:P2}";
+            series.DataLabelsSize = 40;
         });
         ExpenseByCategoryTitle = new LabelVisual
         {
             Text = "Expense by category",
-            TextSize = 25,
+            TextSize = 40,
             Padding = new Padding(15),
             Paint = new SolidColorPaint(SKColors.DarkSlateGray)
         };
