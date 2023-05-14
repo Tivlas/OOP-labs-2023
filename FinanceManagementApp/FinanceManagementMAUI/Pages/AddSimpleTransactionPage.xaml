@@ -3,6 +3,7 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:entities="clr-namespace:Domain.Entities.Transactions;assembly=Domain"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              x:Class="FinanceManagementMAUI.Pages.AddSimpleTransactionPage"
              Title="Adding a transaction">
 
@@ -56,7 +57,9 @@
                    Style="{StaticResource JustLabel}" />
             <DatePicker Date="{Binding Date}"
                         Grid.Column="1"
-                        Grid.Row="1" />
+                        Grid.Row="1" 
+                        Format="dd/mm/yyyy"
+                        MaximumDate="{x:Static sys:DateTime.Today}"/>
 
             <Label Text="Is income: "
                    Grid.Row="2"
