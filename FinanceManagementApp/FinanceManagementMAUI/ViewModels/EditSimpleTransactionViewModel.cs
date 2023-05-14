@@ -61,16 +61,11 @@ namespace FinanceManagementMAUI.ViewModels
         {
             decimal prevMoney = SelectedSimpleTransaction.AmountOfMoney;
             NewComment ??= string.Empty;
-            decimal money = 0;
-            try
+            if (!decimal.TryParse(NewAmountOfMoney, out decimal money))
             {
-                money = Calculator.Calc(NewAmountOfMoney);
+                await _popupService.Alert("Wrong input", "Amount of money must be a number greater than 0", "Ok");
             }
-            catch (Exception)
-            {
-                await _popupService.Alert("Wrong input", "Amount of money must be a number greater than 0 or expression (eg: 5 * 3 - 4)", "Ok");
-            }
-            if (money <= 0)
+            else if (money <= 0)
             {
                 await _popupService.Alert("Wrong input", "Amount of money must be a number greater than 0", "Ok");
             }
