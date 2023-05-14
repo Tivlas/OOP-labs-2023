@@ -7,8 +7,8 @@ public partial class CurrencyConverterPage : ContentPage
     private readonly CurrencyConverterViewModel _vm;
 
     public CurrencyConverterPage(CurrencyConverterViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }

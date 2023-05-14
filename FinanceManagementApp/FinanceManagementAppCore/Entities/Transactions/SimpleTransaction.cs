@@ -8,7 +8,7 @@ namespace Domain.Entities.Transactions
         {
 
         }
-        public SimpleTransaction(int simpleAccountId, DateTime transactionDate, bool isIncome, decimal amountOfMoney, int categoryId, string comment, int userId) : base(transactionDate, amountOfMoney,  userId)
+        public SimpleTransaction(int simpleAccountId, DateTime transactionDate, bool isIncome, decimal amountOfMoney, int categoryId, string comment, int userId) : base(transactionDate, amountOfMoney, userId)
         {
             CategoryId = categoryId;
             Comment = comment;

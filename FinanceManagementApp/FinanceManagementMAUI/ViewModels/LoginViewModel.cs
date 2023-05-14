@@ -23,7 +23,7 @@ public partial class LoginViewModel : ObservableObject
 
     public LoginViewModel()
     {
-        
+
     }
 
     public LoginViewModel(IUserService userService, IPasswordValidator passwordValidator,

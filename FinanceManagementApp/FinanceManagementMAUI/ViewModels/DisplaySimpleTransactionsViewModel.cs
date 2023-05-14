@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Abstractions.NotConsole;
+﻿using Application.Abstractions.NotConsole;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Transactions;
@@ -39,7 +34,7 @@ public partial class DisplaySimpleTransactionsViewModel : ObservableObject
         MutualSimpleTransactionBinding.Remove(transaction);
         var accToEdit = await _simpleAccountService.FirstOrDefaultAsync(acc => acc.UserId == _preferencesService.Get("id", -1) &&
         acc.Id == transaction.SimpleAccountId);
-        if(accToEdit is null)
+        if (accToEdit is null)
         {
             return;
         }

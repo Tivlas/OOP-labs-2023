@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Domain.Entities.Accounts;
-using Domain.Entities.Interfaces;
+﻿using Domain.Entities.Interfaces;
 using SQLite;
 
 namespace Domain.Entities.Transactions

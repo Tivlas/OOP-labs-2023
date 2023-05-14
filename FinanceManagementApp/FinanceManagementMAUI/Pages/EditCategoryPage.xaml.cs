@@ -7,8 +7,8 @@ public partial class EditCategoryPage : ContentPage
     private readonly EditCategoryViewModel _vm;
 
     public EditCategoryPage(EditCategoryViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }

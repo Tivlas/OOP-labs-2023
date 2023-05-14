@@ -7,8 +7,8 @@ public partial class AddCategoryPage : ContentPage
     private readonly AddCategoryViewModel _vm;
 
     public AddCategoryPage(AddCategoryViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }

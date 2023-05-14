@@ -7,8 +7,8 @@ public partial class AddSimpleAccountPage : ContentPage
     private readonly AddSimpleAccountViewModel _vm;
 
     public AddSimpleAccountPage(AddSimpleAccountViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }

@@ -7,8 +7,8 @@ public partial class EditSimpleTransactionPage : ContentPage
     private readonly EditSimpleTransactionViewModel _vm;
 
     public EditSimpleTransactionPage(EditSimpleTransactionViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }

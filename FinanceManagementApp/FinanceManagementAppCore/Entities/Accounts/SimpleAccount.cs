@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Domain.Entities.Transactions;
+﻿using Domain.Entities.Transactions;
 
 namespace Domain.Entities.Accounts
 {

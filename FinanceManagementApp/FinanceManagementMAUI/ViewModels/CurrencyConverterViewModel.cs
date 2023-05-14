@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanceManagementMAUI.Models;
-using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services;
 using FinanceManagementMAUI.Services.CurrencyRateServices;
 

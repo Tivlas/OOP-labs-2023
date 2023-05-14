@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Abstractions.NotConsole;
-using Application.Services.NotConsole;
+﻿using Application.Abstractions.NotConsole;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities.Accounts;
-using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;

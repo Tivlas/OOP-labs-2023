@@ -7,8 +7,8 @@ public partial class DisplaySimpleTransactionsPage : ContentPage
     private readonly DisplaySimpleTransactionsViewModel _vm;
 
     public DisplaySimpleTransactionsPage(DisplaySimpleTransactionsViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }

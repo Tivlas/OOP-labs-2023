@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FinanceManagementMAUI.Models;
+﻿namespace FinanceManagementMAUI.Models;
 public class Rate
 {
     public int Cur_ID { get; set; }

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using Application.Abstractions.NotConsole;
-using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Services.PreferencesServices;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace FinanceManagementMAUI.Services.Bindings;
 public class MutualTransactionCategoryBindings
@@ -23,7 +16,7 @@ public class MutualTransactionCategoryBindings
         MainThread.BeginInvokeOnMainThread(async () =>
         {
             var transactionCategories = await _transactionCategoryService.ListAsync(tc => tc.UserId == _preferencesService.Get("id", -1));
-            foreach(var tc in transactionCategories)
+            foreach (var tc in transactionCategories)
             {
                 TransactionCategories.Add(tc);
             }

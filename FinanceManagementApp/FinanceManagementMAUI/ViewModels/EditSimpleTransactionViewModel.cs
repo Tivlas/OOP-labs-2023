@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Abstractions.NotConsole;
-using Application.Services.NotConsole;
+﻿using Application.Abstractions.NotConsole;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Domain.Entities;
-using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 using FinanceManagementMAUI.Services;
 using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FinanceManagementMAUI.ViewModels
 {

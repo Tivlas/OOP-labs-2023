@@ -7,8 +7,8 @@ public partial class StatisticsPage : ContentPage
     private readonly StatisticsViewModel _vm;
 
     public StatisticsPage(StatisticsViewModel vm)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         _vm = vm;
         BindingContext = _vm;
     }
