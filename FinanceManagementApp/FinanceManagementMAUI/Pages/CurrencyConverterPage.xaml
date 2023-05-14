@@ -11,12 +11,10 @@
     <ContentPage.Resources>
         <converters:CurrencyAbbreviationToFlagConverter x:Key="CurrencyAbbreviationToFlag" />
     </ContentPage.Resources>
-
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Loaded"
                                         Command="{Binding DoLoadCurrenciesCommand}" />
     </ContentPage.Behaviors>
-
     <Grid Padding="10"
           RowDefinitions="*,*,0.3*">
         <VerticalStackLayout Grid.Row="0">
@@ -55,16 +53,22 @@
             </Picker>
         </VerticalStackLayout>
 
-        <DatePicker x:Name="datePicker"
-                    Date="{Binding SelectedDate}"
-                    MaximumDate="{x:Static sys:DateTime.Today}"
-                    Grid.Row="2"
-                    FontSize="Large"
-                    Format="dd/mm/yyyy">
-            <DatePicker.Behaviors>
-                <toolkit:EventToCommandBehavior EventName="DateSelected"
-                                                Command="{Binding DoDateSelectedCommand}" />
-            </DatePicker.Behaviors>
-        </DatePicker>
+        <HorizontalStackLayout Grid.Row="2"
+                               Spacing="20">
+            <DatePicker x:Name="datePicker"
+                        Date="{Binding SelectedDate}"
+                        MaximumDate="{x:Static sys:DateTime.Today}"
+                        FontSize="Large"
+                        Format="dd/mm/yyyy">
+                <DatePicker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="DateSelected"
+                                                    Command="{Binding DoDateSelectedCommand}" />
+                </DatePicker.Behaviors>
+            </DatePicker>
+            <ActivityIndicator HeightRequest="60"
+                               WidthRequest="60"
+                               IsRunning="{Binding ShowActivityIndicator}"
+                               Color="Blue" />
+        </HorizontalStackLayout>
     </Grid>
 </ContentPage>

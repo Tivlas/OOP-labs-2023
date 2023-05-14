@@ -9,7 +9,6 @@ using CommunityToolkit.Mvvm.Input;
 using FinanceManagementMAUI.Models;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services.CurrencyRateServices;
-using static SQLite.SQLite3;
 
 namespace FinanceManagementMAUI.ViewModels;
 public partial class CurrencyConverterViewModel : ObservableObject
@@ -24,6 +23,7 @@ public partial class CurrencyConverterViewModel : ObservableObject
     [ObservableProperty] private string _entryText;
     [ObservableProperty] private Currency? _upperPickerItem;
     [ObservableProperty] private Currency? _lowerPickerItem;
+    [ObservableProperty] private bool _showActivityIndicator;
     public ObservableCollection<Currency> Currencies { get; set; } = new();
 
     public CurrencyConverterViewModel(ICurrencyService currencyService, IRateService rateService)
@@ -32,9 +32,14 @@ public partial class CurrencyConverterViewModel : ObservableObject
         _rateService = rateService;
     }
 
-    [RelayCommand] async Task DoLoadCurrencies() => await LoadCurrencies();
+    [RelayCommand]
+    void DoLoadCurrencies()
+    {
+        Task.Run(LoadCurrencies);
+    }
     private async Task LoadCurrencies()
     {
+        ShowActivityIndicator = true;
         var currencies = await _currencyService.GetCurrenciesAsync();
         await MainThread.InvokeOnMainThreadAsync(() =>
         {
@@ -44,6 +49,7 @@ public partial class CurrencyConverterViewModel : ObservableObject
             }
             Currencies.Add(new Currency { Cur_Abbreviation = "BYN", Cur_Scale = 1 });
         });
+        ShowActivityIndicator = false;
     }
 
 
