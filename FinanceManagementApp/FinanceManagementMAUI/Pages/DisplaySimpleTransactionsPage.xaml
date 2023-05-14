@@ -10,6 +10,7 @@
 
     <ContentPage.Resources>
         <converters:SimpleTransactionIsIncomeToColorConverter x:Key="IsIncomeToColor" />
+        <converters:NullToValueConverter x:Key="NullToValue" />
     </ContentPage.Resources>
 
     <CollectionView Grid.Row="1"
@@ -32,7 +33,7 @@
                           RowSpacing="8">
                         <Label Grid.Row="0"
                                Grid.Column="0"
-                               Text="{Binding TransactionDate, StringFormat='Date: {0}'}"
+                               Text="{Binding TransactionDate, StringFormat='Date: {0:d}'}"
                                FontSize="Medium"
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
@@ -69,7 +70,7 @@
                         </Label>
                         <Label Grid.Row="4"
                                Grid.Column="0"
-                               Text="{Binding SimpleAccount.Name, StringFormat='Card: {0}'}"
+                               Text="{Binding SimpleAccount, StringFormat='Card: {0}', Converter={StaticResource NullToValue}, ConverterParameter='&lt;was removed>'}"
                                FontSize="Medium"
                                HorizontalOptions="Fill"
                                VerticalOptions="Fill"
