@@ -65,10 +65,12 @@
                                                     Command="{Binding DoDateSelectedCommand}" />
                 </DatePicker.Behaviors>
             </DatePicker>
+            <Button Text="Load currencies"
+                    Command="{Binding DoLoadCurrenciesCommand}" />
             <ActivityIndicator HeightRequest="60"
                                WidthRequest="60"
                                IsRunning="{Binding ShowActivityIndicator}"
-                               Color="Blue" />
+                               Color="Pink" />
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>
