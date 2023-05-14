@@ -6,6 +6,7 @@ using Domain.Abstractions.NotForConsoleAsync;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services;
 using FinanceManagementMAUI.Services.Bindings;
+using FinanceManagementMAUI.Services.CurrencyRateServices;
 using FinanceManagementMAUI.Services.PreferencesServices;
 using FinanceManagementMAUI.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                fonts.AddFont("BabelStoneFlags.ttf", "Flags");
             });
 
         var a = Assembly.GetExecutingAssembly();
@@ -62,6 +64,9 @@ public static class MauiProgram
         services.AddSingleton<MutualTransactionCategoryBindings>();
         services.AddSingleton<MutualSimpleAccountsBinding>();
         services.AddSingleton<MutualSimpleTransactionBinding>();
+        services.AddHttpClient<IRateService, RateService>(opt => opt.BaseAddress = new Uri("https://www.nbrb.by/api/exrates/rates/"));
+        services.AddHttpClient<ICurrencyService, CurrencyService>(opt => opt.BaseAddress = new Uri("https://www.nbrb.by/api/exrates/currencies"));
+
     }
 
     private static void SetupPages(IServiceCollection services)
