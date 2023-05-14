@@ -17,8 +17,7 @@
                 Command="{Binding DoAddSimpleAccountCommand}" />
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding MutualSimpleAccountsBinding.SimpleAccounts}"
-                        HorizontalOptions="FillAndExpand"
-                        Margin="100, 0, 100, 0">
+                        HorizontalOptions="Fill">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="entities:SimpleAccount">
                     <Frame BackgroundColor="Orange"

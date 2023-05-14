@@ -15,8 +15,7 @@
 
     <CollectionView Grid.Row="1"
                     ItemsSource="{Binding MutualSimpleTransactionBinding.SimpleTransactions}"
-                    HorizontalOptions="FillAndExpand"
-                    Margin="100, 0, 100, 0">
+                    HorizontalOptions="Fill">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="entities:SimpleTransaction">
                 <Frame BackgroundColor="Orange"

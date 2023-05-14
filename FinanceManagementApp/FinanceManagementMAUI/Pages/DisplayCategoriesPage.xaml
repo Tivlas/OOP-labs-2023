@@ -16,8 +16,7 @@
                 Command="{Binding DoAddCategoryCommand}" />
         <CollectionView Grid.Row="1"
                         ItemsSource="{Binding MutualTransactionCategoryBindings.TransactionCategories}"
-                        HorizontalOptions="FillAndExpand"
-                        Margin="100, 0, 100, 0">
+                        HorizontalOptions="Fill">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="entities:TransactionCategory">
                     <Frame BackgroundColor="Orange">
@@ -41,8 +40,8 @@
                                     BackgroundColor="Red"
                                     Command="{Binding 
                                 Source={RelativeSource AncestorType={x:Type models:DisplayCategoriesViewModel} },
-                                    Path=DoRemoveCommand}" 
-                                    CommandParameter="{Binding}"/>
+                                    Path=DoRemoveCommand}"
+                                    CommandParameter="{Binding}" />
                         </Grid>
                     </Frame>
                 </DataTemplate>
