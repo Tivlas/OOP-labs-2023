@@ -18,47 +18,69 @@ namespace FinanceManagementMAUI.ViewModels;
 public partial class StatisticsViewModel : ObservableObject
 {
     private readonly MutualSimpleTransactionBinding _mutualSimpleTransactionBinding;
-    public IEnumerable<ISeries> IncomeByCategorySeries { get; set; } 
+    public IEnumerable<ISeries> IncomeByCategorySeries { get; set; }
+    public IEnumerable<ISeries> ExpenseByCategorySeries { get; set; }
     public LabelVisual IncomeByCategoryTitle { get; set; }
+    public LabelVisual ExpenseByCategoryTitle { get; set; }
     public StatisticsViewModel(MutualSimpleTransactionBinding mutualSimpleTransactionBinding)
     {
         _mutualSimpleTransactionBinding = mutualSimpleTransactionBinding;
         IncomeByCategoryStats();
+        ExpenseByCategoryStats();
     }
 
     void IncomeByCategoryStats()
     {
-        try
+        var query = _mutualSimpleTransactionBinding.SimpleTransactions.Where(st => st.IsIncome == true).GroupBy(st => st.Category.Name);
+        var result = query.Select(g => new
         {
-            var query = _mutualSimpleTransactionBinding.SimpleTransactions.GroupBy(st => st.Category.Name);
-            var result = query.Select(g => new
+            Name = g.Key,
+            Count = g.Count()
+        });
+        IncomeByCategorySeries = result.AsLiveChartsPieSeries((value, series) =>
+        {
+            series.Name = $"{value.Name}";
+            series.Mapping = (value, p) =>
             {
-                Name = g.Key,
-                Count = g.Count(),
-                Percentage = (double)g.Count() / _mutualSimpleTransactionBinding.SimpleTransactions.Count() * 100
-            });
-            IncomeByCategorySeries = result.AsLiveChartsPieSeries((value, series) =>
-            {
-                series.Name = $"{value.Name}";
-                series.Mapping = (value, p) =>
-                {
-                    p.PrimaryValue = value.Count;
-                };
-                series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30));
-                series.DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Outer;
-                series.DataLabelsFormatter = p => $"{p.StackedValue.Share:P2}";
-            });
-            IncomeByCategoryTitle = new LabelVisual
-            {
-                Text = "Income by category",
-                TextSize = 14,
-                Padding = new Padding(15),
-                Paint = new SolidColorPaint(SKColors.DarkSlateGray)
+                p.PrimaryValue = value.Count;
             };
-        }
-        catch (Exception e)
+            series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30));
+            series.DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle;
+            series.DataLabelsFormatter = p => $"{p.StackedValue.Share:P2}";
+        });
+        IncomeByCategoryTitle = new LabelVisual
         {
-            int a = 5;
-        }
+            Text = "Income by category",
+            TextSize = 25,
+            Padding = new Padding(15),
+            Paint = new SolidColorPaint(SKColors.DarkSlateGray)
+        };
+    }
+    void ExpenseByCategoryStats()
+    {
+        var query = _mutualSimpleTransactionBinding.SimpleTransactions.Where(st => st.IsIncome == false).GroupBy(st => st.Category.Name);
+        var result = query.Select(g => new
+        {
+            Name = g.Key,
+            Count = g.Count()
+        });
+        ExpenseByCategorySeries = result.AsLiveChartsPieSeries((value, series) =>
+        {
+            series.Name = $"{value.Name}";
+            series.Mapping = (value, p) =>
+            {
+                p.PrimaryValue = value.Count;
+            };
+            series.DataLabelsPaint = new SolidColorPaint(new SKColor(30, 30, 30));
+            series.DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle;
+            series.DataLabelsFormatter = p => $"{p.StackedValue.Share:P2}";
+        });
+        ExpenseByCategoryTitle = new LabelVisual
+        {
+            Text = "Expense by category",
+            TextSize = 25,
+            Padding = new Padding(15),
+            Paint = new SolidColorPaint(SKColors.DarkSlateGray)
+        };
     }
 }
