@@ -2,11 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FinanceManagementMAUI.Pages.StatisticsPage"
-             Title="Statistics">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             Title="Statistics"
+             BackgroundColor="{AppThemeBinding Light={StaticResource Blue200Accent}, Dark={StaticResource White}}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="Pie"
+                   TargetType="lvc:PieChart">
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+                <Setter Property="HeightRequest"
+                        Value="300" />
+                <Setter Property="LegendPosition"
+                        Value="Right" />
+                <Setter Property="Margin"
+                        Value="50,50,50,50" />
+                
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView HeightRequest="400">
+        <VerticalStackLayout>
+            <lvc:PieChart Series="{Binding IncomeByCategorySeries}"
+                          Title="{Binding IncomeByCategoryTitle}"
+                          Style="{StaticResource Pie}">
+            </lvc:PieChart>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
