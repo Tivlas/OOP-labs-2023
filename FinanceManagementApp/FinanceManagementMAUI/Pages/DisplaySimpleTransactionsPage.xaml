@@ -5,6 +5,7 @@
              xmlns:converters="clr-namespace:FinanceManagementMAUI.ValueConverters"
              xmlns:models="clr-namespace:FinanceManagementMAUI.ViewModels"
              xmlns:entities="clr-namespace:Domain.Entities.Transactions;assembly=Domain"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SomethingGreen},Dark={StaticResource DeepBlueDark}}"
              x:Class="FinanceManagementMAUI.Pages.DisplaySimpleTransactionsPage"
              Title="Your transactions">
 
@@ -18,7 +19,7 @@
                     HorizontalOptions="Fill">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="entities:SimpleTransaction">
-                <Frame BackgroundColor="Orange"
+                <Frame 
                        HeightRequest="350"
                        Margin="10,10,10,10">
                     <Frame.GestureRecognizers>
