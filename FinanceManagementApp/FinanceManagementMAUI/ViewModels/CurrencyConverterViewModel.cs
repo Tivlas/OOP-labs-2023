@@ -33,10 +33,7 @@ public partial class CurrencyConverterViewModel : ObservableObject
     }
 
     [RelayCommand]
-    void DoLoadCurrencies()
-    {
-        Task.Run(LoadCurrencies);
-    }
+    void DoLoadCurrencies() => Task.Run(LoadCurrencies);
     private async Task LoadCurrencies()
     {
         ShowActivityIndicator = true;
@@ -51,7 +48,6 @@ public partial class CurrencyConverterViewModel : ObservableObject
         });
         ShowActivityIndicator = false;
     }
-
 
     private async Task Convert()
     {
@@ -91,7 +87,8 @@ public partial class CurrencyConverterViewModel : ObservableObject
     }
 
 
-    [RelayCommand] async Task DoDateSelected() => await DateSelected();
+    [RelayCommand]
+    void DoDateSelected() => Task.Run(DateSelected);
     private async Task DateSelected()
     {
         if (UpperPickerItem is not null && LowerPickerItem is not null)
@@ -101,7 +98,8 @@ public partial class CurrencyConverterViewModel : ObservableObject
     }
 
 
-    [RelayCommand] async Task DoUpperPickerChanged() => await UpperPickerChanged();
+    [RelayCommand]
+    void DoUpperPickerChanged() => Task.Run(UpperPickerChanged);
     private async Task UpperPickerChanged()
     {
         if (LowerPickerItem is not null)
@@ -111,7 +109,8 @@ public partial class CurrencyConverterViewModel : ObservableObject
     }
 
 
-    [RelayCommand] async Task DoLowerPickerChanged() => await LowerPickerChanged();
+    [RelayCommand]
+    void DoLowerPickerChanged() => Task.Run(LowerPickerChanged);
     private async Task LowerPickerChanged()
     {
         if (UpperPickerItem is not null)
@@ -121,7 +120,7 @@ public partial class CurrencyConverterViewModel : ObservableObject
     }
 
 
-    [RelayCommand] async Task DoEntryTextChanged() => await EntryTextChanged();
+    [RelayCommand] void DoEntryTextChanged() => Task.Run(EntryTextChanged);
     private async Task EntryTextChanged()
     {
         await Convert();
