@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceManagementMAUI.Pages.AboutPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SomethingGreen},Dark={StaticResource DeepBlueDark}}"
+             Title="About">
+    <VerticalStackLayout Margin="10,10,10,10"
+                         Spacing="15">
+        <Label VerticalOptions="Center"
+               HorizontalOptions="Center"
+               FontSize="Medium">
+            <Label.Text>Welcome to simple finance management app!&#10;You can add transactions, transaction categories, cards.&#10;You can use built-in currency converter and get simple statistics about the transactions you have made.&#10;If you face the problem, you can leave an issue on the github (button below).</Label.Text>
+
+        </Label>
+        <Button Text="Source code here"
+                FontSize="Medium"
+                Command="{Binding DoLookAtSourceCodeCommand}"
+                CommandParameter="https://github.com/Tivlas/OOP-labs-2023/tree/only-maui-app" />
+    </VerticalStackLayout>
+</ContentPage>

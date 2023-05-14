@@ -77,6 +77,7 @@ public static class MauiProgram
         services.AddSingleton<LoginPage>();
         services.AddSingleton<CurrencyConverterPage>();
         services.AddTransient<StatisticsPage>();
+        services.AddTransient<AboutPage>();
 
         services.AddTransient<AddCategoryPage>();
         services.AddTransient<AddSimpleAccountPage>();
@@ -97,6 +98,7 @@ public static class MauiProgram
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<CurrencyConverterViewModel>();
         services.AddTransient<StatisticsViewModel>();
+        services.AddTransient<AboutViewModel>();
 
         services.AddTransient<AddCategoryViewModel>();
         services.AddTransient<AddSimpleAccountViewModel>();

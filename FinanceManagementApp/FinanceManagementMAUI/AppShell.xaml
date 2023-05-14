@@ -5,6 +5,10 @@
        xmlns:pages="clr-namespace:FinanceManagementMAUI.Pages">
 
     <TabBar>
+        <ShellContent Title="About"
+                      ContentTemplate="{DataTemplate pages:AboutPage}"
+                      Route="AboutPage" />
+        
         <ShellContent Title="Home"
                       ContentTemplate="{DataTemplate pages:MainPage}"
                       Route="MainPage" />
