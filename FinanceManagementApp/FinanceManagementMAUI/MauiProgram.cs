@@ -75,17 +75,17 @@ public static class MauiProgram
         services.AddSingleton<LoginPage>();
         services.AddSingleton<CurrencyConverterPage>();
 
-        services.AddSingleton<AddCategoryPage>();
-        services.AddSingleton<AddSimpleAccountPage>();
-        services.AddSingleton<AddSimpleTransactionPage>();
+        services.AddTransient<AddCategoryPage>();
+        services.AddTransient<AddSimpleAccountPage>();
+        services.AddTransient<AddSimpleTransactionPage>();
 
         services.AddSingleton<DisplayCategoriesPage>();
         services.AddSingleton<DisplaySimpleAccountsPage>();
         services.AddSingleton<DisplaySimpleTransactionsPage>();
 
-        services.AddSingleton<EditCategoryPage>();
-        services.AddSingleton<EditSimpleAccountPage>();
-        services.AddSingleton<EditSimpleTransactionPage>();
+        services.AddTransient<EditCategoryPage>();
+        services.AddTransient<EditSimpleAccountPage>();
+        services.AddTransient<EditSimpleTransactionPage>();
     }
 
     private static void SetupViewModels(IServiceCollection services)
@@ -94,17 +94,17 @@ public static class MauiProgram
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<CurrencyConverterViewModel>();
 
-        services.AddSingleton<AddCategoryViewModel>();
-        services.AddSingleton<AddSimpleAccountViewModel>();
-        services.AddSingleton<AddSimpleTransactionViewModel>();
+        services.AddTransient<AddCategoryViewModel>();
+        services.AddTransient<AddSimpleAccountViewModel>();
+        services.AddTransient<AddSimpleTransactionViewModel>();
 
         services.AddSingleton<DisplayCategoriesViewModel>();
         services.AddSingleton<DisplaySimpleAccountsViewModel>();
         services.AddSingleton<DisplaySimpleTransactionsViewModel>();
 
-        services.AddSingleton<EditCategoryViewModel>();
-        services.AddSingleton<EditSimpleAccountViewModel>();
-        services.AddSingleton<EditSimpleTransactionViewModel>();
+        services.AddTransient<EditCategoryViewModel>();
+        services.AddTransient<EditSimpleAccountViewModel>();
+        services.AddTransient<EditSimpleTransactionViewModel>();
     }
 
     private static void SetupDbContext(MauiAppBuilder builder)
