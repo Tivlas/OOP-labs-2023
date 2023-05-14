@@ -13,7 +13,7 @@ public class CurrencyService : ICurrencyService
 
     public async Task<IEnumerable<Currency>> GetCurrenciesAsync()
     {
-        var result = _client.Send(new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress));
+        var result = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, _client.BaseAddress));
         var response = await HttpContentJsonExtensions.ReadFromJsonAsync<IEnumerable<Currency>>(result.Content);
         return response.Where(currency => currency.Cur_DateEnd > DateTime.Today);
     }
