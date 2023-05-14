@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Persistence.Data;
 using Persistence.UnitOfWork;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace FinanceManagementMAUI;
 public static class MauiProgram
@@ -24,6 +25,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseSkiaSharp(true)
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
@@ -74,6 +76,7 @@ public static class MauiProgram
         services.AddSingleton<MainPage>();
         services.AddSingleton<LoginPage>();
         services.AddSingleton<CurrencyConverterPage>();
+        services.AddSingleton<StatisticsPage>();
 
         services.AddTransient<AddCategoryPage>();
         services.AddTransient<AddSimpleAccountPage>();
@@ -93,6 +96,7 @@ public static class MauiProgram
         services.AddSingleton<MainViewModel>();
         services.AddSingleton<LoginViewModel>();
         services.AddSingleton<CurrencyConverterViewModel>();
+        services.AddSingleton<StatisticsViewModel>();
 
         services.AddTransient<AddCategoryViewModel>();
         services.AddTransient<AddSimpleAccountViewModel>();
