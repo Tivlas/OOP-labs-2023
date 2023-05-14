@@ -20,6 +20,9 @@
         <ShellContent Title="Transactions"
                       ContentTemplate="{DataTemplate pages:DisplaySimpleTransactionsPage}"
                       Route="DisplaySimpleTransactionsPage" />
+        <ShellContent Title="Converter"
+                      ContentTemplate="{DataTemplate pages:CurrencyConverterPage}"
+                      Route="CurrencyConverterPage" />
     </TabBar>
 
 
