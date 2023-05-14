@@ -17,7 +17,6 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand] async Task DoCheckIfAlreadyLoggedIn() => await CheckIfAlreadyLoggedIn();
-
     private async Task CheckIfAlreadyLoggedIn()
     {
         if (await _userService.FirstOrDefaultAsync(u => u.Id == _preferencesService.Get("id", -1)) is null)
@@ -28,16 +27,21 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand] async Task DoAddCategory() => await AddCategory();
-
     async Task AddCategory()
     {
         await Shell.Current.GoToAsync(nameof(AddCategoryPage));
     }
 
     [RelayCommand] async Task DoAddCard() => await AddCard();
-
     async Task AddCard()
     {
         await Shell.Current.GoToAsync(nameof(AddSimpleAccountPage));
+    }
+
+
+    [RelayCommand] async Task DoShowStatistics() => await ShowStatistics();
+    async Task ShowStatistics()
+    {
+        await Shell.Current.GoToAsync(nameof(StatisticsPage));
     }
 }

@@ -23,9 +23,6 @@
         <ShellContent Title="Converter"
                       ContentTemplate="{DataTemplate pages:CurrencyConverterPage}"
                       Route="CurrencyConverterPage" />
-        <ShellContent Title="Statistics"
-                      ContentTemplate="{DataTemplate pages:StatisticsPage}"
-                      Route="StatisticsPage" />
     </TabBar>
 
 

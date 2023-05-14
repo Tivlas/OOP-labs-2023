@@ -26,6 +26,9 @@
             <Button Text="Add card"
                     WidthRequest="260"
                     Command="{Binding DoAddCardCommand}" />
+            <Button Text="Statistics"
+                    WidthRequest="260"
+                    Command="{Binding DoShowStatisticsCommand}" />
         </VerticalStackLayout>
     </ScrollView>
 
