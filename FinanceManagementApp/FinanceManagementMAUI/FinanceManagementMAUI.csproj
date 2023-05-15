@@ -12,7 +12,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 
 		<!-- Display name -->
-		<ApplicationTitle>FinanceManagementMAUI</ApplicationTitle>
+		<ApplicationTitle>Finance manager</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.financemanagementmaui</ApplicationId>
