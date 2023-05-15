@@ -13,14 +13,25 @@ public class MutualSimpleAccountsBinding
     {
         _simpleAccountService = simpleAccountService;
         _preferencesService = preferencesService;
-        MainThread.BeginInvokeOnMainThread(async () =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            var accounts = await _simpleAccountService.ListAsync(a => a.UserId == _preferencesService.Get("id", -1));
-            foreach (var a in accounts)
-            {
-                SimpleAccounts.Add(a);
-            }
+            Load();
         });
+    }
+
+    private async Task Load()
+    {
+        var accounts = await _simpleAccountService.ListAsync(a => a.UserId == _preferencesService.Get("id", -1));
+        foreach (var a in accounts)
+        {
+            SimpleAccounts.Add(a);
+        }
+    }
+
+    public async Task Reload()
+    {
+        SimpleAccounts.Clear();
+        await Load();
     }
 
     public ObservableCollection<SimpleAccount> SimpleAccounts { get; set; } = new();

@@ -13,14 +13,25 @@ public class MutualTransactionCategoryBindings
     {
         _transactionCategoryService = transactionCategoryService;
         _preferencesService = preferencesService;
-        MainThread.BeginInvokeOnMainThread(async () =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            var transactionCategories = await _transactionCategoryService.ListAsync(tc => tc.UserId == _preferencesService.Get("id", -1));
-            foreach (var tc in transactionCategories)
-            {
-                TransactionCategories.Add(tc);
-            }
+            Load();
         });
+    }
+
+    private async Task Load()
+    {
+        var transactionCategories = await _transactionCategoryService.ListAsync(tc => tc.UserId == _preferencesService.Get("id", -1));
+        foreach (var tc in transactionCategories)
+        {
+            TransactionCategories.Add(tc);
+        }
+    }
+
+    public async Task Reload()
+    {
+        TransactionCategories.Clear();
+        await Load();
     }
 
     public ObservableCollection<TransactionCategory> TransactionCategories { get; set; } = new();

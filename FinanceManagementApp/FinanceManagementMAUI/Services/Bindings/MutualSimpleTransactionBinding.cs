@@ -13,15 +13,26 @@ public class MutualSimpleTransactionBinding
     {
         _simpleTransactionService = simpleTransactionService;
         _preferencesService = preferencesService;
-        MainThread.BeginInvokeOnMainThread(async () =>
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            var transactions = await _simpleTransactionService.ListAsync(st => st.UserId == _preferencesService.Get("id", -1), default,
-                st => st.Category, st => st.SimpleAccount);
-            foreach (var t in transactions)
-            {
-                SimpleTransactions.Add(t);
-            }
+            Load();
         });
+    }
+
+    private async Task Load()
+    {
+        var transactions = await _simpleTransactionService.ListAsync(st => st.UserId == _preferencesService.Get("id", -1), default,
+                st => st.Category, st => st.SimpleAccount);
+        foreach (var t in transactions)
+        {
+            SimpleTransactions.Add(t);
+        }
+    }
+
+    public async Task Reload()
+    {
+        SimpleTransactions.Clear();
+        await Load();
     }
 
     public ObservableCollection<SimpleTransaction> SimpleTransactions { get; set; } = new();

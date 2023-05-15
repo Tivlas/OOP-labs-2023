@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Domain.Entities;
 using FinanceManagementMAUI.Services;
+using FinanceManagementMAUI.Services.Bindings;
 using FinanceManagementMAUI.Services.PreferencesServices;
 
 namespace FinanceManagementMAUI.ViewModels;
@@ -15,6 +16,7 @@ public partial class LoginViewModel : ObservableObject
     private readonly IPopupService _popupService;
     private readonly IEmailVerifier _emailVerifier;
     private readonly IPreferencesService _preferencesService;
+    private readonly IServiceProvider _serviceProvider;
     [ObservableProperty] private string _email;
     [ObservableProperty] private string _password;
     [ObservableProperty] private bool _showActivityIndicator;
@@ -28,7 +30,8 @@ public partial class LoginViewModel : ObservableObject
 
     public LoginViewModel(IUserService userService, IPasswordValidator passwordValidator,
         IEmailValidator emailValidator, IPasswordHasher passwordHasher,
-        IPopupService popupService, IEmailVerifier emailVerifier, IPreferencesService preferencesService)
+        IPopupService popupService, IEmailVerifier emailVerifier, IPreferencesService preferencesService,
+        IServiceProvider serviceProvider)
     {
         _userService = userService;
         _passwordValidator = passwordValidator;
@@ -37,6 +40,7 @@ public partial class LoginViewModel : ObservableObject
         _popupService = popupService;
         _emailVerifier = emailVerifier;
         _preferencesService = preferencesService;
+        _serviceProvider = serviceProvider;
     }
 
     [RelayCommand] async Task DoLogin() => await Login();
@@ -70,6 +74,7 @@ public partial class LoginViewModel : ObservableObject
             else
             {
                 _preferencesService.SetUserData(user.Id, user.Email);
+                ReloadUserCollections();
                 await Shell.Current.GoToAsync("//MainPage");
             }
         }
@@ -101,5 +106,15 @@ public partial class LoginViewModel : ObservableObject
                 }
             }
         }
+    }
+
+    private void ReloadUserCollections()
+    {
+        var categories = _serviceProvider.GetRequiredService<MutualTransactionCategoryBindings>();
+        var accs = _serviceProvider.GetRequiredService<MutualSimpleAccountsBinding>();
+        var transactions = _serviceProvider.GetRequiredService<MutualSimpleTransactionBinding>();
+        Task.Run(categories.Reload);
+        Task.Run(accs.Reload);
+        Task.Run(transactions.Reload);
     }
 }
