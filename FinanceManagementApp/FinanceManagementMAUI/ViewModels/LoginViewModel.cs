@@ -117,6 +117,10 @@ public partial class LoginViewModel : ObservableObject
                     await Shell.Current.GoToAsync("//MainPage");
                 }
             }
+            else
+            {
+                await _popupService.Alert("Error", "Already exists", "Ok");
+            }
         }
         else
         {
