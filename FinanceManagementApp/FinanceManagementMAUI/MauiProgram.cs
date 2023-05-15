@@ -66,8 +66,8 @@ public static class MauiProgram
         services.AddSingleton<MutualTransactionCategoryBindings>();
         services.AddSingleton<MutualSimpleAccountsBinding>();
         services.AddSingleton<MutualSimpleTransactionBinding>();
-        services.AddHttpClient<IRateService, RateService>(opt => opt.BaseAddress = new Uri("https://www.nbrb.by/api/exrates/rates/"));
-        services.AddHttpClient<ICurrencyService, CurrencyService>(opt => opt.BaseAddress = new Uri("https://www.nbrb.by/api/exrates/currencies"));
+        services.AddHttpClient<IRateService, RateService>(opt => opt.BaseAddress = new Uri("https://api.nbrb.by/exrates/rates/"));
+        services.AddHttpClient<ICurrencyService, CurrencyService>(opt => opt.BaseAddress = new Uri("https://api.nbrb.by/exrates/currencies"));
 
     }
 
