@@ -8,7 +8,7 @@
 
 
     <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior EventName="Loaded"
+        <toolkit:EventToCommandBehavior EventName="Appearing"
                                         Command="{Binding DoCheckIfAlreadyLoggedInCommand}" />
     </ContentPage.Behaviors>
     <ScrollView>
