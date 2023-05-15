@@ -52,6 +52,13 @@ public partial class LoginViewModel : ObservableObject
         IsPasswordValid = _passwordValidator.IsValid(Password);
     }
 
+    private void SetFlagsToTrue()
+    {
+        // чтобы текст в entry не оставался красным
+        IsEmailValid = true;
+        IsPasswordValid = true;
+    }
+
     private bool BothFlagsValid()
     {
         return IsPasswordValid && IsEmailValid;
@@ -77,6 +84,11 @@ public partial class LoginViewModel : ObservableObject
                 ReloadUserCollections();
                 await Shell.Current.GoToAsync("//MainPage");
             }
+        }
+        else
+        {
+            await Task.Delay(600);
+            SetFlagsToTrue();
         }
     }
 
@@ -105,6 +117,11 @@ public partial class LoginViewModel : ObservableObject
                     await Shell.Current.GoToAsync("//MainPage");
                 }
             }
+        }
+        else
+        {
+            await Task.Delay(600);
+            SetFlagsToTrue();
         }
     }
 
