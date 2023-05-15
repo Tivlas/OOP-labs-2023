@@ -13,7 +13,7 @@ public class RateService : IRateService
 
     public async Task<Rate> GetRateAsync(DateTime date, Currency currency)
     {
-        var result = _client.Send(new HttpRequestMessage(HttpMethod.Get, $"{currency.Cur_ID}?ondate={date:yyyy-MM-dd}"));
+        var result = await _client.SendAsync(new HttpRequestMessage(HttpMethod.Get, $"{currency.Cur_ID}?ondate={date:yyyy-MM-dd}"));
         var response = await HttpContentJsonExtensions.ReadFromJsonAsync<Rate>(result.Content);
         return response!;
     }
