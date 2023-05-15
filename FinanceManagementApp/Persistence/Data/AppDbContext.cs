@@ -14,7 +14,6 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
     {
-        //Database.EnsureDeleted(); // на время разработки
         Database.EnsureCreated();
     }
 
@@ -36,7 +35,5 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<TransactionCategory>().Property(tc => tc.Id).ValueGeneratedOnAdd();
         modelBuilder.Entity<SimpleTransaction>().Property(st => st.Id).ValueGeneratedOnAdd();
         modelBuilder.Entity<SimpleAccount>().Property(sa => sa.Id).ValueGeneratedOnAdd();
-        modelBuilder.Entity<SimpleAccount>().HasAlternateKey(sa => sa.Name);
-
     }
 }
