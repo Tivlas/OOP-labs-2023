@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:FinanceManagementMAUI.ValueConverters"
+             xmlns:model="clr-namespace:FinanceManagementMAUI.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SomethingGreen},Dark={StaticResource DeepBlueDark}}"
+             x:Class="FinanceManagementMAUI.Pages.CurrencyConverterPage"
+             Title="Currency converter">
+
+    <ContentPage.Resources>
+        <converters:CurrencyAbbreviationToFlagConverter x:Key="CurrencyAbbreviationToFlag" />
+    </ContentPage.Resources>
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Loaded"
+                                        Command="{Binding DoLoadCurrenciesCommand}" />
+    </ContentPage.Behaviors>
+    <Grid Padding="10"
+          RowDefinitions="*,*,0.3*">
+        <VerticalStackLayout Grid.Row="0">
+            <Entry Placeholder="Enter value"
+                   Text="{Binding EntryText}"
+                   FontSize="Medium">
+                <Entry.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="TextChanged"
+                                                    Command="{Binding DoEntryTextChangedCommand}" />
+                </Entry.Behaviors>
+            </Entry >
+            <Picker FontFamily="Flags"
+                    SelectedItem="{Binding UpperPickerItem}"
+                    Title="Select currency"
+                    ItemsSource="{Binding Currencies}"
+                    ItemDisplayBinding="{Binding Cur_Abbreviation, Converter={StaticResource CurrencyAbbreviationToFlag}}">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                    Command="{Binding DoUpperPickerChangedCommand}" />
+                </Picker.Behaviors>
+            </Picker>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1">
+            <Label FontSize="Medium"
+                   Text="{Binding ResultText}" />
+            <Picker FontFamily="Flags"
+                    SelectedItem="{Binding LowerPickerItem}"
+                    Title="Select currency"
+                    ItemsSource="{Binding Currencies}"
+                    ItemDisplayBinding="{Binding Cur_Abbreviation, Converter={StaticResource CurrencyAbbreviationToFlag}}">
+                <Picker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="SelectedIndexChanged"
+                                                    Command="{Binding DoLowerPickerChangedCommand}" />
+                </Picker.Behaviors>
+            </Picker>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout Grid.Row="2"
+                               Spacing="20">
+            <DatePicker x:Name="datePicker"
+                        Date="{Binding SelectedDate}"
+                        MaximumDate="{x:Static sys:DateTime.Today}"
+                        FontSize="Large">
+                <DatePicker.Behaviors>
+                    <toolkit:EventToCommandBehavior EventName="DateSelected"
+                                                    Command="{Binding DoDateSelectedCommand}" />
+                </DatePicker.Behaviors>
+            </DatePicker>
+            <Button Text="Load currencies"
+                    Command="{Binding DoLoadCurrenciesCommand}" />
+            <ActivityIndicator HeightRequest="60"
+                               WidthRequest="60"
+                               IsRunning="{Binding ShowActivityIndicator}"
+                               Color="Pink" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

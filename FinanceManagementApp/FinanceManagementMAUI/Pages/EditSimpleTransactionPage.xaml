@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SomethingGreen},Dark={StaticResource DeepBlueDark}}"
+             x:Class="FinanceManagementMAUI.Pages.EditSimpleTransactionPage"
+             Title="Editing transaction">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="JustLabel"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                <Setter Property="FontSize"
+                        Value="Medium" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+
+        <Grid RowDefinitions="*,*,*,*"
+              ColumnDefinitions="Auto,Auto"
+              HorizontalOptions="Center"
+              VerticalOptions="Start"
+              Padding="10,10,10,10"
+              Margin="10,10,10,10"
+              ColumnSpacing="20"
+              RowSpacing="20">
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Text="New amount: "
+                   Style="{StaticResource JustLabel}" />
+            <Entry Text="{Binding NewAmountOfMoney}"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HeightRequest="50"
+                   WidthRequest="150" />
+
+            <Label Text="New date: "
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Style="{StaticResource JustLabel}" />
+            <DatePicker Date="{Binding NewDate}"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        MaximumDate="{x:Static sys:DateTime.Today}"/>
+
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   Text="New comment: "
+                   Style="{StaticResource JustLabel}" />
+            <Entry Text="{Binding NewComment}"
+                   Grid.Row="2"
+                   Grid.Column="1"
+                   HeightRequest="50"
+                   WidthRequest="150" />
+
+            <Label Text="New category: "
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   Style="{StaticResource JustLabel}" />
+            <Picker ItemsSource="{Binding MutualTransactionCategoryBindings.TransactionCategories}"
+                    ItemDisplayBinding="{Binding Name}"
+                    WidthRequest="200"
+                    SelectedItem="{Binding NewCategory}"
+                    Grid.Row="3"
+                    Grid.Column="1" />
+        </Grid>
+
+        <Button Text="Edit"
+                WidthRequest="200"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Command="{Binding DoEditTransactionCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

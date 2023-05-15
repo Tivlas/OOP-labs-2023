@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FinanceManagementMAUI.Pages.LoginPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:FinanceManagementMAUI.ValueConverters"
+             xmlns:iOsSpecific="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             Title="Login page"
+             iOsSpecific:Page.UseSafeArea="True"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SomethingGreen},Dark={StaticResource DeepBlueDark}}"
+             Shell.PresentationMode="ModalAnimated"
+             >
+    
+    <ContentPage.Resources>
+        <converters:LoginPageEmailToColorConverter x:Key="EmailConverter" />
+        <converters:LoginPagePasswordToColorConverter x:Key="PasswordConverter" />
+        <ResourceDictionary>
+            <Style x:Key="Prompt"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                <Setter Property="FontSize"
+                        Value="Medium" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+            </Style>
+
+            <Style x:Key="LoginButton"
+                   TargetType="Button">
+                <Setter Property="BackgroundColor"
+                        Value="LightGray" />
+                <Setter Property="Margin"
+                        Value="0,20,0,0" />
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource Primary}}" />
+                <Setter Property="WidthRequest"
+                        Value="125" />
+                <Setter Property="HeightRequest"
+                        Value="60" />
+                <Setter Property="LineBreakMode"
+                        Value="WordWrap" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+        <Grid ColumnDefinitions="*,*"
+              RowDefinitions="Auto,Auto,Auto"
+              RowSpacing="10">
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Style="{StaticResource Prompt}"
+                   Text="Email" />
+            <Entry Grid.Row="0"
+                   Grid.Column="1"
+                   Placeholder="test@gmail.com"
+                   Text="{Binding Email}"
+                   WidthRequest="150"
+                   TextColor="{Binding IsEmailValid, Converter={StaticResource EmailConverter}}" />
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalOptions="End"
+                   Style="{StaticResource Prompt}"
+                   Text="Password" />
+            <Entry Grid.Row="1"
+                   Grid.Column="1"
+                   IsPassword="True"
+                   Placeholder="Password"
+                   Text="{Binding Password}"
+                   WidthRequest="150"
+                   TextColor="{Binding IsPasswordValid, Converter={StaticResource PasswordConverter}}" />
+            <Button Grid.Row="2"
+                    Grid.Column="0"
+                    Command="{Binding DoLoginCommand}"
+                    Style="{StaticResource LoginButton}"
+                    Text="Log in" />
+            <Button Grid.Row="2"
+                    Grid.Column="1"
+                    Command="{Binding DoCreateAccountCommand}"
+                    Style="{StaticResource LoginButton}"
+                    Text="Create Account" />
+        </Grid>
+
+        <ActivityIndicator x:Name="activityIndicator"
+                           HeightRequest="50"
+                           IsRunning="{Binding ShowActivityIndicator}"
+                           Color="Blue" />
+    </VerticalStackLayout>
+</ContentPage>

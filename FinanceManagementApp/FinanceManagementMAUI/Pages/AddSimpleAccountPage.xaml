@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FinanceManagementMAUI.Pages.AddSimpleAccountPage"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SomethingGreen},Dark={StaticResource DeepBlueDark}}"
+             Title="Adding card">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="JustLabel"
+                   TargetType="Label">
+                <Setter Property="TextColor"
+                        Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                <Setter Property="FontSize"
+                        Value="Medium" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalTextAlignment"
+                        Value="Center" />
+                <Setter Property="VerticalOptions"
+                        Value="Center" />
+                <Setter Property="HorizontalOptions"
+                        Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <VerticalStackLayout Spacing="10">
+
+        <Grid RowDefinitions="*,*,*"
+              ColumnDefinitions="Auto,Auto"
+              HorizontalOptions="Center"
+              VerticalOptions="Start"
+              Padding="10,10,10,10"
+              Margin="10,10,10,10"
+              ColumnSpacing="30"
+              RowSpacing="20">
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Name: "
+                   Style="{StaticResource JustLabel}" />
+            <Entry Text="{Binding Name}"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   HeightRequest="50"
+                   WidthRequest="150" />
+
+            <Label Text="Currency name: "
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   Style="{StaticResource JustLabel}" />
+            <Entry Text="{Binding CurrencyName}"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   HeightRequest="50"
+                   WidthRequest="150" />
+
+            <Label Text="Balance: "
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Style="{StaticResource JustLabel}" />
+            <Entry Text="{Binding Balance}"
+                   Grid.Row="2"
+                   Grid.Column="1"
+                   HeightRequest="50"
+                   WidthRequest="150" />
+        </Grid>
+
+        <Button Text="Add"
+                WidthRequest="200"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Command="{Binding DoAddCardCommand}" />
+    </VerticalStackLayout>
+</ContentPage>

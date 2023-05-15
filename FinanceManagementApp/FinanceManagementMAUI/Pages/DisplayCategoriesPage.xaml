@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:models="clr-namespace:FinanceManagementMAUI.ViewModels"
+             xmlns:entities="clr-namespace:Domain.Entities.Transactions;assembly=Domain"
+             BackgroundColor="{AppThemeBinding Light={StaticResource SomethingGreen},Dark={StaticResource DeepBlueDark}}"
+             x:Class="FinanceManagementMAUI.Pages.DisplayCategoriesPage"
+             Title="Your categories">
+
+    <Grid RowDefinitions="*,7*"
+          RowSpacing="10">
+        <Button Grid.Row="0"
+                Text="Add transaction category"
+                WidthRequest="260"
+                HorizontalOptions="Center"
+                Command="{Binding DoAddCategoryCommand}" />
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding MutualTransactionCategoryBindings.TransactionCategories}"
+                        HorizontalOptions="Fill">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="entities:TransactionCategory">
+                    <Frame>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding 
+                                Source={RelativeSource AncestorType={x:Type models:DisplayCategoriesViewModel} },
+                                    Path=DoEditCommand}"
+                                                  CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0"
+                                   Text="{Binding Name, StringFormat='Name: {0}'}"
+                                   FontSize="Medium"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   FontAutoScalingEnabled="True">
+                            </Label>
+                            <Button Grid.Column="1"
+                                    x:DataType="models:DisplayCategoriesViewModel"
+                                    Text="X"
+                                    BackgroundColor="Red"
+                                    Command="{Binding 
+                                Source={RelativeSource AncestorType={x:Type models:DisplayCategoriesViewModel} },
+                                    Path=DoRemoveCommand}"
+                                    CommandParameter="{Binding}" />
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
