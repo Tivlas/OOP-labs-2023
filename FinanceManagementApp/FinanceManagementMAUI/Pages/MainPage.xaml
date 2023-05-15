@@ -20,7 +20,10 @@
                    SemanticProperties.Description="Cute dot net bot waving hi to you!"
                    HeightRequest="200"
                    HorizontalOptions="Center" />
-
+            
+            <Button Text="Logout"
+                    WidthRequest="260"
+                    Command="{Binding DoLogoutCommand}" />
             <Button Text="Add transaction category"
                     WidthRequest="260"
                     Command="{Binding DoAddCategoryCommand}" />

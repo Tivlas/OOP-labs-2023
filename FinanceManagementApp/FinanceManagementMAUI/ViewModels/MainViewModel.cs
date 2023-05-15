@@ -48,4 +48,11 @@ public partial class MainViewModel : ObservableObject
     {
         await Shell.Current.GoToAsync(nameof(StatisticsPage));
     }
+
+    [RelayCommand] async Task DoLogout() => await Logout();
+    async Task Logout()
+    {
+        _preferencesService.RemoveUserData();
+        await Shell.Current.GoToAsync(nameof(LoginPage));
+    }
 }
