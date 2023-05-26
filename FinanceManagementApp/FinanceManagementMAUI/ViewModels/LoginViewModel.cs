@@ -114,6 +114,7 @@ public partial class LoginViewModel : ObservableObject
                     await _userService.AddAsync(u);
                     await _userService.SaveChangesAsync();
                     _preferencesService.SetUserData(u.Id, u.Email);
+                    ReloadUserCollections();
                     await Shell.Current.GoToAsync("//MainPage");
                 }
             }

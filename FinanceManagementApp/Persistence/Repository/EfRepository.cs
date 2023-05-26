@@ -29,7 +29,6 @@ public class EfRepository<T> : IEntityRepository<T> where T : class, IEntity
     public async Task<IReadOnlyList<T>> ListAsync(Expression<Func<T, bool>> filter, CancellationToken cancellationToken = default,
         params Expression<Func<T, object>>[] includesProperties)
     {
-        //return await _entities.Where(filter).ToListAsync(cancellationToken);
         IQueryable<T>? query = _entities.AsQueryable();
         if (includesProperties.Any())
         {
