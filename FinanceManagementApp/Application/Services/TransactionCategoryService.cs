@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
-using Application.Abstractions.NotConsole;
-using Domain.Abstractions.NotForConsoleAsync;
+using Application.Abstractions;
+using Domain.Abstractions;
 using Domain.Entities.Transactions;
 
-namespace Application.Services.NotConsole;
+namespace Application.Services;
 public class TransactionCategoryService : ITransactionCategoryService
 {
     private readonly IUnitOfWork _unitOfWork;

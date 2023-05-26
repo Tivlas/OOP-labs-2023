@@ -2,7 +2,7 @@
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 
-namespace Domain.Abstractions.NotForConsoleAsync;
+namespace Domain.Abstractions;
 public interface IUnitOfWork
 {
     IEntityRepository<SimpleAccount> SimpleAccountsRepository { get; }

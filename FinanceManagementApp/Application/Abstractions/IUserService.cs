@@ -1,6 +1,6 @@
 ﻿using Domain.Entities;
 
-namespace Application.Abstractions.NotConsole;
+namespace Application.Abstractions;
 public interface IUserService : IBaseService<User>
 {
 }

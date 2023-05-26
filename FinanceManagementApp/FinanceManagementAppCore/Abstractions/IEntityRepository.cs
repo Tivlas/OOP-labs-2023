@@ -1,9 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Domain.Entities.Interfaces;
 
-namespace Application.Abstractions.NotConsole;
-public interface IBaseService<T> where T : IEntity
+namespace Domain.Abstractions;
+public interface IEntityRepository<T> where T : IEntity
 {
+
     Task<bool> Exists(Expression<Func<T, bool>> filter,
     CancellationToken cancellationToken = default);
 
@@ -20,6 +21,4 @@ public interface IBaseService<T> where T : IEntity
 
     Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> filter, CancellationToken
    cancellationToken = default);
-
-    Task SaveChangesAsync();
 }

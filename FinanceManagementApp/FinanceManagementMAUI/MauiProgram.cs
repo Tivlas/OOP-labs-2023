@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
-using Application.Abstractions.NotConsole;
-using Application.Services.NotConsole;
+using Application.Abstractions;
+using Application.Services;
 using CommunityToolkit.Maui;
-using Domain.Abstractions.NotForConsoleAsync;
+using Domain.Abstractions;
 using FinanceManagementMAUI.Pages;
 using FinanceManagementMAUI.Services;
 using FinanceManagementMAUI.Services.Bindings;

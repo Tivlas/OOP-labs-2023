@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using Domain.Abstractions.NotForConsoleAsync;
+using Domain.Abstractions;
 using Domain.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Data;

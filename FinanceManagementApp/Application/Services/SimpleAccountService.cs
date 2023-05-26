@@ -1,9 +1,9 @@
 ﻿using System.Linq.Expressions;
-using Application.Abstractions.NotConsole;
-using Domain.Abstractions.NotForConsoleAsync;
+using Application.Abstractions;
+using Domain.Abstractions;
 using Domain.Entities.Accounts;
 
-namespace Application.Services.NotConsole;
+namespace Application.Services;
 public class SimpleAccountService : ISimpleAccountService
 {
     private readonly IUnitOfWork _unitOfWork;

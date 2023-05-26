@@ -26,13 +26,5 @@ namespace Domain.Entities.Transactions
         public int UserId { get; set; }
 
         public User? User { get; set; }
-
-        public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
-        {
-            List<(string PropName, object propValue)> info = new();
-            info.Add(("TransactionDate", TransactionDate.Date.ToShortDateString()));
-            info.Add(("AmountOfMoney", AmountOfMoney));
-            return info;
-        }
     }
 }

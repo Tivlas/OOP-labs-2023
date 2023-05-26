@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.Transactions;
 
-namespace Application.Abstractions.NotConsole;
+namespace Application.Abstractions;
 public interface ITransactionCategoryService : IBaseService<TransactionCategory>
 {
 }

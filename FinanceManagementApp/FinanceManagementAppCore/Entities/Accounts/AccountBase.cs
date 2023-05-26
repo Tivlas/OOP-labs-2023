@@ -29,14 +29,5 @@ namespace Domain.Entities.Accounts
 
         [PrimaryKey, Indexed, AutoIncrement]
         public int Id { get; set; }
-
-        public virtual IEnumerable<(string PropName, object propValue)> GetInfo()
-        {
-            List<(string PropName, object propValue)> info = new();
-            info.Add(("Name", Name));
-            info.Add(("Currency name", CurrencyName));
-            info.Add(("Balance", Balance));
-            return info;
-        }
     }
 }

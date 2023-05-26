@@ -1,6 +1,6 @@
 ﻿using Domain.Entities.Accounts;
 
-namespace Application.Abstractions.NotConsole;
+namespace Application.Abstractions;
 public interface ISimpleAccountService : IBaseService<SimpleAccount>
 {
 }

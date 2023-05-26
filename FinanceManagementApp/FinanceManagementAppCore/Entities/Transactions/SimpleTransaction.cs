@@ -26,15 +26,5 @@ namespace Domain.Entities.Transactions
         public string Comment { get; set; }
 
         public bool IsIncome { get; init; }
-
-        public override IEnumerable<(string PropName, object propValue)> GetInfo()
-        {
-            var info = base.GetInfo() as List<(string PropName, object propValue)>;
-            info!.Add(("Category", Category?.Name));
-            info!.Add(("Comment", Comment));
-            info!.Add(("IsIncome", IsIncome));
-            info!.Add(("Id", Id));
-            return info;
-        }
     }
 }

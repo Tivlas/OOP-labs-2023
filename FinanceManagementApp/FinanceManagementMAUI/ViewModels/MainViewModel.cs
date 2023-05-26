@@ -1,4 +1,4 @@
-﻿using Application.Abstractions.NotConsole;
+﻿using Application.Abstractions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FinanceManagementMAUI.Pages;

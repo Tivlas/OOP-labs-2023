@@ -1,5 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using Application.Abstractions.NotConsole;
+using Application.Abstractions;
 using Domain.Entities.Accounts;
 using FinanceManagementMAUI.Services.PreferencesServices;
 

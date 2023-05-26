@@ -1,4 +1,4 @@
-﻿using Domain.Abstractions.NotForConsoleAsync;
+﻿using Domain.Abstractions;
 using Domain.Entities;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
